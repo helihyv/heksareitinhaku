@@ -2,9 +2,11 @@
 
 ## Mitä tehty ja miten edistytty
 
-Tällä viikolla olen seurannut aloitusluennon, tutustunut kurssimateriaaliin, reitihakualgorimeihin ja niiden tehokkuuteen vaikuttaviin tekijöihin ja kuusiokulmioista koostuvan kartan käsittelyyn.
+Tällä viikolla olen seurannut aloitusluennon, tutustunut kurssimateriaaliin, reitinhakualgoritmeihin ja niiden tehokkuuteen vaikuttaviin tekijöihin ja kuusiokulmioista koostuvan kartan käsittelyyn. Olen myös kirjoittanut määrittelydokumenttia.
 
 Repositorio on luotu ja aihe on valittu ja ilmoitettu labtooliin. Määrittelydokumentti on valmis.
+
+Käytin työhön viikon aikana 5 tuntia.
 
 ## Mitä opin
 
