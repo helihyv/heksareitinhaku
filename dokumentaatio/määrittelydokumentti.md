@@ -2,7 +2,7 @@
 
 ## Ratkaistava ongelma
 
-Ratkaistavana ongelmana on nopeimman reitin löytäminen kahden "ruudun" välillä strategiapeleille tyypillisellä kuusikulmaisista "ruuduista" koostuvalla kartalla. Kartassa on erilaisia maastoja, joiden läpi liikkuminen vaatii eri määrän "liikkumispisteitä". Mahdollisesti reitinhaku tehdään ottamaan huomioon pelivuorot ja yksikön liikkumispisteet pelivuoroa kohti. (Tällöin jos jäljellä olevilla liikkumispisteillä ei pääse seuraavaan ruutuun, ylijääneet liikkumispisteet jäävät käyttämättä ja ruuttun siirrytään seuraavan vuoron liikkumispisteillä. Tällöin reitti voi olla pidempi, kuin jos vuoroja ei huomioitaisi.) Aineistona käytetään Battle of Wesnoth - pelin karttoja. Työssä vertaillaan eri reitinhakualgoritmien tehokkuutta tehtävässä. Ohjelma toteutetaan Javalla.
+Ratkaistavana ongelmana on nopeimman reitin löytäminen kahden "ruudun" välillä strategiapeleille tyypillisellä kuusikulmaisista "ruuduista" koostuvalla kartalla. Kartassa on erilaisia maastoja, joiden läpi liikkuminen vaatii eri määrän "liikkumispisteitä". Mahdollisesti reitinhaku tehdään ottamaan huomioon pelivuorot ja yksikön liikkumispisteet pelivuoroa kohti. (Tällöin jos jäljellä olevilla liikkumispisteillä ei pääse seuraavaan ruutuun, ylijääneet liikkumispisteet jäävät käyttämättä ja ruutuun siirrytään seuraavan vuoron liikkumispisteillä. Tällöin reitti voi olla pidempi, kuin jos vuoroja ei huomioitaisi.) Aineistona käytetään Battle of Wesnoth - pelin karttoja. Työssä vertaillaan eri reitinhakualgoritmien tehokkuutta tehtävässä. Ohjelma toteutetaan Javalla.
 
 ## Toteutettavat algoritmit ja tietorakenteet
 
@@ -24,7 +24,7 @@ Ohjelma tulostaa kullekin reitinhakualgoritmille sen löytämän reitin, reitin 
 
 ## tavoitteena olevat aika-ja tilavaativuudet
 
-Djikstran algoritmin osalta tavoitteena oleva aikavaativuus on tirakirjan mukainen Djikstran aikavaativuus O(n+mlog(n), jossa n on solmujen (heksojen) määrä ja m kaarien eli heksojen välisten yhteyksien määrä. Kuusikulmioista koostuvalla kartalla ei voi olla enempää kuin 6n yhteyttä kuusikulmioiden välillä, joten aikavaativuus voidaan kirjata myös muodossa O(n+nlog(n)). Djikstran algoritmi tarvitsee itse kartan (taulukko, keon, ja taulukot etäisyyksille, tiedolle siitä onko solmua jo käsitelty ja tiedolle siitä mistä solmuun tultiin. Taulukoiden koko on n, keossa ei voi olla ainakaan enempäää kuin jokaisen heksan yhteys kaikkiin kuuteen heksaan elin nm = 6n kaarta kerralla. Tilavaativuustavoite on tämän peusteella O(n).
+Djikstran algoritmin osalta tavoitteena oleva aikavaativuus on tirakirjan mukainen Djikstran aikavaativuus O(n+mlog(n), jossa n on solmujen (heksojen) määrä ja m kaarien eli heksojen välisten yhteyksien määrä. Kuusikulmioista koostuvalla kartalla ei voi olla enempää kuin 6n yhteyttä yhdestä kuusikulmiosta muihin, joten aikavaativuus voidaan kirjata myös muodossa O(n+nlog(n)). Djikstran algoritmi tarvitsee itse kartan (taulukko, keon, ja taulukot etäisyyksille, tiedolle siitä onko solmua jo käsitelty ja tiedolle siitä mistä solmuun tultiin. Taulukoiden koko on n, keossa ei voi olla ainakaan enempäää kuin jokaisen heksan yhteys kaikkiin kuuteen viereiseen heksaan elin nm = 6n kaarta kerralla. Tilavaativuustavoite on tämän peusteella O(n).
 
 A*-algoritmi on toiminnaltaan hyvin lähellä Djikstran algoritmia, minkä vuoksi sen aikavaatimuustavoite on sama kuin Djikstran algoritmilla, O(n+nlog(n)). A*-algoritmi käyttää samoja tietorakenteta kuin Djikstran algoritmi, joten sen tilavaativuustavoitekin on sama kuin Djikstran algoritmillla eli O(n).
 
