@@ -14,24 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package heksareitinhaku;
+package heksareitinhaku.ui;
 
 /**
  *
  * @author Heli Hyvättinen
  */
 
-import heksareitinhaku.ui.HexUI;
-public class Main {
+import javafx.application.Application;
+import javafx.scene.control.Label;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-    /**
-     * @param args the command line arguments
-     */
+public class HexUI extends Application {
+    
     public static void main(String[] args) {
-        
-        HexUI.main(args);
-        
-        // TODO code application logic here
+        HexUI.launch(args);
+    }
+    
+    public void start(Stage stage) {
+        Label title = new Label("Heksareitinhaku");
+        Group root = new Group(title);
+        Scene scene = new Scene(root,1000,1000);
+                
+        stage.show();
     }
     
 }
