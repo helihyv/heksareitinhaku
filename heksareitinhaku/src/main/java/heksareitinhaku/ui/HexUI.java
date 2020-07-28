@@ -36,7 +36,8 @@ public class HexUI extends Application {
     public void start(Stage stage) {
         Label title = new Label("Heksareitinhaku");
         Group root = new Group(title);
-        Scene scene = new Scene(root,1000,1000);
+        Scene scene = new Scene(root,1200,800);
+        stage.setScene(scene);
                 
         stage.show();
     }
