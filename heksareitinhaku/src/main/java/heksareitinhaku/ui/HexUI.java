@@ -16,23 +16,33 @@
  */
 package heksareitinhaku.ui;
 
-/**
- *
- * @author Heli Hyvättinen
- */
-
 import javafx.application.Application;
 import javafx.scene.control.Label;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Käyttölittymän runko
+ * @author Heli Hyvättinen
+ */
+
 public class HexUI extends Application {
     
+    /**
+     * Käyttöliittymä käynnistetään kutsumalla tätä funktiota
+     * @param args ohjelman komentoriviparametrit, ei tällä hetkeöllä käytetä mihinkään
+     */
     public static void main(String[] args) {
         HexUI.launch(args);
     }
     
+    /**
+     * JavaFX kutsuu tätä sovelluksen käyttöliittymän käynnistyksen yhteydessä
+     * Funktiossa alustetaan käyttöliittymä
+     * @param stage 
+     */
+    @Override
     public void start(Stage stage) {
         Label title = new Label("Heksareitinhaku");
         Group root = new Group(title);
