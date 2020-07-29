@@ -25,20 +25,17 @@ public class WesnothMapInterpreter implements MapInterpreter {
     
     private String[][] map;
     private int [] movementPointsPerTerrain;
-    int width;
 
-    
     /**
      *
      * @param map
      * @param width kartan leveys heksoina
      *
      */
-    public WesnothMapInterpreter(String[][] map, int width) {
+    public WesnothMapInterpreter(String[][] map) {
         this.map = map;
         this.movementPointsPerTerrain = new int [400];
         // Tähän kovakoodattujen liikkumispisteiden lisääminen taulukkoon 
-        this.width = width;
 
     }
     
@@ -56,11 +53,11 @@ public class WesnothMapInterpreter implements MapInterpreter {
     @Override
     public int getMovementPointsBetween(int fromX, int fromY, int toX, int toY) {
         
-       if (toX < 0 || toX >= width || toY < 0 || toY >= map.length / width) {
+       if (toX < 0 || toX >= map[0].length || toY < 0 || toY >= map.length) {
            return -1;
        } 
        
-       if (fromX < 0 || fromX >= width || fromY < 0 || fromY >= map.length / width) {
+       if (fromX < 0 || fromX >= map[0].length || fromY < 0 || fromY >= map.length) {
            return -1;
        }
        
@@ -93,7 +90,19 @@ public class WesnothMapInterpreter implements MapInterpreter {
         
         return movementPointsPerTerrain[index];
                 }
-    
-    
-    
+
+    @Override
+    public int getWidth() {
+        return map[0].length;
+    }
+
+    /**
+     *
+     * @return height of map in hexes
+     */
+    @Override
+    public int getHeigth() {
+        return map.length;
+}
+
 }

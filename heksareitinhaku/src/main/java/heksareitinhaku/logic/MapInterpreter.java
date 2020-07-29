@@ -21,7 +21,8 @@ package heksareitinhaku.logic;
  * @author Heli Hyvättinen
  */
 public interface MapInterpreter {
-
+    
+    
     /**
      * Kertoo liikkumispistekustannuksen ruutujen välillä. Jos ruutuun ei pääse
      * tuloruudusta, ruudut eivät ole vierekkäin tai jompikumpi ruuduista on
@@ -33,6 +34,15 @@ public interface MapInterpreter {
      * @return tarvittavien liikepisteiden määrä, jos kohderuutuun on
      * mahdollista siirtyä suoraan tuloruudusta. Muuten -1.
      */
-    int getMovementPointsBetween(int fromX, int fromY, int toX, int toY);
+    public int getMovementPointsBetween(int fromX, int fromY, int toX, int toY);
+
+    /**
+     *
+     * @return width of map in hexes
+     */
+    public int getWidth();
+
+    
+    public int getHeigth();
     
 }

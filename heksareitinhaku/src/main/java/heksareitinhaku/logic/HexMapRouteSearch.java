@@ -23,14 +23,14 @@ package heksareitinhaku.logic;
 public interface HexMapRouteSearch {
     
     /**
-     * Hakee reitin lähtöheksasta maaliheksaan annetulla kartalla
-     * @param map kartta, jolla reitti etsitään (
+     * Hakee reitin lähtöheksasta maaliheksaan 
      * @param startX lähtöheksan x-koordinaatti
      * @param startY lähtöheksan y-koordinaatti
      * @param destinationX maaliheksan x-koordinaatti
      * @param destinatinY maaliheksan y-koordinaatii
-     * @return
+     * @return  int[][] containing the route from start to destination with the 
+     * x-coordinate and y-coordinate of a hex to go trough next on each row. 
      */
-    public int[] findRoute(String[][] map, int startX, int startY, int destinationX, int destinatinY);
+    public int[][] findRoute(int startX, int startY, int destinationX, int destinatinY);
     
 }
