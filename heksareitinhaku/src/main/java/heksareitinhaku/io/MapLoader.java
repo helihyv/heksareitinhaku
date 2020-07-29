@@ -16,6 +16,8 @@
  */
 package heksareitinhaku.io;
 
+import java.io.IOException;
+
 /**
  * Lataa kartan tiedostosta
  * @author Heli Hyvättinen
@@ -23,16 +25,13 @@ package heksareitinhaku.io;
 public interface MapLoader {
     
     /**
-     * Lataa kartan tiedostosta ja kertoo kartan maastokoodit taulukkona ja kartan leveyden
+     * Lataa kartan tiedostosta
      * @param filenameWithPath tiedoston nimi polulla
-     * @return kartta
+     * @return kartta kaksiulotteisena taulukkone maastokoodeja
+     * @throws java.io.IOException if reading the fole fails
      */
     
-    public void loadMap(String filenameWithPath);
-    
-    public String[][] getMap();
-    
-    public int getWidth();
+    public String[][] loadMap(String filenameWithPath) throws IOException ;
     
     
 }

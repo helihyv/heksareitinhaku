@@ -18,6 +18,7 @@ package heksareitinhaku.io;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -25,25 +26,26 @@ import java.util.ArrayList;
  * @author Heli Hyvättinen
  */
 public class WesnothMapLoader implements MapLoader {
-    
-    String[][] map;
-    int mapWidth;  
+
+  
 
     /**
-     * Lukee kartaan tiedostosta
+     * Lukee Battle of Wesnoth -kartaan tiedostosta
      * @param filenameWithPath
+     * @throws java.io.IOException
      */
     @Override
-    public void loadMap(String filenameWithPath) {
+    
+    public String[][] loadMap(String filenameWithPath) throws IOException{
         
-        try (FileReader fileReader = new FileReader(filenameWithPath)) {
+        FileReader fileReader = new FileReader(filenameWithPath); 
             
         BufferedReader reader = new BufferedReader(fileReader);
             
             String line;
             ArrayList<String> lines = new ArrayList();
             
-            try {
+
                  line = reader.readLine() ;
                  while (line !=  null) {
                     lines.add(line);
@@ -54,11 +56,12 @@ public class WesnothMapLoader implements MapLoader {
                 
                 String[] terrainCodes = lines.get(0).split(",");
                 
-                mapWidth = terrainCodes.length; 
+                int mapWidth = terrainCodes.length; 
+                int mapHeigth = lines.size();
                 
-                map = new String[terrainCodes.length][lines.size()];
+                String[][] map = new String[mapWidth][mapHeigth];
                 
-                for (int i = 0; i < lines.size(); i++) {
+                for (int i = 0; i < mapHeigth; i++) {
                     
                     terrainCodes = lines.get(i).split(",");
                     
@@ -67,28 +70,8 @@ public class WesnothMapLoader implements MapLoader {
                     }
      
                 }
+        return map;
                 
             } 
-            catch (Exception e ){
-                //Tiedostoa luettaessa tapahtui virhe, virheenkäsittely tähän
-                
-            }
-            
-        } catch (Exception e){
-            // Tiedostoa ei löytynyt virheenkäsittely tähän
-        }
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String[][] getMap() {
-        return map;
-    }
-
-    @Override
-    public int getWidth() {
-        
-      return mapWidth;
-    }
-    
 }
+
