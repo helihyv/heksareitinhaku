@@ -23,55 +23,53 @@ import java.util.ArrayList;
 
 /**
  * Lukee Battle of Wesnoth -karttoja tiedostosta
+ *
  * @author Heli Hyvättinen
  */
 public class WesnothMapLoader implements MapLoader {
 
-  
-
     /**
      * Lukee Battle of Wesnoth -kartaan tiedostosta
+     *
      * @param filenameWithPath
      * @throws java.io.IOException
      */
     @Override
-    
-    public String[][] loadMap(String filenameWithPath) throws IOException{
-        
-        FileReader fileReader = new FileReader(filenameWithPath); 
-            
+
+    public String[][] loadMap(String filenameWithPath) throws IOException {
+
+        FileReader fileReader = new FileReader(filenameWithPath);
+
         BufferedReader reader = new BufferedReader(fileReader);
-            
-            String line;
-            ArrayList<String> lines = new ArrayList();
-            
 
-                 line = reader.readLine() ;
-                 while (line !=  null) {
-                    lines.add(line);
-                    line = reader.readLine(); 
-                     
-                 }
+        String line;
+        ArrayList<String> lines = new ArrayList();
 
-                
-                String[] terrainCodes = lines.get(0).split(",");
-                
-                int mapWidth = terrainCodes.length; 
-                int mapHeigth = lines.size();
-                
-                String[][] map = new String[mapWidth][mapHeigth];
-                
-                for (int i = 0; i < mapHeigth; i++) {
-                    
-                    terrainCodes = lines.get(i).split(",");
-                    
-                    for (int j = 0; j < mapWidth; j++) {
-                        map[i][j] = terrainCodes[j];
-                    }
-     
-                }
+        line = reader.readLine();
+        while (line != null) {
+            lines.add(line);
+            line = reader.readLine();
+
+        }
+
+        String[] terrainCodes = lines.get(0).split(",");
+
+        int mapWidth = terrainCodes.length;
+        int mapHeigth = lines.size();
+
+        String[][] map = new String[mapWidth][mapHeigth];
+
+        for (int i = 0; i < mapHeigth; i++) {
+
+            terrainCodes = lines.get(i).split(",");
+
+            for (int j = 0; j < mapWidth; j++) {
+                map[i][j] = terrainCodes[j];
+            }
+
+        }
+
         return map;
-                
-            } 
-}
 
+    }
+}

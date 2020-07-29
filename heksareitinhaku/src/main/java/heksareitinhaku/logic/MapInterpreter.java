@@ -42,7 +42,10 @@ public interface MapInterpreter {
      */
     public int getWidth();
 
-    
+    /**
+     *
+     * @return height of map in hexes
+     */
     public int getHeigth();
     
 }

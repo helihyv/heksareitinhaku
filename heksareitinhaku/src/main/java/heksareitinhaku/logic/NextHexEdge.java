@@ -17,23 +17,22 @@
 package heksareitinhaku.logic;
 
 /**
- * Class for the edge to next hex to be inserted in the priority queue in the 
+ * Class for the edge to next hex to be inserted in the priority queue in the
  * Djikstra's and A* algorithms.
- * 
+ *
  * @author Heli Hyvättinen
  */
-
-
 public class NextHexEdge {
+
     private int x;
     private int y;
     private int priority;
 
     /**
-     * 
+     *
      * @param x The x-coordinate of the hex this edge leads ro
-     * @param y The y-coordinate of the hex  this edge leads to
-     * @param priority the priority used to determine the edges place in the 
+     * @param y The y-coordinate of the hex this edge leads to
+     * @param priority the priority used to determine the edges place in the
      * queue
      */
     public NextHexEdge(int x, int y, int priority) {
@@ -60,14 +59,11 @@ public class NextHexEdge {
 
     /**
      *
-     * @return the priority that determines this edge's place in the priority 
+     * @return the priority that determines this edge's place in the priority
      * queue
      */
     public int getPriority() {
         return priority;
     }
-    
-    
-    
-    
+
 }

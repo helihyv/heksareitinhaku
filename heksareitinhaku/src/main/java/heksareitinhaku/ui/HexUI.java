@@ -42,6 +42,7 @@ public class HexUI extends Application {
      * Funktiossa alustetaan käyttöliittymä
      * @param stage 
      */
+    
     @Override
     public void start(Stage stage) {
         Label title = new Label("Heksareitinhaku");

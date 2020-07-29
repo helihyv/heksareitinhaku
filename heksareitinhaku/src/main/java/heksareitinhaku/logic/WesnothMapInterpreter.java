@@ -17,14 +17,15 @@
 package heksareitinhaku.logic;
 
 /**
- * huolehtii Battle of Wesnoth -kartan tulkinnasta liikkumispisteiksi heksojen 
+ * huolehtii Battle of Wesnoth -kartan tulkinnasta liikkumispisteiksi heksojen
  * välillä. Ei noudata pelin sääntöjä, vaan tulkitsee kartaa vapaasti.
+ *
  * @author Heli Hyvättinen
  */
 public class WesnothMapInterpreter implements MapInterpreter {
-    
+
     private String[][] map;
-    private int [] movementPointsPerTerrain;
+    private int[] movementPointsPerTerrain;
 
     /**
      *
@@ -34,62 +35,61 @@ public class WesnothMapInterpreter implements MapInterpreter {
      */
     public WesnothMapInterpreter(String[][] map) {
         this.map = map;
-        this.movementPointsPerTerrain = new int [400];
-        // Tähän kovakoodattujen liikkumispisteiden lisääminen taulukkoon 
+        this.movementPointsPerTerrain = new int[400];
+        // Tähän kovakoodattujen liikkumispisteiden lisääminen taulukkoon
 
     }
-    
+
     /**
-     * Kertoo liikkumispistekustannuksen ruutujen välillä. Jos ruutuun ei pääse 
-     * tuloruudusta, ruudut eivät ole vierekkäin tai jompikumpi ruuduista on 
+     * Kertoo liikkumispistekustannuksen ruutujen välillä. Jos ruutuun ei pääse
+     * tuloruudusta, ruudut eivät ole vierekkäin tai jompikumpi ruuduista on
      * kartan ulkopuolella palautetaan -1.
+     *
      * @param fromX
      * @param fromY
      * @param toX
      * @param toY
-     * @return tarvittavien liikepisteiden määrä, jos kohderuutuun on 
+     * @return tarvittavien liikepisteiden määrä, jos kohderuutuun on
      * mahdollista siirtyä suoraan tuloruudusta. Muuten -1.
      */
     @Override
     public int getMovementPointsBetween(int fromX, int fromY, int toX, int toY) {
-        
-       if (toX < 0 || toX >= map[0].length || toY < 0 || toY >= map.length) {
-           return -1;
-       } 
-       
-       if (fromX < 0 || fromX >= map[0].length || fromY < 0 || fromY >= map.length) {
-           return -1;
-       }
-       
-        if (fromX == toX) {
-           if (toY != toX +1 && toY != toX -1  ) {
-               return -1;
-           }
-       }
-       
-       if (toX > fromX + 1 || toX < fromX - 1) {
-           return -1;
-       }
-       
-  
-        if (fromX % 2 == 0 && toY != fromY && toY != fromY +1) {
-            return -1;
-            
-        } 
-        
-        if (fromX % 2 == 1 && toY != fromY && toY != fromY -1) {
+
+        if (toX < 0 || toX >= map[0].length || toY < 0 || toY >= map.length) {
             return -1;
         }
-              
+
+        if (fromX < 0 || fromX >= map[0].length || fromY < 0 || fromY >= map.length) {
+            return -1;
+        }
+
+        if (fromX == toX) {
+            if (toY != toX + 1 && toY != toX - 1) {
+                return -1;
+            }
+        }
+
+        if (toX > fromX + 1 || toX < fromX - 1) {
+            return -1;
+        }
+
+        if (fromX % 2 == 0 && toY != fromY && toY != fromY + 1) {
+            return -1;
+
+        }
+
+        if (fromX % 2 == 1 && toY != fromY && toY != fromY - 1) {
+            return -1;
+        }
+
         String fromHex = map[fromY][fromX];
         String toHex = map[toY][toX];
-        
+
         // Tähän teiden ja siltojen käsittey!
-        
         int index = toHex.charAt(0);
-        
+
         return movementPointsPerTerrain[index];
-                }
+    }
 
     @Override
     public int getWidth() {
@@ -103,6 +103,6 @@ public class WesnothMapInterpreter implements MapInterpreter {
     @Override
     public int getHeigth() {
         return map.length;
-}
+    }
 
 }
