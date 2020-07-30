@@ -35,7 +35,7 @@ public class WesnothMapInterpreter implements MapInterpreter {
      */
     public WesnothMapInterpreter(String[][] map) {
         this.map = map;
-        this.movementPointsPerTerrain = new int[400];
+        this.movementPointsPerTerrain = new int[26];
         // meaning of codes from: https://wiki.wesnoth.org/TerrainCodesWML
         // actual movement points are not from the game
         movementPointsPerTerrain[0] = 3;  //A, arctic
@@ -52,8 +52,8 @@ public class WesnothMapInterpreter implements MapInterpreter {
         movementPointsPerTerrain[1] = 2; //L not used, reserved for future use
         movementPointsPerTerrain[12] = 6; //M, mountains
         movementPointsPerTerrain[13] = 2; //N, not used,reserved fot future use
-        movementPointsPerTerrain[14] = 2; //O
-        movementPointsPerTerrain[15] = 2; //P
+        movementPointsPerTerrain[14] = 2; //O, not used,reserved fot future use
+        movementPointsPerTerrain[15] = 2; //P, not used,reserved fot future use
         movementPointsPerTerrain[16] = -1; //Q, un-walkable
         movementPointsPerTerrain[17] = 1; //R, roads or rails, requires special treatment
         movementPointsPerTerrain[18] = 5; //S, swamp
@@ -122,7 +122,13 @@ public class WesnothMapInterpreter implements MapInterpreter {
 
         // Tähän teiden ja siltojen käsittey!
         int baseMovementPoints = movementPointsPerTerrain[base - 'A'];
-        if (overlay > 0) {
+        if (baseMovementPoints < 0) {
+            return -1;
+        }
+        // codes starting with _ are special system codes
+        // apparently found only in overlays
+        if (overlay > 0 && overlay != '_') {
+
             int overlayMovementPoints = movementPointsPerTerrain[overlay - 'A'];
             if (overlayMovementPoints < 0) {
                 return -1;
