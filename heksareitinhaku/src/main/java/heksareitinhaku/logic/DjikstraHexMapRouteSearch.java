@@ -67,6 +67,14 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
 
         checked = new boolean[width][heigth];
         distance = new int[width][heigth];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < heigth; j++) {
+                distance[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
+        distance[startX][startY] = 0;
+
         cameFromX = new int[width][heigth];
         cameFromY = new int[width][heigth];
         cameFromX[startX][startY] = -1;
@@ -130,10 +138,11 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
             routePointY = cameFromY[routePointX][routePointY];
             routePointX = previousX;
         }
-        int[][] route = new int[2][routeList.size() / 2];
+        int[][] route = new int[routeList.size() / 2][2];
         for (int i = 0; i < routeList.size() / 2; i++) {
             for (int j = 0; j < 2; j++) {
-                route[i][j] = routeList.get(routeList.size() - i * 2 + j);
+                route[i][j] = routeList.get(routeList.size() - i * 2 - j - 1);
+
             }
         }
 
