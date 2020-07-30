@@ -148,15 +148,22 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
             int newY
     ) {
 
+        int movementPointsNeeded = mapInterpreter.getMovementPointsBetween(
+                currentX,
+                currentY,
+                newX,
+                newY);
+
+        if (movementPointsNeeded < 0) {
+            //impossible to move along this edge
+            return;
+        }
+
         int currentDistance = distance[newX][newY];
 
         int newDistance
                 = distance[currentX][currentY]
-                + mapInterpreter.getMovementPointsBetween(
-                        currentX,
-                        currentY,
-                        newX,
-                        newY);
+                + movementPointsNeeded;
 
         if (newDistance < currentDistance) {
             distance[newX][newY] = newDistance;
