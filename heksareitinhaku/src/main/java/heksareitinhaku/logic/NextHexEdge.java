@@ -22,10 +22,10 @@ package heksareitinhaku.logic;
  *
  * @author Heli Hyvättinen
  */
-public class NextHexEdge {
+public class NextHexEdge implements Comparable<NextHexEdge> {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     private int priority;
 
     /**
@@ -59,11 +59,17 @@ public class NextHexEdge {
 
     /**
      *
-     * @return the priority that determines this edge's place in the priority
-     * queue
+     * @return priority for ordering the edges in the heap
      */
     public int getPriority() {
         return priority;
+    }
+
+    @Override
+    public int compareTo(NextHexEdge anotherEdge) {
+
+        return this.priority - anotherEdge.getPriority();
+
     }
 
 }
