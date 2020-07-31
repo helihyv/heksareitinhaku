@@ -92,26 +92,28 @@ public class WesnothMapInterpreter implements MapInterpreter {
         }
 
         if (fromX == toX) {
-            if (toY != toX + 1 && toY != toX - 1) {
+            if (toY != fromY + 1 && toY != fromY - 1) {
+                return -1;
+            }
+        } else {
+
+            if (toX > fromX + 1 || toX < fromX - 1) {
+                return -1;
+            }
+
+            if (fromX % 2 == 0 && toY != fromY && toY != fromY + 1) {
+                return -1;
+
+            }
+
+            if (fromX % 2 == 1 && toY != fromY && toY != fromY - 1) {
                 return -1;
             }
         }
 
-        if (toX > fromX + 1 || toX < fromX - 1) {
-            return -1;
-        }
-
-        if (fromX % 2 == 0 && toY != fromY && toY != fromY + 1) {
-            return -1;
-
-        }
-
-        if (fromX % 2 == 1 && toY != fromY && toY != fromY - 1) {
-            return -1;
-        }
-
         String fromHex = map[fromY][fromX];
         String toHex = map[toY][toX];
+
         int base = toHex.charAt(0);
         int overlay = -1;
         for (int i = 1; i < toHex.length(); i++) {
