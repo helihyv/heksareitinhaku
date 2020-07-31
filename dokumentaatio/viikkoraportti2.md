@@ -2,21 +2,23 @@
 
 ## Mitä tehty
 
-Tällä viikolla (la-pe) työhön on menny aikaa noin 12 h. Tänä aikana olen luonut projektin ja tehnyt sille jacoco- ja alustavat checkstyle-asetukset, työstänyt Djikstran algoritmin toteutusta, kartan tulkintaa, kartan lukemista tiedostosta ja ottanut käytttöliittymässä käyttöön jJavaFX:n. 
+Tällä viikolla (la-pe) työhön on menny aikaa noin 15 h. Tänä aikana olen luonut projektin ja tehnyt sille jacoco- ja alustavat checkstyle-asetukset, työstänyt Djikstran algoritmin toteutusta, kartan tulkintaa, kartan lukemista tiedostosta ja ottanut käytttöliittymässä käyttöön JavaFX:n. 
 
 ## Miten edistytty
 
 Djikstran algoritmi on toteuttu käyttäen vielä javan PriorityQueue:a ja ArrayList:iä. (Jälkimmäinen on korvattavissa taulukolla.) Luokalle on tehty testit yksinkertaisimmille tilanteille. Algoritmin tarvitsema kaarilluokka on myös toteutettu ja sille on tehty testejä. 
 
-Kaikille reitinhakualgoritmeille yhteinen kartan tulkinnnasta huolehtiva luokka on lähes valmis, teiden ja siltojen suuntien huomioiminen puuttuu vielä. 
+Kaikille reitinhakualgoritmeille yhteinen kartan tulkinnnasta huolehtiva luokka on lähes valmis, teiden ja siltojen suuntien huomioiminen puuttuu vielä. Sille on myös tehty joitain testejä- 
 
 Kartan tiedostosta lukeva luokka on toteutettu, mutta täysin testaamaton. Siellä on vielä käytetty ArrayList:iä ja String.split():iä. 
 
 Käyttöliittymä on aivan alkutekijöissään, sovelluksen ikkuna aukeaa, sinä kaikki.
 
+![testikattavuus](/dokumentaatio/testikattavuusviikko2.png)
+
 ## Mitä opin
 
-Tällä viikolla opin reitin talteenottamista Djikstran algoritmissa, checkstylen konfiguraatiota ja Battle for Wesnoth -pelin karttatiedostojen tulkintaa. Huomasin myös tarvitsevani jonkinlaista listaa tiedostosta luvun yhteydessä.
+Tällä viikolla opin reitin talteenottamista Djikstran algoritmissa, checkstylen konfiguraatiota ja Battle for Wesnoth -pelin karttatiedostojen tulkintaa. 
 
 ## Epäselvyyksiä, vaikeuksia, kysymyksiä
 
