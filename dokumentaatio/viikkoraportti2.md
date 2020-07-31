@@ -2,7 +2,7 @@
 
 ## Mitä tehty
 
-Tällä viikolla (la-pe) työhön on menny aikaa noin 15 h. Tänä aikana olen luonut projektin ja tehnyt sille jacoco- ja alustavat checkstyle-asetukset, työstänyt Djikstran algoritmin toteutusta, kartan tulkintaa, kartan lukemista tiedostosta ja ottanut käytttöliittymässä käyttöön JavaFX:n. 
+Tällä viikolla (la-pe) työhön on mennyt aikaa noin 15 h. Tänä aikana olen luonut projektin ja tehnyt sille jacoco- ja alustavat checkstyle-asetukset, työstänyt Djikstran algoritmin toteutusta, kartan tulkintaa, kartan lukemista tiedostosta ja ottanut käytttöliittymässä käyttöön JavaFX:n. 
 
 ## Miten edistytty
 
@@ -28,5 +28,5 @@ Kartan näyttämisessä vaihtoehtoina ovat vielä pelin omien grafiikoiden (saat
 
 ## Mitä seuraavaksi
 
-Seuraavalla viikolla toteutan A*-algoritmin ja sen testit, lisää testejä Djikstran algoritmille, aloitan Fringe Search-algoritmin toteuttamisen, täydennän karttatulkkia ja teen sille testit, teen tiedostonluvulle testit ja työstän käyttöliittymää eteenpäin.
+Seuraavalla viikolla toteutan A*-algoritmin ja sen testit, lisää testejä Djikstran algoritmille, aloitan Fringe Search-algoritmin toteuttamisen, täydennän karttatulkkia ja teen sille lisää testejä, teen tiedostonluvulle testit ja työstän käyttöliittymää eteenpäin.
 
