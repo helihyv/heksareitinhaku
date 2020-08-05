@@ -18,27 +18,29 @@ package heksareitinhaku.io;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Lukee Battle of Wesnoth -karttoja tiedostosta
+ * Reads Battle for Wesnoth maps from files
  *
  * @author Heli Hyvättinen
  */
 public class WesnothMapLoader implements MapLoader {
 
     /**
-     * Lukee Battle of Wesnoth -kartaan tiedostosta
+     * Reads a Battle for Wesnoth map from a file
      *
-     * @param filenameWithPath
+     * @param file The file to read the map from.
+     * @return The loaded map as a two-dimensional table of Strings
      * @throws java.io.IOException
      */
     @Override
 
-    public String[][] loadMap(String filenameWithPath) throws IOException {
+    public String[][] loadMap(File file) throws IOException {
 
-        FileReader fileReader = new FileReader(filenameWithPath);
+        FileReader fileReader = new FileReader(file);
 
         BufferedReader reader = new BufferedReader(fileReader);
 
@@ -57,13 +59,14 @@ public class WesnothMapLoader implements MapLoader {
         int mapWidth = terrainCodes.length;
         int mapHeigth = lines.size();
 
-        String[][] map = new String[mapWidth][mapHeigth];
+        String[][] map = new String[mapHeigth][mapWidth];
 
         for (int i = 0; i < mapHeigth; i++) {
 
             terrainCodes = lines.get(i).split(",");
 
             for (int j = 0; j < mapWidth; j++) {
+
                 map[i][j] = terrainCodes[j];
             }
 

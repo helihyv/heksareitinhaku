@@ -16,23 +16,23 @@
  */
 package heksareitinhaku.io;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
- * Lataa kartan tiedostosta
+ * Loads a map from a file
+ *
  * @author Heli Hyvättinen
  */
 public interface MapLoader {
-    
+
     /**
-     * Lataa kartan tiedostosta
-     * @param filenameWithPath tiedoston nimi polulla
-     * @return kartta kaksiulotteisena taulukkone maastokoodeja
-     * @throws java.io.IOException if reading the fole fails
+     * Loads a map from a file
+     *
+     * @param file mapfile
+     * @return the map a two-dimensional table of Strings
+     * @throws java.io.IOException if reading the file fails
      */
-    
-    public String[][] loadMap(String filenameWithPath) throws IOException ;
-    
-    
+    public String[][] loadMap(File file) throws IOException;
+
 }
- 
