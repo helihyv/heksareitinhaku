@@ -28,24 +28,40 @@ public class MapUI {
 
     private Group mapTileGroup;
 
-    public MapUI(String[][] map, HexUI ui) {
+    private HexRouteSearchUI parentUI;
 
+    public MapUI(HexRouteSearchUI ui) {
+        this.parentUI = ui;
         mapTileGroup = new Group();
+    }
+
+    public Group getMapTileGroup() {
+        return mapTileGroup;
+    }
+
+    public void setMap(String[][] map) {
+
+        System.out.println("Saavuttu ruuduko luomiseen 1");
+
+        mapTileGroup.getChildren().clear();
+
+        System.out.println("Saavuttu ruuduon luomiseen 2");
 
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
 
-                double x = j * radius * 0.866 + radius;
+                System.out.println("i: " + i + "j: " + j);
+
+                double x = j * radius * 1.5 + radius;
 
                 double y = (i + 0.5) * 1.732 * radius;
 
                 if (j % 2 != 0) {
                     y += 0.866 * radius;
-                    x += radius * 0.688;
 
                 }
 
-                HexOutline hex = new HexOutline(x, y, ui, j, i);
+                HexOutline hex = new HexOutline(x, y, parentUI, j, i);
 
                 mapTileGroup.getChildren().add(hex);
 
@@ -53,9 +69,4 @@ public class MapUI {
         }
 
     }
-
-    public Group getMapTileGroup() {
-        return mapTileGroup;
-    }
-
 }

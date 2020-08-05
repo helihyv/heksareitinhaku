@@ -21,7 +21,7 @@ package heksareitinhaku;
  * @author Heli Hyvättinen
  */
 
-import heksareitinhaku.ui.HexUI;
+import heksareitinhaku.ui.HexRouteSearchUI;
 public class Main {
 
     /**
@@ -29,7 +29,7 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        HexUI.main(args);
+        HexRouteSearchUI.main(args);
         
         // TODO code application logic here
     }

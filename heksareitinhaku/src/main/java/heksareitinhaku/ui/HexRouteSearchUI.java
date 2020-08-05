@@ -16,26 +16,42 @@
  */
 package heksareitinhaku.ui;
 
+import java.io.File;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.scene.control.Button;
+import heksareitinhaku.io.MapLoader;
+import heksareitinhaku.io.WesnothMapLoader;
+import heksareitinhaku.logic.DjikstraHexMapRouteSearch;
+import heksareitinhaku.logic.HexMapRouteSearch;
+import heksareitinhaku.logic.MapInterpreter;
+import heksareitinhaku.logic.WesnothMapInterpreter;
+import java.io.IOException;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * Käyttölittymän runko
  *
  * @author Heli Hyvättinen
  */
-public class HexUI extends Application {
+public class HexRouteSearchUI extends Application {
 
+    private HexMapRouteSearch djikstraSearch;
     private boolean selectingStartPoint;
     private boolean selectingGoal;
     private HexOutline startPoint;
     private HexOutline goal;
     private Label startPointText;
     private Label goalText;
+    private MapUI mapView;
 
     /**
      * Käyttöliittymä käynnistetään kutsumalla tätä funktiota
@@ -44,7 +60,7 @@ public class HexUI extends Application {
      * mihinkään
      */
     public static void main(String[] args) {
-        HexUI.launch(args);
+        HexRouteSearchUI.launch(args);
     }
 
     /**
@@ -55,6 +71,46 @@ public class HexUI extends Application {
      */
     @Override
     public void start(Stage stage) {
+
+        Button openMapFileButton = new Button("Valitse karttatiedosto");
+
+        EventHandler fileOpenPressedHandler = new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Valitse karttatiedosto");
+                File mapFile = fileChooser.showOpenDialog(null);
+
+                if (mapFile != null) {
+
+                    MapLoader mapLoader = new WesnothMapLoader();
+
+                    try {
+                        String[][] map = mapLoader.loadMap(mapFile);
+                        System.out.println("kartta ladattu");
+                        MapInterpreter mapInterpreter = new WesnothMapInterpreter(map);
+                        System.out.println("karttatulkki alustettu");
+                        djikstraSearch = new DjikstraHexMapRouteSearch(mapInterpreter);
+                        System.out.println("Algoritmi luotu");
+                        mapView.setMap(map);
+
+                    } catch (Exception e) {
+
+                        Alert errorAlert = new Alert(
+                                AlertType.ERROR,
+                                "Kartan lukeminen tiedostosta epäonnistui.\n"
+                                + e.getMessage()
+                        );
+                        errorAlert.show();
+
+                    }
+
+                }
+            }
+        };
+
+        openMapFileButton.setOnAction(fileOpenPressedHandler);
+
         startPointText = new Label(
                 "Lähtöpaikka:"
         );
@@ -63,10 +119,9 @@ public class HexUI extends Application {
 
         selectingStartPoint = true;
 
-        String[][] map = {{"G", "G~F"}, {"W", "H"}};
-        MapUI mapView = new MapUI(map, this);
+        mapView = new MapUI(this);
 
-        VBox mainLayout = new VBox(startPointText, goalText, mapView.getMapTileGroup());
+        VBox mainLayout = new VBox(openMapFileButton, startPointText, goalText, mapView.getMapTileGroup());
 
         Scene scene = new Scene(mainLayout, 1200, 800);
         stage.setScene(scene);

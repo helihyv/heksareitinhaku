@@ -35,9 +35,9 @@ public class HexOutline extends Polygon {
     private int indexX;
     private int indexY;
 
-    HexUI ui;
+    HexRouteSearchUI ui;
 
-    public HexOutline(double centerX, double centerY, HexUI ui, int indexX, int indexY) {
+    public HexOutline(double centerX, double centerY, HexRouteSearchUI ui, int indexX, int indexY) {
 
         super(
                 centerX - (radius / 2), centerY - distanceToMiddleOfSide,
