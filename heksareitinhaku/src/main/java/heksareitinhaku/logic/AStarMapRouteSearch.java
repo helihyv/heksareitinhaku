@@ -101,22 +101,86 @@ public class AStarMapRouteSearch {
 
             checked[currentX][currentY] = true;
 
-            handleEdge(currentX, currentY, currentX, currentY - 1, destinationX, destinationY); //North
-            handleEdge(currentX, currentY, currentX, currentY + 1, destinationX, destinationY); //South
+            handleEdge(
+                    currentX,
+                    currentY,
+                    currentX,
+                    currentY - 1,
+                    destinationX,
+                    destinationY
+            ); //North
+
+            handleEdge(
+                    currentX,
+                    currentY,
+                    currentX,
+                    currentY + 1,
+                    destinationX,
+                    destinationY
+            ); //South
+
             //Nortwest for even columns, Southeast for odd columns
-            handleEdge(currentX, currentY, currentX - 1, currentY, destinationX, destinationY);
+            handleEdge(
+                    currentX,
+                    currentY,
+                    currentX - 1,
+                    currentY,
+                    destinationX,
+                    destinationY
+            );
+
             //Northeast for even colums, southeast for odd columns
-            handleEdge(currentX, currentY, currentX + 1, currentY, destinationX, destinationY);
+            handleEdge(
+                    currentX,
+                    currentY,
+                    currentX + 1,
+                    currentY,
+                    destinationX,
+                    destinationY
+            );
+
             if (currentX % 2 == 0) {
+
                 //Southwest for evene columss
-                handleEdge(currentX, currentY, currentX + -1, currentY + 1, destinationX, destinationY);
+                handleEdge(
+                        currentX,
+                        currentY,
+                        currentX + -1,
+                        currentY + 1,
+                        destinationX,
+                        destinationY
+                );
+
                 //Southeast for even colums
-                handleEdge(currentX, currentY, currentX + 1, currentY + 1, destinationX, destinationY);
+                handleEdge(
+                        currentX,
+                        currentY,
+                        currentX + 1,
+                        currentY + 1,
+                        destinationX,
+                        destinationY
+                );
             } else {
+
                 //Northwest for odd colums
-                handleEdge(currentX, currentY, currentX - 1, currentY - 1, destinationX, destinationY);
+                handleEdge(
+                        currentX,
+                        currentY,
+                        currentX - 1,
+                        currentY - 1,
+                        destinationX,
+                        destinationY
+                );
+
                 //Northeast for odd columns
-                handleEdge(currentX, currentY, currentX + 1, currentY - 1, destinationX, destinationY);
+                handleEdge(
+                        currentX,
+                        currentY,
+                        currentX + 1,
+                        currentY - 1,
+                        destinationX,
+                        destinationY
+                );
             }
 
         }
@@ -181,18 +245,23 @@ public class AStarMapRouteSearch {
             //Manhattan distance adapted to hex grid
             int yCoordinateDistance = abs(destinationY - newY);
             int xCoordinateDistance = abs(destinationX - newX);
-            int maxDiagonalMoves = max(yCoordinateDistance / 2, xCoordinateDistance);
+            int maxYDiagonalTravel = yCoordinateDistance / 2;
+
             if (yCoordinateDistance % 2 == 1) {
                 boolean onEvenRow = newX % 2 == 0;
                 boolean destinationRoughlySouth = destinationY > newY;
-                if ((onEvenRow && destinationRoughlySouth) || (!onEvenRow && !destinationRoughlySouth)) {
-                    maxDiagonalMoves++;
+                if ((onEvenRow && destinationRoughlySouth)
+                        || (!onEvenRow && !destinationRoughlySouth)) {
+                    maxYDiagonalTravel++;
                 }
             }
+
+            int maxDiagonalMoves
+                    = min(maxYDiagonalTravel, xCoordinateDistance);
             int distanceInHexes = xCoordinateDistance + yCoordinateDistance - maxDiagonalMoves;
 
             //Distance in hexees is the smallest possible distance when all
-            //edges weigth at leas one
+            //edges weigth at least one
             int priority = newDistance + distanceInHexes;
 
             heap.add(new NextHexEdge(newX, newY, priority));
@@ -214,6 +283,14 @@ public class AStarMapRouteSearch {
     private int max(int x1, int x2) {
 
         if (x1 > x2) {
+            return x1;
+        }
+
+        return x2;
+    }
+
+    private int min(int x1, int x2) {
+        if (x1 < x2) {
             return x1;
         }
 
