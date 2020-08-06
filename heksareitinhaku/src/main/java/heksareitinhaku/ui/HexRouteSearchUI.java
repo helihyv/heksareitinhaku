@@ -30,6 +30,7 @@ import javafx.scene.control.Button;
 import heksareitinhaku.io.MapLoader;
 import heksareitinhaku.io.WesnothMapLoader;
 import heksareitinhaku.logic.DjikstraHexMapRouteSearch;
+import heksareitinhaku.logic.AStarMapRouteSearch;
 import heksareitinhaku.logic.HexMapRouteSearch;
 import heksareitinhaku.logic.MapInterpreter;
 import heksareitinhaku.logic.WesnothMapInterpreter;
@@ -45,6 +46,11 @@ import javafx.scene.control.Alert.AlertType;
 public class HexRouteSearchUI extends Application {
 
     private HexMapRouteSearch djikstraSearch;
+    private int[][] djikstraRoute;
+    private Label djikstraResultLabel;
+    private AStarMapRouteSearch aStarSearch;
+    private int[][] aStarRoute;
+    private Label aStarResultLabel;
     private boolean selectingStartPoint;
     private boolean selectingGoal;
     private HexOutline startPoint;
@@ -52,6 +58,7 @@ public class HexRouteSearchUI extends Application {
     private Label startPointText;
     private Label goalText;
     private MapUI mapView;
+    private Label guideText;
 
     /**
      * Käyttöliittymä käynnistetään kutsumalla tätä funktiota
@@ -87,12 +94,11 @@ public class HexRouteSearchUI extends Application {
 
                     try {
                         String[][] map = mapLoader.loadMap(mapFile);
-                        System.out.println("kartta ladattu");
                         MapInterpreter mapInterpreter = new WesnothMapInterpreter(map);
-                        System.out.println("karttatulkki alustettu");
                         djikstraSearch = new DjikstraHexMapRouteSearch(mapInterpreter);
-                        System.out.println("Algoritmi luotu");
+                        aStarSearch = new AStarMapRouteSearch(mapInterpreter);
                         mapView.setMap(map);
+                        guideText.setText("Valitse lähtöpaikka kartalta");
 
                     } catch (Exception e) {
 
@@ -111,6 +117,8 @@ public class HexRouteSearchUI extends Application {
 
         openMapFileButton.setOnAction(fileOpenPressedHandler);
 
+        guideText = new Label("Valitse karrttatiedosto");
+
         startPointText = new Label(
                 "Lähtöpaikka:"
         );
@@ -119,9 +127,20 @@ public class HexRouteSearchUI extends Application {
 
         selectingStartPoint = true;
 
+        djikstraResultLabel = new Label();
+        aStarResultLabel = new Label();
+
         mapView = new MapUI(this);
 
-        VBox mainLayout = new VBox(openMapFileButton, startPointText, goalText, mapView.getMapTileGroup());
+        VBox mainLayout = new VBox(
+                guideText,
+                openMapFileButton,
+                startPointText,
+                goalText,
+                djikstraResultLabel,
+                aStarResultLabel,
+                mapView.getMapTileGroup()
+        );
 
         Scene scene = new Scene(mainLayout, 1200, 800);
         stage.setScene(scene);
@@ -151,6 +170,8 @@ public class HexRouteSearchUI extends Application {
                 + startPoint.getIndexY() + ")"
         );
 
+        guideText.setText("Valitse määränpää kartalta");
+
     }
 
     void setGoal(HexOutline hex) {
@@ -163,7 +184,43 @@ public class HexRouteSearchUI extends Application {
         goalText.setText(
                 "Maali: (" + goal.getIndexX() + ", " + goal.getIndexY() + ")"
         );
+        guideText.setText("");
+        search();
 
+    }
+
+    private void search() {
+        djikstraRoute = djikstraSearch.findRoute(
+                startPoint.getIndexX(),
+                startPoint.getIndexY(),
+                goal.getIndexX(),
+                goal.getIndexY()
+        );
+
+        aStarRoute = aStarSearch.findRoute(
+                startPoint.getIndexX(),
+                startPoint.getIndexY(),
+                goal.getIndexX(),
+                goal.getIndexY()
+        );
+
+        if (djikstraRoute != null) {
+            djikstraResultLabel
+                    .setText("Djikstran algoritmi löysi reitin.");
+        } else {
+            djikstraResultLabel
+                    .setText("Djikstra's algoritmin mukaan reittiä ei ole.");
+        }
+
+        if (aStarRoute != null) {
+
+            aStarResultLabel.setText("A*-algoritmi löysi reitin");
+
+        } else {
+            aStarResultLabel.setText("A*-algoritmin mukaan reittiä ei ole.");
+        }
+
+        //mapView.updateRoute();
     }
 
 }
