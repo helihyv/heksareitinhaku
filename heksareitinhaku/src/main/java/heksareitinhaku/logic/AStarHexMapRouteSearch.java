@@ -25,7 +25,7 @@ import java.util.PriorityQueue;
  *
  * @author Heli Hyvättinen
  */
-public class AStarMapRouteSearch {
+public class AStarHexMapRouteSearch implements HexMapRouteSearch {
 
     protected MapInterpreter mapInterpreter;
     protected PriorityQueue<NextHexEdge> heap;
@@ -39,7 +39,7 @@ public class AStarMapRouteSearch {
      * @param mapInterpreter MapInterpeter containing the map to be used in the
      * search
      */
-    public AStarMapRouteSearch(MapInterpreter mapInterpreter) {
+    public AStarHexMapRouteSearch(MapInterpreter mapInterpreter) {
         this.mapInterpreter = mapInterpreter;
 
     }

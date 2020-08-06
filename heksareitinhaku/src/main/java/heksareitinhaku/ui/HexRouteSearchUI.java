@@ -30,7 +30,7 @@ import javafx.scene.control.Button;
 import heksareitinhaku.io.MapLoader;
 import heksareitinhaku.io.WesnothMapLoader;
 import heksareitinhaku.logic.DjikstraHexMapRouteSearch;
-import heksareitinhaku.logic.AStarMapRouteSearch;
+import heksareitinhaku.logic.AStarHexMapRouteSearch;
 import heksareitinhaku.logic.HexMapRouteSearch;
 import heksareitinhaku.logic.MapInterpreter;
 import heksareitinhaku.logic.WesnothMapInterpreter;
@@ -48,7 +48,7 @@ public class HexRouteSearchUI extends Application {
     private HexMapRouteSearch djikstraSearch;
     private int[][] djikstraRoute;
     private Label djikstraResultLabel;
-    private AStarMapRouteSearch aStarSearch;
+    private AStarHexMapRouteSearch aStarSearch;
     private int[][] aStarRoute;
     private Label aStarResultLabel;
     private boolean selectingStartPoint;
@@ -96,7 +96,7 @@ public class HexRouteSearchUI extends Application {
                         String[][] map = mapLoader.loadMap(mapFile);
                         MapInterpreter mapInterpreter = new WesnothMapInterpreter(map);
                         djikstraSearch = new DjikstraHexMapRouteSearch(mapInterpreter);
-                        aStarSearch = new AStarMapRouteSearch(mapInterpreter);
+                        aStarSearch = new AStarHexMapRouteSearch(mapInterpreter);
                         mapView.setMap(map);
                         guideText.setText("Valitse lähtöpaikka kartalta");
 
