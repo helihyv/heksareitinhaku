@@ -21,7 +21,7 @@ import java.util.PriorityQueue;
 
 /**
  * Finds the shortest route betwween two points on a hex map using the A*
- * algorithm algorithm.
+ * algorithm.
  *
  * @author Heli Hyvättinen
  */
@@ -55,6 +55,7 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
      * @return int[][] containing the route from start to destination with the
      * x-coordinate and y-coordinate of a hex to go trough next on each row.
      */
+    @Override
     public int[][] findRoute(
             int startX,
             int startY,
@@ -243,8 +244,8 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
             distance[newX][newY] = newDistance;
 
             //Manhattan distance adapted to hex grid
-            int yCoordinateDistance = abs(destinationY - newY);
-            int xCoordinateDistance = abs(destinationX - newX);
+            int yCoordinateDistance = SimpleMath.abs(destinationY - newY);
+            int xCoordinateDistance = SimpleMath.abs(destinationX - newX);
             int maxYDiagonalTravel = yCoordinateDistance / 2;
 
             if (yCoordinateDistance % 2 == 1) {
@@ -256,9 +257,9 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
                 }
             }
 
-            int maxDiagonalMoves
-                    = min(maxYDiagonalTravel, xCoordinateDistance);
-            int distanceInHexes = xCoordinateDistance + yCoordinateDistance - maxDiagonalMoves;
+            int minDiagonalMoves
+                    = SimpleMath.min(maxYDiagonalTravel, xCoordinateDistance);
+            int distanceInHexes = xCoordinateDistance + yCoordinateDistance - minDiagonalMoves;
 
             //Distance in hexees is the smallest possible distance when all
             //edges weigth at least one
@@ -270,31 +271,6 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
 
         }
 
-    }
-
-    private int abs(int x) {
-        if (x < 0) {
-            return -x;
-        }
-
-        return x;
-    }
-
-    private int max(int x1, int x2) {
-
-        if (x1 > x2) {
-            return x1;
-        }
-
-        return x2;
-    }
-
-    private int min(int x1, int x2) {
-        if (x1 < x2) {
-            return x1;
-        }
-
-        return x2;
     }
 
 }
