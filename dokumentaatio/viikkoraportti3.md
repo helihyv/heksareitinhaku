@@ -14,7 +14,7 @@ Tiedoston lukemisesta huolehtuville luokalle on tehty testejä ja korjauksia.
 
 Itseisarvon ja minimin laskeville apufunktioille on tehty oma SimpleMath-luokkansa.
 
-Käyttöliittymään on lisätty mahdollisuus karttatiedoston avaamiseen. Käyttöliittymään on myös lisätty karttaruudukko, joka näyttää ruutujen reunat. Se tulee näkyviin kartan kokoisena, kun kartta on ladattu. Kartan sisältöä ei vielä näytetä. Ruudukosta voi valita haun alkupisteen ja kohteen. Kun kohde on valitu, ohjelma hakee reitin Djikstran - ja A*-algoritmeilla ja kertoo löysivätkö algoritmit reitin. Reittiä ei vielä näytetä käyttöliittymässä.
+Käyttöliittymään on lisätty mahdollisuus karttatiedoston avaamiseen. Käyttöliittymään on myös lisätty karttaruudukko, joka näyttää ruutujen reunat. Se tulee näkyviin kartan kokoisena, kun kartta on ladattu. Kartan sisältöä ei vielä näytetä. Ruudukosta voi valita haun alkupisteen ja kohteen. Kun kohde on valitu, ohjelma hakee reitin Djikstran - ja A*-algoritmeilla ja kertoo löysivätkö algoritmit reitin. Reittiä ei vielä näytetä käyttöliittymässä. (Tätä voi kokeilla vaikkapa tiedostonlukutesteissä käytetyllä minikartalla, joka löytyy tiedostosta heksareitinhaku/src/test/resources/verysmallmap .)
 
 Testikattavuus:
 ![Testikattavuus](dokumentaatio/testikattavuusviikko3.png)
