@@ -31,15 +31,6 @@ public class SimpleMath {
         return x;
     }
 
-    public static int max(int x1, int x2) {
-
-        if (x1 > x2) {
-            return x1;
-        }
-
-        return x2;
-    }
-
     public static int min(int x1, int x2) {
         if (x1 < x2) {
             return x1;
