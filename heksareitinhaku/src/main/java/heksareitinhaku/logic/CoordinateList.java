@@ -39,8 +39,8 @@ public class CoordinateList {
             node.setNext(null);
         } else {
             first.setPrevious(node);
-            first = node;
             node.setNext(first);
+            first = node;
         }
         node.setPrevious(null);
     }
