@@ -88,15 +88,16 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
 
         boolean found = false;
 
-        //set search debth for the first round to minimum possible distance
+        //set search debth for the first round to the minimum possible distance
         int fLimit = heuristic(startX, startY);
 
         while (!fringe.isEmpty() && !found) {
             int fMin = Integer.MAX_VALUE;
-            //Iterate over fringe
-            System.out.println("Fringe");
 
-            for (CoordinateListItem node = fringe.getFirst(); node != null; node = node.getNext()) {
+            //Iterate over fringe
+            for (CoordinateListItem node = fringe.getFirst();
+                    node != null;
+                    node = node.getNext()) {
 
                 int currentX = node.getX();
                 int currentY = node.getY();
@@ -111,7 +112,6 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
 
                 if (node == destination) {
                     found = true;
-                    System.out.println("X: " + node.getX() + " Y: " + node.getY());
                     break;
 
                 }
@@ -135,7 +135,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                 }
 
                 fringe.remove(node);
-                System.out.println("");
+
                 onList[currentY][currentX] = false;
 
             }
@@ -149,20 +149,20 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
 
         int[][] routeBackwards = new int[width * height][2];
 
-        int routePointX = cameFromX[destinationX][destinationY];
-        int routePointY = cameFromY[destinationX][destinationY];
+        int routePointX = cameFromX[destinationY][destinationX];
+        int routePointY = cameFromY[destinationY][destinationX];
         int index = 0;
 
         while (routePointX > 0 && routePointY > 0) {
-            routeBackwards[index][0] = routePointY;
-            routeBackwards[index][1] = routePointX;
-            int previousX = cameFromX[routePointX][routePointY];
-            routePointY = cameFromY[routePointX][routePointY];
+            routeBackwards[index][0] = routePointX;
+            routeBackwards[index][1] = routePointY;
+            int previousX = cameFromX[routePointY][routePointX];
+            routePointY = cameFromY[routePointY][routePointX];
             routePointX = previousX;
             index++;
         }
-        int[][] route = new int[index][2];
-        for (int i = 0; i < index; i++) {
+        int[][] route = new int[index - 1][2];
+        for (int i = 0; i < index - 1; i++) {
             for (int j = 0; j < 2; j++) {
                 route[i][j] = routeBackwards[index - i - 1][j];
 
@@ -219,7 +219,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         }
 
         CoordinateListItem currentNode = nodes[currentY][currentX];
-        CoordinateListItem newNode = nodes[currentY][currentX];
+        CoordinateListItem newNode = nodes[newY][newX];
         if (onList[newY][newX]) {
             fringe.remove(newNode);
         }
