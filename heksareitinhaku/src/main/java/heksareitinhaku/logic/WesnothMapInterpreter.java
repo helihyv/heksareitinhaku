@@ -124,66 +124,14 @@ public class WesnothMapInterpreter implements MapInterpreter {
         }
         // Tähän teiden ja siltojen käsittey!
 
-        if (base == 'B') {  // Bridge
-            for (int i = 1; i < toHex.length(); i++) {
-                char direction = toHex.charAt(i);
-
-                if (direction == '/') {
-
-                    if (toX % 2 == 0) {
-                        if ((fromY == toY && fromX == toY + 1)
-                                || (fromY == toY + 1 && fromX == toY - 1)) {
-                            return 11;
-                        }
-
-                        return -1;
-                    }
-
-                    if ((fromY == toY - 1 && fromX == toY + 1)
-                            || (fromY == toY && fromX == toY - 1)) {
-                        return 1;
-                    }
-
-                    return -1;
-
-                }
-
-                if (direction == '\\') {
-
-                    if (toX % 2 == 0) {
-                        if ((fromY == toY && fromX == toX - 1)
-                                || (fromY == toY + 1 && fromX == toX + 1)) {
-                            return 1;
-                        }
-
-                        return -1;
-                    }
-
-                    if ((fromY == toY - 1 && fromX == toY - 1)
-                            || (fromY == toY + 1 && fromX == toX + 1)) {
-                        return 1;
-                    }
-                    return -1;
-
-                }
-
-                if (direction == '|') {
-
-                    if ((fromY == toY + 1 || fromY == toY - 1) && fromX == toX) {
-                        return 1;
-                    }
-
-                    return -1;
-                }
-
-                if (direction == '^') //code ended {
-                {
-                    return -1; // invalid bridge
-                }
+        if (base == 'B') {
+            return handleBridge(toHex, toX, toY, fromX, fromY);
+        }
+        if (fromHex.charAt(0) == 'B') {
+            //This handles bridges fine, but railroads get treated the same!
+            if (handleBridge(fromHex, fromX, fromY, toX, toY) < 0) {
+                return -1;
             }
-
-            return -1; //invalid bridge
-
         }
 
         int baseMovementPoints = movementPointsPerTerrain[base - 'A'];
@@ -217,6 +165,80 @@ public class WesnothMapInterpreter implements MapInterpreter {
     @Override
     public int getHeigth() {
         return map.length;
+    }
+
+    private int handleBridge(
+            String bridgeTerrainCode,
+            int bridgeHexX,
+            int bridgeHexY,
+            int otherHexX,
+            int otherHexY
+    ) {
+// Bridge
+        for (int i = 1; i < bridgeTerrainCode.length(); i++) {
+            char direction = bridgeTerrainCode.charAt(i);
+
+            if (direction == '/') {
+
+                if (bridgeHexX % 2 == 0) {
+                    if ((otherHexY == bridgeHexY && otherHexX == bridgeHexY + 1)
+                            || (otherHexY == bridgeHexY + 1
+                            && otherHexX == bridgeHexX - 1)) {
+                        return 11;
+                    }
+
+                    return -1;
+                }
+
+                if ((otherHexY == bridgeHexY - 1 && otherHexX == bridgeHexX + 1)
+                        || (otherHexY == bridgeHexY
+                        && otherHexX == bridgeHexX - 1)) {
+                    return 1;
+                }
+
+                return -1;
+
+            }
+
+            if (direction == '\\') {
+
+                if (bridgeHexX % 2 == 0) {
+                    if ((otherHexY == bridgeHexY && otherHexX == bridgeHexX - 1)
+                            || (otherHexY == bridgeHexY + 1
+                            && otherHexX == bridgeHexY + 1)) {
+                        return 1;
+                    }
+
+                    return -1;
+                }
+
+                if ((otherHexY == bridgeHexY - 1 && otherHexX == bridgeHexX - 1)
+                        || (otherHexY == bridgeHexY + 1
+                        && otherHexX == bridgeHexX + 1)) {
+                    return 1;
+                }
+                return -1;
+
+            }
+
+            if (direction == '|') {
+
+                if ((otherHexY == bridgeHexY + 1 || otherHexY == bridgeHexY - 1)
+                        && otherHexX == bridgeHexX) {
+                    return 1;
+                }
+
+                return -1;
+            }
+
+            if (direction == '^') //code ended {
+            {
+                return -1; // invalid bridge
+            }
+        }
+
+        return -1; //invalid bridge
+
     }
 
 }
