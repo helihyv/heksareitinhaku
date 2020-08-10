@@ -17,8 +17,8 @@
 package heksareitinhaku.logic;
 
 /**
- * huolehtii Battle for Wesnoth -kartan tulkinnasta liikkumispisteiksi heksojen
- * välillä. Ei noudata pelin sääntöjä, vaan tulkitsee kartaa vapaasti.
+ * Interprets Battle for Wesnoth maps telling the movement points needed for
+ * moving between adjacent tiles.
  *
  * @author Heli Hyvättinen
  */
@@ -29,7 +29,8 @@ public class WesnothMapInterpreter implements MapInterpreter {
 
     /**
      *
-     * @param map
+     * @param map The Battle for Wesnoth map to be interpreted as
+     * two-dimensional array of terrain codes
      *
      *
      */
@@ -121,8 +122,70 @@ public class WesnothMapInterpreter implements MapInterpreter {
                 overlay = toHex.charAt(i + 1);
             }
         }
-
         // Tähän teiden ja siltojen käsittey!
+
+        if (base == 'B') {  // Bridge
+            for (int i = 1; i < toHex.length(); i++) {
+                char direction = toHex.charAt(i);
+
+                if (direction == '/') {
+
+                    if (toX % 2 == 0) {
+                        if ((fromY == toY && fromX == toY + 1)
+                                || (fromY == toY + 1 && fromX == toY - 1)) {
+                            return 11;
+                        }
+
+                        return -1;
+                    }
+
+                    if ((fromY == toY - 1 && fromX == toY + 1)
+                            || (fromY == toY && fromX == toY - 1)) {
+                        return 1;
+                    }
+
+                    return -1;
+
+                }
+
+                if (direction == '\\') {
+
+                    if (toX % 2 == 0) {
+                        if ((fromY == toY && fromX == toX - 1)
+                                || (fromY == toY + 1 && fromX == toX + 1)) {
+                            return 1;
+                        }
+
+                        return -1;
+                    }
+
+                    if ((fromY == toY - 1 && fromX == toY - 1)
+                            || (fromY == toY + 1 && fromX == toX + 1)) {
+                        return 1;
+                    }
+                    return -1;
+
+                }
+
+                if (direction == '|') {
+
+                    if ((fromY == toY + 1 || fromY == toY - 1) && fromX == toX) {
+                        return 1;
+                    }
+
+                    return -1;
+                }
+
+                if (direction == '^') //code ended {
+                {
+                    return -1; // invalid bridge
+                }
+            }
+
+            return -1; //invalid bridge
+
+        }
+
         int baseMovementPoints = movementPointsPerTerrain[base - 'A'];
         if (baseMovementPoints < 0) {
             return -1;
