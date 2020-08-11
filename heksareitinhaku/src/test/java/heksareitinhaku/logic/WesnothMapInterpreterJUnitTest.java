@@ -84,14 +84,14 @@ public class WesnothMapInterpreterJUnitTest {
     }
 
     @Test
-    public void grassCanBeEnteredUsingTwoMovementPoints() {
+    public void grassCanBeEnteredUsingOneMovementPoint() {
         //
         MapInterpreter mapInterpreter
                 = new WesnothMapInterpreter(firstCharOfBaseOnlyMap);
 
         int movementPoints = mapInterpreter.getMovementPointsBetween(0, 1, 1, 1);
 
-        assertEquals(2, movementPoints);
+        assertEquals(1, movementPoints);
 
     }
 
@@ -104,17 +104,17 @@ public class WesnothMapInterpreterJUnitTest {
         //Mountains with forest, mountains decisive
         int movementPoints = mapInterpreter.getMovementPointsBetween(0, 1, 1, 1);
 
-        assertEquals(6, movementPoints);
+        assertEquals(5, movementPoints);
 
         //Grass with forest, forest decisive
         movementPoints = mapInterpreter.getMovementPointsBetween(1, 2, 0, 2);
 
-        assertEquals(4, movementPoints);
+        assertEquals(3, movementPoints);
 
     }
 
     @Test
-    public void ImpassableOverlayCannotBeEntered() {
+    public void impassableOverlayCannotBeEntered() {
         //Q
         MapInterpreter mapInterpreter
                 = new WesnothMapInterpreter(baseAndOverlayMap);
