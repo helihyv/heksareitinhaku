@@ -42,30 +42,29 @@ public class WesnothMapInterpreter implements MapInterpreter {
         movementPointsPerTerrain[0] = 3;  //A, arctic
         movementPointsPerTerrain[1] = 1; // B, bridge, reuires special treatment
         movementPointsPerTerrain[2] = 1; //C, castle
-        movementPointsPerTerrain[3] = 3; //D, desert
-        movementPointsPerTerrain[4] = 2; //E, embellishment
-        movementPointsPerTerrain[5] = 4; //F, forest
-        movementPointsPerTerrain[6] = 2; //G, grass e.g. flat
-        movementPointsPerTerrain[7] = 4; //H, hills
-        movementPointsPerTerrain[8] = 2;//I, interior
+        movementPointsPerTerrain[3] = 2; //D, desert
+        movementPointsPerTerrain[4] = 1; //E, embellishment
+        movementPointsPerTerrain[5] = 3; //F, forest
+        movementPointsPerTerrain[6] = 1; //G, grass e.g. flat
+        movementPointsPerTerrain[7] = 3; //H, hills
+        movementPointsPerTerrain[8] = 1;//I, interior
         movementPointsPerTerrain[9] = -1; //J, testing
-        movementPointsPerTerrain[10] = 2; //K, keep
-        movementPointsPerTerrain[1] = 2; //L not used, reserved for future use
-        movementPointsPerTerrain[12] = 6; //M, mountains
-        movementPointsPerTerrain[13] = 2; //N, not used,reserved fot future use
-        movementPointsPerTerrain[14] = 2; //O, not used,reserved fot future use
-        movementPointsPerTerrain[15] = 2; //P, not used,reserved fot future use
+        movementPointsPerTerrain[10] = 1; //K, keep
+        movementPointsPerTerrain[11] = 1; //L not used, reserved for future use
+        movementPointsPerTerrain[12] = 5; //M, mountains
+        movementPointsPerTerrain[13] = 1; //N, not used,reserved fot future use
+        movementPointsPerTerrain[14] = 1; //O, not used,reserved fot future use
+        movementPointsPerTerrain[15] = 1; //P, not used,reserved fot future use
         movementPointsPerTerrain[16] = -1; //Q, un-walkable
         movementPointsPerTerrain[17] = 1; //R, roads or rails, requires special treatment
-        movementPointsPerTerrain[18] = 5; //S, swamp
-        movementPointsPerTerrain[19] = 2; //T, toadstool i.e. fungus
-        movementPointsPerTerrain[20] = 3; //U, undergraound
-        movementPointsPerTerrain[21] = 2; //V, village
-        movementPointsPerTerrain[22] = 4; //w, water, shallow water is passable
-        //   in the Battle for Wesnoth
+        movementPointsPerTerrain[18] = 4; //S, swamp
+        movementPointsPerTerrain[19] = 1; //T, toadstool i.e. fungus
+        movementPointsPerTerrain[20] = 2; //U, undergraound
+        movementPointsPerTerrain[21] = 1; //V, village
+        movementPointsPerTerrain[22] = -1; // W, water
         movementPointsPerTerrain[23] = -1; //X, impassable
-        movementPointsPerTerrain[24] = 2; //Y, reserved for UMC
-        movementPointsPerTerrain[25] = 2; //Z, reserved for UMC
+        movementPointsPerTerrain[24] = 1; //Y, reserved for UMC
+        movementPointsPerTerrain[25] = 1; //Z, reserved for UMC
         //Special sytem stuff has _ before first letter, needs spelcial treatment
     }
 
@@ -116,15 +115,12 @@ public class WesnothMapInterpreter implements MapInterpreter {
         String toHex = map[toY][toX];
 
         int base = toHex.charAt(0);
-        int overlay = -1;
-        for (int i = 1; i < toHex.length(); i++) {
-            if (toHex.charAt(i) == '^') {
-                overlay = toHex.charAt(i + 1);
-                if (overlay == 'B' && toHex.charAt(i + 2) == 'r') {
-                    overlay = -1; //ignore mine rails
-                }
-            }
-        }
+
+        int overlay = extractOverlay(toHex);
+
+        int fromBase = fromHex.charAt(0);
+
+        int fromOverlay = extractOverlay(fromHex);
 
         if (overlay == 'B') { //Bridges
             if (toHex.charAt(1) == 'r') { //mine rail, move like under ground
@@ -155,7 +151,16 @@ public class WesnothMapInterpreter implements MapInterpreter {
             if (overlayMovementPoints < 0) {
                 return -1;
             }
-            if (overlayMovementPoints > baseMovementPoints) {
+
+            boolean movingAlongRoad = (base == 'R' || overlay == 'R');
+            if (fromBase != 'R' && fromOverlay != 'R') {
+                movingAlongRoad = false;
+            }
+            //Roads override rough terrain,
+            //otherwise rougher terrain type dominates
+            //Rails are treated as roads here
+            if ((overlayMovementPoints > baseMovementPoints
+                    && !movingAlongRoad)) {
                 baseMovementPoints = overlayMovementPoints;
             }
         }
@@ -247,6 +252,22 @@ public class WesnothMapInterpreter implements MapInterpreter {
         }
 
         return -1; //invalid bridge
+
+    }
+
+    int extractOverlay(String terrainCode) {
+
+        int overlay = -1;
+        for (int i = 1; i < terrainCode.length(); i++) {
+            if (terrainCode.charAt(i) == '^') {
+                overlay = terrainCode.charAt(i + 1);
+                if (overlay == 'B' && terrainCode.charAt(i + 2) == 'r') {
+                    overlay = -1; //ignore mine rails
+                }
+            }
+        }
+
+        return overlay;
 
     }
 
