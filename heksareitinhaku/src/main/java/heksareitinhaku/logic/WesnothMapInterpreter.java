@@ -122,13 +122,20 @@ public class WesnothMapInterpreter implements MapInterpreter {
                 overlay = toHex.charAt(i + 1);
             }
         }
-        // Tähän teiden ja siltojen käsittey!
+        // Tähän teiden ja siltojen ja rautateiden käsittey!
 
-        if (base == 'B') {
-            return handleBridge(toHex, toX, toY, fromX, fromY);
+        if (base == 'B') { //Bridges
+            if (toHex.charAt(1) == 'r') { //mine rail, move like under ground
+
+                return 3;
+            }
+            int bridgeMovementPoints = handleBridge(toHex, toX, toY, fromX, fromY);
+
+            return bridgeMovementPoints;
+
         }
-        if (fromHex.charAt(0) == 'B') {
-            //This handles bridges fine, but railroads get treated the same!
+        if (fromHex.charAt(0) == 'B' && fromHex.charAt(1) != 'r') {
+            //Bridges, but not mine rails that also start with B!
             if (handleBridge(fromHex, fromX, fromY, toX, toY) < 0) {
                 return -1;
             }
