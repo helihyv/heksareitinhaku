@@ -120,11 +120,13 @@ public class WesnothMapInterpreter implements MapInterpreter {
         for (int i = 1; i < toHex.length(); i++) {
             if (toHex.charAt(i) == '^') {
                 overlay = toHex.charAt(i + 1);
+                if (overlay == 'B' && toHex.charAt(i + 2) == 'r') {
+                    overlay = -1; //ignore mine rails
+                }
             }
         }
-        // Tähän teiden ja siltojen ja rautateiden käsittey!
 
-        if (base == 'B') { //Bridges
+        if (overlay == 'B') { //Bridges
             if (toHex.charAt(1) == 'r') { //mine rail, move like under ground
 
                 return 3;
