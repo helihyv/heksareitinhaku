@@ -16,7 +16,6 @@
  */
 package heksareitinhaku.logic;
 
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 /**
@@ -140,9 +139,10 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
                     destinationY
             );
 
-            if (currentX % 2 == 0) {
+            if (currentX % 2 != 0) {
+                //even & odd are reversed by starting column numbering from zero
 
-                //Southwest for evene columss
+                //Southwest for even columns
                 handleEdge(
                         currentX,
                         currentY,
@@ -152,7 +152,7 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
                         destinationY
                 );
 
-                //Southeast for even colums
+                //Southeast for even columns
                 handleEdge(
                         currentX,
                         currentY,

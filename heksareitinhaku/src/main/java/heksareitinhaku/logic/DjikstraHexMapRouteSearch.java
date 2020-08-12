@@ -17,7 +17,6 @@
 package heksareitinhaku.logic;
 
 import java.util.PriorityQueue;
-import java.util.ArrayList;
 
 /**
  * Finds shortest route betwween two points on a hex map using Djikstra's
@@ -108,7 +107,7 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
             handleEdge(currentX, currentY, currentX - 1, currentY);
             //Northeast for even colums, southeast for odd columns
             handleEdge(currentX, currentY, currentX + 1, currentY);
-            if (currentX % 2 == 0) {
+            if (currentX % 2 != 0) { //even & odd are reversed by starting column numbering from zero
                 //Southwest for evene columss
                 handleEdge(currentX, currentY, currentX + -1, currentY + 1);
                 //Southeast for even colums
@@ -142,6 +141,8 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
                 currentY,
                 newX,
                 newY);
+
+        System.out.println("X: " + newX + " Y: " + newY + " Vaatii: " + movementPointsNeeded);
 
         if (movementPointsNeeded < 0) {
             //impossible to move along this edge

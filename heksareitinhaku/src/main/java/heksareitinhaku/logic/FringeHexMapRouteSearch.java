@@ -122,7 +122,8 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                 handleEdge(currentX, currentY, currentX - 1, currentY);
                 //Northeast for even colums, southeast for odd columns
                 handleEdge(currentX, currentY, currentX + 1, currentY);
-                if (currentX % 2 == 0) {
+                if (currentX % 2 != 0) {
+//even & odd are reversed by starting column numbering from zero
                     //Southwest for evene columss
                     handleEdge(currentX, currentY, currentX + -1, currentY + 1);
                     //Southeast for even colums

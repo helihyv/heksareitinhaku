@@ -90,7 +90,7 @@ public class WesnothMapInterpreter implements MapInterpreter {
         if (fromX < 0 || fromX >= map[0].length || fromY < 0 || fromY >= map.length) {
             return -1;
         }
-
+        /*
         if (fromX == toX) {
             if (toY != fromY + 1 && toY != fromY - 1) {
                 return -1;
@@ -101,16 +101,17 @@ public class WesnothMapInterpreter implements MapInterpreter {
                 return -1;
             }
 
-            if (fromX % 2 == 0 && toY != fromY && toY != fromY + 1) {
+            //even & odd are reversed by starting column numbering from zero
+            if (fromX % 2 != 0 && toY != fromY && toY != fromY + 1) {
                 return -1;
 
             }
 
-            if (fromX % 2 == 1 && toY != fromY && toY != fromY - 1) {
+            if (fromX % 2 == 0 && toY != fromY && toY != fromY - 1) {
                 return -1;
             }
         }
-
+         */
         String fromHex = map[fromY][fromX];
         String toHex = map[toY][toX];
 
@@ -194,7 +195,7 @@ public class WesnothMapInterpreter implements MapInterpreter {
 
             if (direction == '/') {
 
-                if (bridgeHexX % 2 == 0) {
+                if (bridgeHexX % 2 != 0) {
                     if ((otherHexY == bridgeHexY && otherHexX == bridgeHexY + 1)
                             || (otherHexY == bridgeHexY + 1
                             && otherHexX == bridgeHexX - 1)) {
