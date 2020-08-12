@@ -30,8 +30,6 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
     private CoordinateListItem[][] nodes;
     private boolean[][] onList;
     private boolean[][] visited;
-    private int destinationX;
-    private int destinationY;
     private int cameFromX[][];
     private int cameFromY[][];
     private int distance[][];
@@ -71,23 +69,25 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         int width = mapInterpreter.getWidth();
         int height = mapInterpreter.getHeigth();
         distance = new int[height][width];
-        distance[startY][startX] = 0;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 distance[i][j] = Integer.MAX_VALUE;
             }
         }
+        distance[startY][startX] = 0;
         onList = new boolean[height][width];
         onList[startY][startX] = true;
         visited = new boolean[height][width];
         cameFromX = new int[height][width];
+        cameFromX[startY][startX] = -1;
         cameFromY = new int[height][width];
+        cameFromX[startY][startX] = -1;
         CoordinateListItem destination = nodes[destinationY][destinationX];
 
         boolean found = false;
 
         //set search debth for the first round to the minimum possible distance
-        int fLimit = heuristic(startX, startY);
+        int fLimit = heuristic(startX, startY, destinationX, destinationY);
 
         while (!fringe.isEmpty() && !found) {
             int fMin = Integer.MAX_VALUE;
@@ -100,8 +100,12 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                 int currentX = node.getX();
                 int currentY = node.getY();
 
+                System.out.println("fLimit: " + fLimit);
+                System.out.println("Came to node X: " + currentX + " Y: " + currentY);
+                System.out.println("Distance this far: " + distance[currentY][currentX]);
+
                 int f = distance[currentY][currentX]
-                        + heuristic(currentX, currentY);
+                        + heuristic(currentX, currentY, destinationX, destinationY);
 
                 if (f > fLimit) {
                     fMin = SimpleMath.min(f, fMin);
@@ -113,6 +117,14 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                     break;
 
                 }
+
+                if (visited[currentY][currentX]) {
+                    System.out.println("täällä käytiin jo1");
+                    continue;
+                }
+
+                visited[currentY][currentX] = true;
+                System.out.println("Ei käyty vielä");
 
                 handleEdge(currentX, currentY, currentX, currentY - 1); //North
                 handleEdge(currentX, currentY, currentX, currentY + 1); //South
@@ -146,52 +158,30 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
             return null;
         }
 
-        int[][] routeBackwards = new int[width * height][2];
-
-        int routePointX = cameFromX[destinationY][destinationX];
-        int routePointY = cameFromY[destinationY][destinationX];
-        int index = 0;
-
-        while (routePointX > 0 && routePointY > 0) {
-            routeBackwards[index][0] = routePointX;
-            routeBackwards[index][1] = routePointY;
-            int previousX = cameFromX[routePointY][routePointX];
-            routePointY = cameFromY[routePointY][routePointX];
-            routePointX = previousX;
-            index++;
-        }
-        int[][] route = new int[index - 1][2];
-        for (int i = 0; i < index - 1; i++) {
-            for (int j = 0; j < 2; j++) {
-                route[i][j] = routeBackwards[index - i - 1][j];
-
-            }
-        }
-
-        return route;
+        return reconstructRoute(destinationX, destinationY);
     }
 
-    private int heuristic(int x, int y) {
+    private int heuristic(int currentX, int currentY, int destinationX, int destinationY) {
         //Returns smallest possible distance from given
-        //coordinate to the destination (assuming all costs > 1)
+        //coordinate to the destination (assuming all costs => 1)
         //Manhattan distance adapted to hex grid
-        int yCoordinateDistance = SimpleMath.abs(destinationY - y);
-        int xCoordinateDistance = SimpleMath.abs(destinationX - x);
+        int yCoordinateDistance = SimpleMath.abs(destinationY - currentY);
+        int xCoordinateDistance = SimpleMath.abs(destinationX - currentX);
         int maxYDiagonalTravel = yCoordinateDistance / 2;
 
         if (yCoordinateDistance % 2 == 1) {
-            boolean onEvenRow = x % 2 == 0;
-            boolean destinationRoughlySouth = destinationY > y;
-            if ((onEvenRow && destinationRoughlySouth)
-                    || (!onEvenRow && !destinationRoughlySouth)) {
+            boolean onEvenColumn = currentX % 2 != 0; //Even when starting column numbering from one!
+            boolean destinationRoughlySouth = destinationY > currentY;
+            if ((onEvenColumn && destinationRoughlySouth)
+                    || (!onEvenColumn && !destinationRoughlySouth)) {
                 maxYDiagonalTravel++;
             }
         }
 
-        int minDiagonalMoves
+        int maxDiagonalMoves
                 = SimpleMath.min(maxYDiagonalTravel, xCoordinateDistance);
 
-        return minDiagonalMoves;
+        return yCoordinateDistance + xCoordinateDistance - maxDiagonalMoves;
     }
 
     private void handleEdge(
@@ -228,6 +218,35 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         distance[newY][newX] = newDistance;
         cameFromX[newY][newX] = currentX;
         cameFromY[newY][newX] = currentY;
+    }
+
+    private int[][] reconstructRoute(int destinationX, int destinationY) {
+
+        int[][] routeBackwards
+                = new int[mapInterpreter.getHeigth() * mapInterpreter.getWidth()][2];
+
+        int routePointX = destinationX;
+        int routePointY = destinationY;
+        int index = 0;
+
+        while (routePointX >= 0 && routePointY >= 0) {
+            routeBackwards[index][0] = routePointX;
+            routeBackwards[index][1] = routePointY;
+            System.out.println("route: X: " + routePointX + " Y: " + routePointY);
+            index++;
+            int previousX = cameFromX[routePointY][routePointX];
+            routePointY = cameFromY[routePointY][routePointX];
+            routePointX = previousX;
+        }
+        int[][] route = new int[index - 1][2];
+        for (int i = 0; i < index - 1; i++) {
+            for (int j = 0; j < 2; j++) {
+                route[i][j] = routeBackwards[index - 2 - i][j];
+            }
+        }
+
+        return route;
+
     }
 
 }
