@@ -16,8 +16,6 @@
  */
 package heksareitinhaku.logic;
 
-import java.util.ArrayList;
-
 /**
  *
  * Finds the shortest route between two points on a hex map using the Fringe
@@ -225,7 +223,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
             fringe.remove(newNode);
         }
         fringe.insertAfter(newNode, currentNode);
-        onList[newX][newY] = true;
+        onList[newY][newX] = true;
 
         distance[newY][newX] = newDistance;
         cameFromX[newY][newX] = currentX;
