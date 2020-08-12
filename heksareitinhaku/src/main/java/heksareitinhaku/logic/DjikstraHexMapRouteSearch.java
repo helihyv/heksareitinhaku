@@ -61,23 +61,23 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
             int destinationX,
             int destinationY
     ) {
-        int width = mapInterpreter.getWidth();
         int heigth = mapInterpreter.getHeigth();
+        int width = mapInterpreter.getWidth();
 
-        checked = new boolean[width][heigth];
-        distance = new int[width][heigth];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < heigth; j++) {
+        checked = new boolean[heigth][width];
+        distance = new int[heigth][width];
+        for (int i = 0; i < heigth; i++) {
+            for (int j = 0; j < width; j++) {
                 distance[i][j] = Integer.MAX_VALUE;
             }
         }
 
-        distance[startX][startY] = 0;
+        distance[startY][startX] = 0;
 
-        cameFromX = new int[width][heigth];
-        cameFromY = new int[width][heigth];
-        cameFromX[startX][startY] = -1;
-        cameFromY[startX][startY] = -1;
+        cameFromX = new int[heigth][width];
+        cameFromY = new int[heigth][width];
+        cameFromX[startY][startX] = -1;
+        cameFromY[startY][startX] = -1;
 
         heap = new PriorityQueue<>();
 
@@ -95,11 +95,11 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
                 break;
             }
 
-            if (checked[currentX][currentY]) {
+            if (checked[currentY][currentX]) {
                 continue;
             }
 
-            checked[currentX][currentY] = true;
+            checked[currentY][currentX] = true;
 
             handleEdge(currentX, currentY, currentX, currentY - 1); //North
             handleEdge(currentX, currentY, currentX, currentY + 1); //South
@@ -149,17 +149,17 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
             return;
         }
 
-        int currentDistance = distance[newX][newY];
+        int currentDistance = distance[newY][newX];
 
         int newDistance
-                = distance[currentX][currentY]
+                = distance[currentY][currentX]
                 + movementPointsNeeded;
 
         if (newDistance < currentDistance) {
-            distance[newX][newY] = newDistance;
+            distance[newY][newX] = newDistance;
             heap.add(new NextHexEdge(newX, newY, newDistance));
-            cameFromX[newX][newY] = currentX;
-            cameFromY[newX][newY] = currentY;
+            cameFromX[newY][newX] = currentX;
+            cameFromY[newY][newX] = currentY;
 
         }
     }
@@ -168,27 +168,26 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
 
         int[][] routeBackwards = new int[mapInterpreter.getHeigth() * mapInterpreter.getWidth()][2];
 
-        int routePointX = cameFromX[destinationX][destinationY];
-        int routePointY = cameFromY[destinationX][destinationY];
+        int routePointX = destinationX;
+        int routePointY = destinationY;
         int index = 0;
 
-        while (routePointX > 0 && routePointY > 0) {
+        while (routePointX >= 0 && routePointY >= 0) {
             routeBackwards[index][0] = routePointX;
             routeBackwards[index][1] = routePointY;
             index++;
-            int previousX = cameFromX[routePointX][routePointY];
-            routePointY = cameFromY[routePointX][routePointY];
+            int previousX = cameFromX[routePointY][routePointX];
+            routePointY = cameFromY[routePointY][routePointX];
             routePointX = previousX;
         }
-        int[][] route = new int[index][2];
-        for (int i = 0; i < index; i++) {
+        int[][] route = new int[index - 1][2];
+        for (int i = 0; i < index - 1; i++) {
             for (int j = 0; j < 2; j++) {
-                route[i][j] = routeBackwards[index - 1 - i][j];
+                route[i][j] = routeBackwards[index - 2 - i][j];
             }
         }
 
         return route;
 
     }
-
 }
