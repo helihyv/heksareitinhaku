@@ -219,12 +219,16 @@ public class HexRouteSearchUI extends Application {
     }
 
     private void search() {
+
+        long djikstraStart = System.nanoTime();
         djikstraRoute = djikstraSearch.findRoute(
                 startPoint.getIndexX(),
                 startPoint.getIndexY(),
                 goal.getIndexX(),
                 goal.getIndexY()
         );
+
+        long djikstraEndAStarStart = System.nanoTime();
 
         aStarRoute = aStarSearch.findRoute(
                 startPoint.getIndexX(),
@@ -233,6 +237,8 @@ public class HexRouteSearchUI extends Application {
                 goal.getIndexY()
         );
 
+        long aStarEndFringeStart = System.nanoTime();
+
         fringeRoute = fringeSearch.findRoute(
                 startPoint.getIndexX(),
                 startPoint.getIndexY(),
@@ -240,43 +246,57 @@ public class HexRouteSearchUI extends Application {
                 goal.getIndexY()
         );
 
+        long fringeEnd = System.nanoTime();
+
+        String djikstraText;
+
         if (djikstraRoute != null) {
-            djikstraResultLabel
-                    .setText("Djikstran algoritmi löysi reitin "
-                            + "(merkitty karttaan punaisilla ympyröillä).");
+
+            djikstraText = "Djikstran algoritmi löysi reitin "
+                    + "(merkitty karttaan punaisilla ympyröillä).";
             mapView.updateRoute(djikstraRoute, "D");
         } else {
-            djikstraResultLabel
-                    .setText("Djikstra's algoritmin mukaan reittiä ei ole.");
+            djikstraText
+                    = "Djikstra's algoritmin mukaan reittiä ei ole.";
         }
+
+        djikstraText += " Reitinhaku kesti "
+                + (djikstraEndAStarStart - djikstraStart) / 1e6 + " ms.";
+
+        djikstraResultLabel.setText(djikstraText);
+
+        String aStarText;
 
         if (aStarRoute != null) {
 
-            aStarResultLabel.setText("A*-algoritmi löysi reitin "
-                    + "(merkitty karttaan oransseilla ympyröillä)");
+            aStarText = "A*-algoritmi löysi reitin "
+                    + "(merkitty karttaan oransseilla ympyröillä)";
             mapView.updateRoute(aStarRoute, "A");
 
         } else {
-            aStarResultLabel.setText("A*-algoritmin mukaan reittiä ei ole.");
+            aStarText = "A*-algoritmin mukaan reittiä ei ole.";
         }
+
+        aStarText += " Reitinhaku kesti "
+                + (aStarEndFringeStart - djikstraEndAStarStart) / 1e6 + " ms.";
+        aStarResultLabel.setText(aStarText);
+
+        String fringeText;
 
         if (fringeRoute != null) {
 
-            fringeResultLabel.setText("Fringe search -algoritmi löysi reitin "
-                    + "(merkitty karttaan violeteilla ympyröillä)");
+            fringeText = "Fringe search -algoritmi löysi reitin "
+                    + "(merkitty karttaan violeteilla ympyröillä)";
             mapView.updateRoute(fringeRoute, "F");
 
         } else {
-            fringeResultLabel.setText("Fringe Search-algoritmin mukaan reittiä ei ole.");
+            fringeText = "Fringe Search-algoritmin mukaan reittiä ei ole.";
         }
 
-        if (fringeRoute != null) {
-            for (int i = 0; i < fringeRoute.length; i++) {
-                System.out.println("X: " + fringeRoute[i][0] + " Y: " + fringeRoute[i][1]);
-            }
-        } else {
+        fringeText += " Reitinhaku kesti "
+                + (fringeEnd - aStarEndFringeStart) / 1e6 + " ms.";
+        fringeResultLabel.setText(fringeText);
 
-        }
     }
 
 }
