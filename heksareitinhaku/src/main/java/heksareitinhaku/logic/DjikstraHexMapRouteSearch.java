@@ -126,27 +126,7 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
             return null;
         }
 
-        ArrayList<Integer> routeList = new ArrayList<>();
-
-        int routePointX = cameFromX[destinationX][destinationY];
-        int routePointY = cameFromY[destinationX][destinationY];
-
-        while (routePointX > 0 && routePointY > 0) {
-            routeList.add(routePointY);
-            routeList.add(routePointX);
-            int previousX = cameFromX[routePointX][routePointY];
-            routePointY = cameFromY[routePointX][routePointY];
-            routePointX = previousX;
-        }
-        int[][] route = new int[routeList.size() / 2][2];
-        for (int i = 0; i < routeList.size() / 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                route[i][j] = routeList.get(routeList.size() - i * 2 - j - 1);
-
-            }
-        }
-
-        return route;
+        return reconstructRoute(destinationX, destinationY);
 
     }
 
@@ -181,6 +161,33 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
             cameFromY[newX][newY] = currentY;
 
         }
+    }
+
+    private int[][] reconstructRoute(int destinationX, int destinationY) {
+
+        int[][] routeBackwards = new int[mapInterpreter.getHeigth() * mapInterpreter.getWidth()][2];
+
+        int routePointX = cameFromX[destinationX][destinationY];
+        int routePointY = cameFromY[destinationX][destinationY];
+        int index = 0;
+
+        while (routePointX > 0 && routePointY > 0) {
+            routeBackwards[index][0] = routePointX;
+            routeBackwards[index][1] = routePointY;
+            index++;
+            int previousX = cameFromX[routePointX][routePointY];
+            routePointY = cameFromY[routePointX][routePointY];
+            routePointX = previousX;
+        }
+        int[][] route = new int[index][2];
+        for (int i = 0; i < index; i++) {
+            for (int j = 0; j < 2; j++) {
+                route[i][j] = routeBackwards[index - 1 - i][j];
+            }
+        }
+
+        return route;
+
     }
 
 }
