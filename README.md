@@ -10,3 +10,9 @@
 ## Dokumentaatio
 
 [Määrittelydokumentti](dokumentaatio/määrittelydokumentti.md)
+
+[Toteutusdokumentti](dokumentaatio/tteutusdokumentti.md)
+
+[Testausdokumentti](dokumentaatio/testausdokumentti.md)
+
+[Käyttöohje](dokumentaatio/käyttöohje.md)
