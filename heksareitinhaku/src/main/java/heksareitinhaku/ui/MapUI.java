@@ -89,12 +89,7 @@ public class MapUI {
             return;
         }
 
-        for (int i = 0; i < routeMarks.length; i++) {
-            for (int j = 0; j < routeMarks[0].length; j++) {
-                routeMarks[i][j][algorithmIndex].setVisible(false);
-            }
-
-        }
+        clearSingleRoute(algorithmIndex);
 
         for (int i = 0; i < route.length; i++) {
             routeMarks[route[i][1]][route[i][0]][algorithmIndex]
@@ -135,5 +130,22 @@ public class MapUI {
         routeMarks[i][j][2] = fringeCircle;
         mapTileGroup.getChildren().add(fringeCircle);
 
+    }
+
+    public void clearRoutes() {
+
+        for (int i = 0; i < 3; i++) {
+            clearSingleRoute(i);
+        }
+
+    }
+
+    private void clearSingleRoute(int algorithmIndex) {
+        for (int i = 0; i < routeMarks.length; i++) {
+            for (int j = 0; j < routeMarks[0].length; j++) {
+                routeMarks[i][j][algorithmIndex].setVisible(false);
+            }
+
+        }
     }
 }

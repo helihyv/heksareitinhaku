@@ -63,6 +63,7 @@ public class HexRouteSearchUI extends Application {
     private Label goalText;
     private MapUI mapView;
     private Label guideText;
+    private Button newSearchButton;
 
     /**
      * Käyttöliittymä käynnistetään kutsumalla tätä funktiota
@@ -136,6 +137,25 @@ public class HexRouteSearchUI extends Application {
         aStarResultLabel = new Label();
         fringeResultLabel = new Label();
 
+        newSearchButton = new Button("Uusi haku");
+
+        EventHandler newSearchPressedHander = new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                selectingStartPoint = true;
+                guideText.setText("Valitse haun alkupiste kartalta");
+                newSearchButton.setVisible(false);
+                mapView.clearRoutes();
+                startPoint.unSelect();
+                startPoint = null;
+                goal.unSelect();;
+                goal = null;
+            }
+        };
+
+        newSearchButton.setOnAction(newSearchPressedHander);
+        newSearchButton.setVisible(false);
+
         mapView = new MapUI(this);
 
         VBox mainLayout = new VBox(
@@ -146,6 +166,7 @@ public class HexRouteSearchUI extends Application {
                 djikstraResultLabel,
                 aStarResultLabel,
                 fringeResultLabel,
+                newSearchButton,
                 mapView.getMapTileGroup()
         );
 
@@ -191,8 +212,9 @@ public class HexRouteSearchUI extends Application {
         goalText.setText(
                 "Maali: (" + goal.getIndexX() + ", " + goal.getIndexY() + ")"
         );
-        guideText.setText("");
+
         search();
+        newSearchButton.setVisible(true);
 
     }
 
