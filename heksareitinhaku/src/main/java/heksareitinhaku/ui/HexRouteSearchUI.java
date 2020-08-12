@@ -31,6 +31,7 @@ import heksareitinhaku.io.MapLoader;
 import heksareitinhaku.io.WesnothMapLoader;
 import heksareitinhaku.logic.DjikstraHexMapRouteSearch;
 import heksareitinhaku.logic.AStarHexMapRouteSearch;
+import heksareitinhaku.logic.FringeHexMapRouteSearch;
 import heksareitinhaku.logic.HexMapRouteSearch;
 import heksareitinhaku.logic.MapInterpreter;
 import heksareitinhaku.logic.WesnothMapInterpreter;
@@ -48,9 +49,12 @@ public class HexRouteSearchUI extends Application {
     private HexMapRouteSearch djikstraSearch;
     private int[][] djikstraRoute;
     private Label djikstraResultLabel;
-    private AStarHexMapRouteSearch aStarSearch;
+    private HexMapRouteSearch aStarSearch;
     private int[][] aStarRoute;
     private Label aStarResultLabel;
+    private HexMapRouteSearch fringeSearch;
+    private int[][] fringeRoute;
+    private Label fringeResultLabel;
     private boolean selectingStartPoint;
     private boolean selectingGoal;
     private HexOutline startPoint;
@@ -97,6 +101,7 @@ public class HexRouteSearchUI extends Application {
                         MapInterpreter mapInterpreter = new WesnothMapInterpreter(map);
                         djikstraSearch = new DjikstraHexMapRouteSearch(mapInterpreter);
                         aStarSearch = new AStarHexMapRouteSearch(mapInterpreter);
+                        fringeSearch = new FringeHexMapRouteSearch(mapInterpreter);
                         mapView.setMap(map);
                         guideText.setText("Valitse lähtöpaikka kartalta");
 
@@ -129,6 +134,7 @@ public class HexRouteSearchUI extends Application {
 
         djikstraResultLabel = new Label();
         aStarResultLabel = new Label();
+        fringeResultLabel = new Label();
 
         mapView = new MapUI(this);
 
@@ -139,6 +145,7 @@ public class HexRouteSearchUI extends Application {
                 goalText,
                 djikstraResultLabel,
                 aStarResultLabel,
+                fringeResultLabel,
                 mapView.getMapTileGroup()
         );
 
@@ -204,9 +211,18 @@ public class HexRouteSearchUI extends Application {
                 goal.getIndexY()
         );
 
+        fringeRoute = fringeSearch.findRoute(
+                startPoint.getIndexX(),
+                startPoint.getIndexY(),
+                goal.getIndexX(),
+                goal.getIndexY()
+        );
+
         if (djikstraRoute != null) {
             djikstraResultLabel
-                    .setText("Djikstran algoritmi löysi reitin.");
+                    .setText("Djikstran algoritmi löysi reitin "
+                            + "(merkitty karttaan punaisilla ympyröillä).");
+            mapView.updateRoute(djikstraRoute, "D");
         } else {
             djikstraResultLabel
                     .setText("Djikstra's algoritmin mukaan reittiä ei ole.");
@@ -214,13 +230,31 @@ public class HexRouteSearchUI extends Application {
 
         if (aStarRoute != null) {
 
-            aStarResultLabel.setText("A*-algoritmi löysi reitin");
+            aStarResultLabel.setText("A*-algoritmi löysi reitin "
+                    + "(merkitty karttaan oransseilla ympyröillä)");
+            mapView.updateRoute(aStarRoute, "A");
 
         } else {
             aStarResultLabel.setText("A*-algoritmin mukaan reittiä ei ole.");
         }
 
-        //mapView.updateRoute();
+        if (fringeRoute != null) {
+
+            fringeResultLabel.setText("Fringe search -algoritmi löysi reitin "
+                    + "(merkitty karttaan violeteilla ympyröillä)");
+            mapView.updateRoute(fringeRoute, "F");
+
+        } else {
+            fringeResultLabel.setText("Fringe Search-algoritmin mukaan reittiä ei ole.");
+        }
+
+        if (fringeRoute != null) {
+            for (int i = 0; i < fringeRoute.length; i++) {
+                System.out.println("X: " + fringeRoute[i][0] + " Y: " + fringeRoute[i][1]);
+            }
+        } else {
+
+        }
     }
 
 }

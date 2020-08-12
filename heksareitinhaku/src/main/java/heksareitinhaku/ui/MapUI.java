@@ -17,6 +17,8 @@
 package heksareitinhaku.ui;
 
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 /**
  *
@@ -30,6 +32,8 @@ public class MapUI {
 
     private HexRouteSearchUI parentUI;
 
+    private Circle[][][] routeMarks;
+
     public MapUI(HexRouteSearchUI ui) {
         this.parentUI = ui;
         mapTileGroup = new Group();
@@ -41,7 +45,7 @@ public class MapUI {
 
     public void setMap(String[][] map) {
 
-        System.out.println("Saavuttu ruuduko luomiseen 1");
+        routeMarks = new Circle[map.length][map[0].length][3];
 
         mapTileGroup.getChildren().clear();
 
@@ -65,8 +69,71 @@ public class MapUI {
 
                 mapTileGroup.getChildren().add(hex);
 
+                createRouteMarks(x, y, i, j);
+
             }
         }
+
+    }
+
+    public void updateRoute(int[][] route, String algorithm) {
+
+        int algorithmIndex;
+        if (algorithm.equals("D")) {
+            algorithmIndex = 0;
+        } else if (algorithm.equals("A")) {
+            algorithmIndex = 1;
+        } else if (algorithm.equals("F")) {
+            algorithmIndex = 2;
+        } else {
+            return;
+        }
+
+        for (int i = 0; i < routeMarks.length; i++) {
+            for (int j = 0; j < routeMarks[0].length; j++) {
+                routeMarks[i][j][algorithmIndex].setVisible(false);
+            }
+
+        }
+
+        for (int i = 0; i < route.length; i++) {
+            routeMarks[route[i][1]][route[i][0]][algorithmIndex]
+                    .setVisible(true);
+
+        }
+    }
+
+    private void createRouteMarks(double x, double y, int i, int j) {
+
+        Circle djikstraCircle = new Circle(
+                x - radius / 2,
+                y - radius / 2,
+                radius / 4,
+                Color.RED
+        );
+        djikstraCircle.setVisible(false);
+        routeMarks[i][j][0] = djikstraCircle;
+        mapTileGroup.getChildren().add(djikstraCircle);
+
+        Circle aStarCircle = new Circle(
+                x + radius / 2,
+                y - radius / 2,
+                radius / 4,
+                Color.ORANGE
+        );
+        aStarCircle.setVisible(false);
+        routeMarks[i][j][1] = aStarCircle;
+        mapTileGroup.getChildren().add(aStarCircle);
+
+        Circle fringeCircle = new Circle(
+                x,
+                y + radius / 2,
+                radius / 4,
+                Color.VIOLET
+        );
+        fringeCircle.setVisible(false);
+        routeMarks[i][j][2] = fringeCircle;
+        mapTileGroup.getChildren().add(fringeCircle);
 
     }
 }
