@@ -67,7 +67,7 @@ public class WesnothMapLoader implements MapLoader {
 
             for (int j = 0; j < mapWidth; j++) {
 
-                map[i][j] = terrainCodes[j];
+                map[i][j] = terrainCodes[j].strip();
             }
 
         }
