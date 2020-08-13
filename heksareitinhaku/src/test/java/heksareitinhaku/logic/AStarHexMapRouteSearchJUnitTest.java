@@ -16,6 +16,10 @@
  */
 package heksareitinhaku.logic;
 
+import heksareitinhaku.io.MapLoader;
+import heksareitinhaku.io.WesnothMapLoader;
+import java.io.File;
+import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -27,7 +31,8 @@ import static org.junit.Assert.*;
  *
  * @author Heli Hyvättinen
  */
-public class AStarHexMapRouteSearchJUnitTest {
+public class AStarHexMapRouteSearchJUnitTest
+        extends AbstractHexMapRouteSearchJUnitTest {
 
     public AStarHexMapRouteSearchJUnitTest() {
     }
@@ -48,23 +53,22 @@ public class AStarHexMapRouteSearchJUnitTest {
     public void tearDown() {
     }
 
-    @Test
-    public void findRouteReturnsNullWhenAllTerrainIsImpassable() {
+    @Override
+    public HexMapRouteSearch
+            createRouteSearchWithUniformTerrainMock(int movementPoints) {
 
-        MapInterpreter mapInterpreter = new UniformTerrainMockMapInterpreter(-1);
-        HexMapRouteSearch algorithm = new AStarHexMapRouteSearch(mapInterpreter);
-        int[][] route = algorithm.findRoute(2, 2, 8, 8);
-        assertNull(route);
-
+        MapInterpreter mapInterpreter
+                = new UniformTerrainMockMapInterpreter(movementPoints);
+        return new AStarHexMapRouteSearch(mapInterpreter);
     }
 
-    @Test
-    public void findRouteReturnsRouteWithCorrectNumberOfHexesOnPassableUniformTerrain() {
-
-        MapInterpreter mapInterpreter = new UniformTerrainMockMapInterpreter(3);
-        HexMapRouteSearch algorithm = new AStarHexMapRouteSearch(mapInterpreter);
-        int[][] route = algorithm.findRoute(2, 2, 8, 8);
-        assertEquals(9, route.length);
-
+    @Override
+    public HexMapRouteSearch createRouteSearchWithRealMap(String filename)
+            throws IOException {
+        File file = new File(filename);
+        MapLoader mapLoader = new WesnothMapLoader();
+        String[][] map = mapLoader.loadMap(file);
+        MapInterpreter mapInterpreter = new WesnothMapInterpreter(map);
+        return new AStarHexMapRouteSearch(mapInterpreter);
     }
 }
