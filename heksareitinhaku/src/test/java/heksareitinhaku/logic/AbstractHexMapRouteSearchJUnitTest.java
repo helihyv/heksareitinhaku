@@ -16,9 +16,6 @@
  */
 package heksareitinhaku.logic;
 
-import heksareitinhaku.io.MapLoader;
-import heksareitinhaku.io.WesnothMapLoader;
-import java.io.File;
 import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -31,10 +28,15 @@ import static org.junit.Assert.*;
  *
  * @author Heli Hyvättinen
  */
-public class DjikstraHexMapRouteSearchJUnitTest
-        extends AbstractHexMapRouteSearchJUnitTest {
+public abstract class AbstractHexMapRouteSearchJUnitTest {
 
-    public DjikstraHexMapRouteSearchJUnitTest() {
+    public abstract HexMapRouteSearch
+            createRouteSearchWithUniformTerrainMock(int movementPoints);
+
+    public abstract HexMapRouteSearch createRouteSearchWithRealMap(String filename)
+            throws IOException;
+
+    public AbstractHexMapRouteSearchJUnitTest() {
     }
 
     @BeforeClass
@@ -58,23 +60,21 @@ public class DjikstraHexMapRouteSearchJUnitTest
     //
     // @Test
     // public void hello() {}
-    @Override
-    public DjikstraHexMapRouteSearch
-            createRouteSearchWithUniformTerrainMock(int movementPoints) {
-        MapInterpreter mapInterpreter
-                = new UniformTerrainMockMapInterpreter(movementPoints);
-        return new DjikstraHexMapRouteSearch(mapInterpreter);
+    @Test
+    public void findRouteReturnsNullWhenAllTerrainIsImpassable() {
+
+        HexMapRouteSearch routeSearch = createRouteSearchWithUniformTerrainMock(-1);
+        int[][] route = routeSearch.findRoute(2, 2, 8, 8);
+        assertNull(route);
 
     }
 
-    @Override
-    public DjikstraHexMapRouteSearch createRouteSearchWithRealMap(String filename)
-            throws IOException {
-        File file = new File(filename);
-        MapLoader mapLoader = new WesnothMapLoader();
-        String[][] map = mapLoader.loadMap(file);
-        MapInterpreter mapInterpreter = new WesnothMapInterpreter(map);
-        return new DjikstraHexMapRouteSearch(mapInterpreter);
-    }
+    @Test
+    public void findRouteReturnsRouteWithCorrectNumberOfHexesOnPassableUniformTerrain() {
 
+        HexMapRouteSearch routeSearch = createRouteSearchWithUniformTerrainMock(3);
+        int[][] route = routeSearch.findRoute(2, 2, 8, 8);
+        assertEquals(9, route.length);
+
+    }
 }
