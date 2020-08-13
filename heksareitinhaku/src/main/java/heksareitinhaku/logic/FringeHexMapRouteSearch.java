@@ -57,7 +57,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
      * @param startX
      * @param startY
      * @param destinationX
-     * @param destinatinY
+     * @param destinationY
      * @return int[][] containing the route from start to destination with the
      * x-coordinate and y-coordinate of a hex to go trough next on each row.
      */
@@ -89,42 +89,40 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         //set search debth for the first round to the minimum possible distance
         int fLimit = heuristic(startX, startY, destinationX, destinationY);
 
+        for (CoordinateListItem node = fringe.getFirst(); node != null; node = node.getNext()) {
+            System.out.println("Listalla X: " + node.getX() + " Y: " + node.getY());
+        }
+
         while (!fringe.isEmpty() && !found) {
+
             int fMin = Integer.MAX_VALUE;
 
             //Iterate over fringe
-            for (CoordinateListItem node = fringe.getFirst();
-                    node != null;
-                    node = node.getNext()) {
+            CoordinateListItem head = fringe.getFirst();
+            while (head != null) {
 
-                int currentX = node.getX();
-                int currentY = node.getY();
+                int currentX = head.getX();
+                int currentY = head.getY();
 
-                System.out.println("fLimit: " + fLimit);
-                System.out.println("Came to node X: " + currentX + " Y: " + currentY);
-                System.out.println("Distance this far: " + distance[currentY][currentX]);
-
+                //               System.out.println("fLimit: " + fLimit);
+                System.out.println("Came to head X: " + currentX + " Y: " + currentY);
+//                System.out.println("Distance this far: " + distance[currentY][currentX]);
                 int f = distance[currentY][currentX]
                         + heuristic(currentX, currentY, destinationX, destinationY);
 
                 if (f > fLimit) {
+                    System.out.println("fmin before" + fMin);
                     fMin = SimpleMath.min(f, fMin);
+                    System.out.println("fmin after" + fMin);
+                    head = head.getNext();
                     continue;
                 }
 
-                if (node == destination) {
+                if (head == destination) {
                     found = true;
                     break;
 
                 }
-
-                if (visited[currentY][currentX]) {
-                    System.out.println("täällä käytiin jo1");
-                    continue;
-                }
-
-                visited[currentY][currentX] = true;
-                System.out.println("Ei käyty vielä");
 
                 handleEdge(currentX, currentY, currentX, currentY - 1); //North
                 handleEdge(currentX, currentY, currentX, currentY + 1); //South
@@ -135,7 +133,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                 if (currentX % 2 != 0) {
 //even & odd are reversed by starting column numbering from zero
                     //Southwest for evene columss
-                    handleEdge(currentX, currentY, currentX + -1, currentY + 1);
+                    handleEdge(currentX, currentY, currentX - 1, currentY + 1);
                     //Southeast for even colums
                     handleEdge(currentX, currentY, currentX + 1, currentY + 1);
                 } else {
@@ -145,7 +143,12 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                     handleEdge(currentX, currentY, currentX + 1, currentY - 1);
                 }
 
-                fringe.remove(node);
+                CoordinateListItem oldHead = head;
+                System.out.println("Old head " + oldHead);
+                head = head.getNext();
+                System.out.println("New head " + head);
+
+                fringe.remove(oldHead);
 
                 onList[currentY][currentX] = false;
 
@@ -181,6 +184,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         int maxDiagonalMoves
                 = SimpleMath.min(maxYDiagonalTravel, xCoordinateDistance);
 
+///       System.out.println("Heuristic " + (yCoordinateDistance + xCoordinateDistance - maxDiagonalMoves));
         return yCoordinateDistance + xCoordinateDistance - maxDiagonalMoves;
     }
 
@@ -232,7 +236,6 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         while (routePointX >= 0 && routePointY >= 0) {
             routeBackwards[index][0] = routePointX;
             routeBackwards[index][1] = routePointY;
-            System.out.println("route: X: " + routePointX + " Y: " + routePointY);
             index++;
             int previousX = cameFromX[routePointY][routePointX];
             routePointY = cameFromY[routePointY][routePointX];
@@ -242,7 +245,9 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         for (int i = 0; i < index - 1; i++) {
             for (int j = 0; j < 2; j++) {
                 route[i][j] = routeBackwards[index - 2 - i][j];
+
             }
+            //           System.out.println("Fringen reitillä X: " + route[i][0] + " Y: " + route[i][1]);
         }
 
         return route;
