@@ -200,7 +200,7 @@ public class WesnothMapInterpreter implements MapInterpreter {
 
             if (direction == '/') {
 
-                if (bridgeHexX % 2 != 0) {
+                if (bridgeHexX % 2 == 0) {
                     if ((otherHexY == bridgeHexY && otherHexX == bridgeHexY + 1)
                             || (otherHexY == bridgeHexY + 1
                             && otherHexX == bridgeHexX - 1)) {
