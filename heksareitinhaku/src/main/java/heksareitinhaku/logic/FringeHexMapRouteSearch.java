@@ -167,26 +167,13 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
     }
 
     private int heuristic(int currentX, int currentY, int destinationX, int destinationY) {
-        //Returns smallest possible distance from given
-        //coordinate to the destination (assuming all costs => 1)
-        //Manhattan distance adapted to hex grid
-        int yCoordinateDistance = SimpleMath.abs(destinationY - currentY);
-        int xCoordinateDistance = SimpleMath.abs(destinationX - currentX);
-        int maxYDiagonalTravel = yCoordinateDistance / 2;
 
-        if (yCoordinateDistance % 2 == 1) {
-            boolean onEvenColumn = currentX % 2 == 0; //Even when starting column numbering from one!
-            boolean destinationRoughlySouth = destinationY > currentY;
-            if ((onEvenColumn && destinationRoughlySouth)
-                    || (!onEvenColumn && !destinationRoughlySouth)) {
-                maxYDiagonalTravel++;
-            }
-        }
-
-        int maxDiagonalMoves
-                = SimpleMath.min(maxYDiagonalTravel, xCoordinateDistance);
-
-        return yCoordinateDistance + xCoordinateDistance - maxDiagonalMoves;
+        // Reeturns a rough estimate of the minimum remaining distance to goal
+        // Mostly smaller than real miminam distance so not optimal but safe
+        return SimpleMath.max(
+                SimpleMath.abs(currentX - destinationX),
+                SimpleMath.abs(currentY - destinationY)
+        );
     }
 
     private void handleEdge(

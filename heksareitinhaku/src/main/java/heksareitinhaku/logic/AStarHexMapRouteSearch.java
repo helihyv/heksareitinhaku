@@ -223,27 +223,15 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
         if (newDistance < currentDistance) {
             distance[newY][newX] = newDistance;
 
-            //Manhattan distance adapted to hex grid
-            int yCoordinateDistance = SimpleMath.abs(destinationY - newY);
-            int xCoordinateDistance = SimpleMath.abs(destinationX - newX);
-            int maxYDiagonalTravel = yCoordinateDistance / 2;
+            // a rough estimate of the minimum remaining distance in hexes to goal
+            // (Distance in heses is the minimum distance if all cost are >= 1
+            // Mostly smaller than real miminam distance in hexes so not optimal but safe
+            int heuristic = SimpleMath.max(
+                    SimpleMath.abs(currentX - destinationX),
+                    SimpleMath.abs(currentY - destinationY)
+            );
 
-            if (yCoordinateDistance % 2 == 1) {
-                boolean onEvenRow = newX % 2 == 0;
-                boolean destinationRoughlySouth = destinationY > newY;
-                if ((onEvenRow && destinationRoughlySouth)
-                        || (!onEvenRow && !destinationRoughlySouth)) {
-                    maxYDiagonalTravel++;
-                }
-            }
-
-            int minDiagonalMoves
-                    = SimpleMath.min(maxYDiagonalTravel, xCoordinateDistance);
-            int distanceInHexes = xCoordinateDistance + yCoordinateDistance - minDiagonalMoves;
-
-            //Distance in hexagons is the smallest possible distance when all
-            //edges weigth at least one
-            int priority = newDistance + distanceInHexes;
+            int priority = newDistance + heuristic;
 
             heap.add(new NextHexEdge(newX, newY, priority));
             cameFromX[newY][newX] = currentX;

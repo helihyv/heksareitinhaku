@@ -23,6 +23,12 @@ package heksareitinhaku.logic;
  */
 public class SimpleMath {
 
+    /**
+     * Calculates absolute
+     *
+     * @param x
+     * @return absolute of x
+     */
     public static int abs(int x) {
         if (x < 0) {
             return -x;
@@ -31,8 +37,30 @@ public class SimpleMath {
         return x;
     }
 
+    /**
+     * Returns the minumum of parameters
+     *
+     * @param x1
+     * @param x2
+     * @return smaller of x1 & x2
+     */
     public static int min(int x1, int x2) {
         if (x1 < x2) {
+            return x1;
+        }
+
+        return x2;
+    }
+
+    /**
+     * Returns the maximum of parameters
+     *
+     * @param x1
+     * @param x2
+     * @return larger of x1 and x2
+     */
+    public static int max(int x1, int x2) {
+        if (x1 > x2) {
             return x1;
         }
 
