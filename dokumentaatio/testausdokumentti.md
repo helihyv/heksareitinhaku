@@ -8,4 +8,4 @@ Testikattavuuden raportoinnissa on käytetty jacocoa. Raportin voi generoida esi
 
 ## Suoritusykytestit
 
-Reitinhakualgoritmeja varten on alettu toteuttamaan suorituskykytestejä. Keskeneräinen alustavasuorituskykytesti löytyy pakkauuksesta performance. Testissä tehdään samat satunnaset reitihaut (100 per kartta, kartat puuttuvat vielä) kaikilla kolmella algoritmilla ja mitataan niihin yhteensä kuluva aika. 
+Reitinhakualgoritmeja varten on alettu toteuttamaan suorituskykytestejä. Keskeneräinen alustavasuorituskykytesti löytyy pakkauuksesta performance. Testissä tehdään samat satunnasiet reitihaut (100 per kartta, kartat puuttuvat vielä) kaikilla kolmella algoritmilla ja mitataan niihin yhteensä kuluva aika. 
