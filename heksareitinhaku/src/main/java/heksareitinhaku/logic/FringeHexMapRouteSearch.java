@@ -58,8 +58,9 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
      * @param startY
      * @param destinationX
      * @param destinationY
-     * @return int[][] containing the route from start to destination with the
-     * x-coordinate and y-coordinate of a hex to go trough next on each row.
+     * @return Route containing the route from start to destination with the
+     * x-coordinate and y-coordinate of a hex to go trough next on each row and
+     * the length of route in movement points.
      */
     @Override
     public Route findRoute(int startX, int startY, int destinationX, int destinationY) {
@@ -185,7 +186,6 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         int maxDiagonalMoves
                 = SimpleMath.min(maxYDiagonalTravel, xCoordinateDistance);
 
-///       System.out.println("Heuristic " + (yCoordinateDistance + xCoordinateDistance - maxDiagonalMoves));
         return yCoordinateDistance + xCoordinateDistance - maxDiagonalMoves;
     }
 
@@ -248,7 +248,6 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                 route[i][j] = routeBackwards[index - 2 - i][j];
 
             }
-            //           System.out.println("Fringen reitillä X: " + route[i][0] + " Y: " + route[i][1]);
         }
 
         return route;

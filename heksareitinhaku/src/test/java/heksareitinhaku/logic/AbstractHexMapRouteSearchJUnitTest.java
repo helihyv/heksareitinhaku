@@ -96,7 +96,8 @@ public abstract class AbstractHexMapRouteSearchJUnitTest {
     @Test
     public void findRouteReturnsRouteThatIncludesBridgeWhenItIsClosestPassage()
             throws IOException {
-        HexMapRouteSearch routeSearch = createRouteSearchWithRealMap("src/test/resources/bridgetest.map");
+        HexMapRouteSearch routeSearch
+                = createRouteSearchWithRealMap("src/test/resources/bridgetest.map");
         Route route = routeSearch.findRoute(10, 1, 10, 10);
         boolean found = false;
         for (int i = 0; i < route.getRoute().length; i++) {
@@ -108,4 +109,5 @@ public abstract class AbstractHexMapRouteSearchJUnitTest {
         assertTrue(found);
 
     }
+
 }

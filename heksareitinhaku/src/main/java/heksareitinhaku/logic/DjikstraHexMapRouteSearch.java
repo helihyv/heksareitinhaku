@@ -190,12 +190,5 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
         return route;
 
     }
-    /*
-    int heuristic(int currentX, int currentY, int destinationX, int destinationY) {
 
-        int cubeCurrentX = currentX;
-        int cubeCurrentY = currentY - ()
-
-    }
-     */
 }
