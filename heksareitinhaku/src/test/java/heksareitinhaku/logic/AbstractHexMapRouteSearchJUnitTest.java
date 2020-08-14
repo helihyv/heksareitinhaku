@@ -64,7 +64,7 @@ public abstract class AbstractHexMapRouteSearchJUnitTest {
     public void findRouteReturnsNullWhenAllTerrainIsImpassable() {
 
         HexMapRouteSearch routeSearch = createRouteSearchWithUniformTerrainMock(-1);
-        int[][] route = routeSearch.findRoute(2, 2, 8, 8);
+        Route route = routeSearch.findRoute(2, 2, 8, 8);
         assertNull(route);
 
     }
@@ -73,8 +73,39 @@ public abstract class AbstractHexMapRouteSearchJUnitTest {
     public void findRouteReturnsRouteWithCorrectNumberOfHexesOnPassableUniformTerrain() {
 
         HexMapRouteSearch routeSearch = createRouteSearchWithUniformTerrainMock(3);
-        int[][] route = routeSearch.findRoute(2, 2, 8, 8);
-        assertEquals(9, route.length);
+        Route route = routeSearch.findRoute(2, 2, 8, 8);
+        assertEquals(9, route.getRoute().length);
+
+    }
+
+    @Test
+    public void findRouteReturnsRouteWithCorrectNumberOfHexesWhenMountainsOnTheWay()
+            throws IOException {
+
+        HexMapRouteSearch routeSearch
+                = createRouteSearchWithRealMap("src/test/resources/mountains.map");
+        Route route = routeSearch.findRoute(6, 2, 6, 5);
+        for (int i = 0; i < route.getRoute().length; i++) {
+            System.out.println("reitti vuorten ympäri: ");
+            System.out.println("X: " + route.getRoute()[i][0] + " Y: " + route.getRoute()[i][1]);
+        }
+
+        assertEquals(8, route.getRoute().length);
+    }
+
+    @Test
+    public void findRouteReturnsRouteThatIncludesBridgeWhenItIsClosestPassage()
+            throws IOException {
+        HexMapRouteSearch routeSearch = createRouteSearchWithRealMap("src/test/resources/bridgetest.map");
+        Route route = routeSearch.findRoute(10, 1, 10, 10);
+        boolean found = false;
+        for (int i = 0; i < route.getRoute().length; i++) {
+            if (route.getRoute()[i][0] == 6 && route.getRoute()[i][1] == 6) {
+                found = true;
+            }
+
+        }
+        assertTrue(found);
 
     }
 }

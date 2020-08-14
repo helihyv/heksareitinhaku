@@ -34,6 +34,7 @@ import heksareitinhaku.logic.AStarHexMapRouteSearch;
 import heksareitinhaku.logic.FringeHexMapRouteSearch;
 import heksareitinhaku.logic.HexMapRouteSearch;
 import heksareitinhaku.logic.MapInterpreter;
+import heksareitinhaku.logic.Route;
 import heksareitinhaku.logic.WesnothMapInterpreter;
 import java.io.IOException;
 import javafx.scene.control.Alert;
@@ -47,13 +48,13 @@ import javafx.scene.control.Alert.AlertType;
 public class HexRouteSearchUI extends Application {
 
     private HexMapRouteSearch djikstraSearch;
-    private int[][] djikstraRoute;
+    private Route djikstraRoute;
     private Label djikstraResultLabel;
     private HexMapRouteSearch aStarSearch;
-    private int[][] aStarRoute;
+    private Route aStarRoute;
     private Label aStarResultLabel;
     private HexMapRouteSearch fringeSearch;
-    private int[][] fringeRoute;
+    private Route fringeRoute;
     private Label fringeResultLabel;
     private boolean selectingStartPoint;
     private boolean selectingGoal;
@@ -259,14 +260,16 @@ public class HexRouteSearchUI extends Application {
         if (djikstraRoute != null) {
 
             djikstraText = "Djikstran algoritmi löysi reitin "
-                    + "(merkitty karttaan punaisilla ympyröillä).";
-            mapView.updateRoute(djikstraRoute, "D");
+                    + "(merkitty karttaan punaisilla ympyröillä)."
+                    + " Reitin pituus liikkumispisteinä on "
+                    + djikstraRoute.getRouteCostInMovementPoints();
+            mapView.updateRoute(djikstraRoute.getRoute(), "D");
         } else {
             djikstraText
                     = "Djikstra's algoritmin mukaan reittiä ei ole.";
         }
 
-        djikstraText += " Reitinhaku kesti "
+        djikstraText += ". Reitinhaku kesti "
                 + (djikstraEndAStarStart - djikstraStart) / 1e6 + " ms.";
 
         djikstraResultLabel.setText(djikstraText);
@@ -276,14 +279,16 @@ public class HexRouteSearchUI extends Application {
         if (aStarRoute != null) {
 
             aStarText = "A*-algoritmi löysi reitin "
-                    + "(merkitty karttaan oransseilla ympyröillä)";
-            mapView.updateRoute(aStarRoute, "A");
+                    + "(merkitty karttaan oransseilla ympyröillä)."
+                    + " Reitin pituus liikkumispisteinä on "
+                    + aStarRoute.getRouteCostInMovementPoints();
+            mapView.updateRoute(aStarRoute.getRoute(), "A");
 
         } else {
             aStarText = "A*-algoritmin mukaan reittiä ei ole.";
         }
 
-        aStarText += " Reitinhaku kesti "
+        aStarText += ". Reitinhaku kesti "
                 + (aStarEndFringeStart - djikstraEndAStarStart) / 1e6 + " ms.";
         aStarResultLabel.setText(aStarText);
 
@@ -292,14 +297,16 @@ public class HexRouteSearchUI extends Application {
         if (fringeRoute != null) {
 
             fringeText = "Fringe search -algoritmi löysi reitin "
-                    + "(merkitty karttaan violeteilla ympyröillä)";
-            mapView.updateRoute(fringeRoute, "F");
+                    + "(merkitty karttaan violeteilla ympyröillä)"
+                    + " Reitin pituus liikkumispisteinä on "
+                    + fringeRoute.getRouteCostInMovementPoints();
+            mapView.updateRoute(fringeRoute.getRoute(), "F");
 
         } else {
             fringeText = "Fringe Search-algoritmin mukaan reittiä ei ole.";
         }
 
-        fringeText += " Reitinhaku kesti "
+        fringeText += ". Reitinhaku kesti "
                 + (fringeEnd - aStarEndFringeStart) / 1e6 + " ms.";
         fringeResultLabel.setText(fringeText);
 

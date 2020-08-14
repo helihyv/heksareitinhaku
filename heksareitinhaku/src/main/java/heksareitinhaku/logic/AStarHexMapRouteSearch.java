@@ -55,7 +55,7 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
      * x-coordinate and y-coordinate of a hex to go trough next on each row.
      */
     @Override
-    public int[][] findRoute(
+    public Route findRoute(
             int startX,
             int startY,
             int destinationX,
@@ -190,7 +190,8 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
             return null;
         }
 
-        return reconstructRoute(destinationX, destinationY);
+        int[][] plainRoute = reconstructRoute(destinationX, destinationY);
+        return new Route(plainRoute, distance[destinationY][destinationX]);
 
     }
 

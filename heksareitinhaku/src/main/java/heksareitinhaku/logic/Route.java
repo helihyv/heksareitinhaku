@@ -17,22 +17,38 @@
 package heksareitinhaku.logic;
 
 /**
- * Rajapinta reitinhakualgoritmeille
+ * Encapsulates a route in coodinates and the cost of theroute in movement
+ * points
  *
  * @author Heli Hyvättinen
  */
-public interface HexMapRouteSearch {
+public class Route {
+
+    int[][] route;
+    int routeCostInMovementPoints;
 
     /**
-     * Hakee reitin lähtöheksasta maaliheksaan
      *
-     * @param startX lähtöheksan x-koordinaatti
-     * @param startY lähtöheksan y-koordinaatti
-     * @param destinationX maaliheksan x-koordinaatti
-     * @param destinatinY maaliheksan y-koordinaatii
-     * @return int[][] containing the route from start to destination with the
-     * x-coordinate and y-coordinate of a hex to go trough next on each row.
+     * @param route coordinates of hexes to go trough with X and Y coordinate of
+     * a hex on each row
+     * @param routeCostInMovementPoints
      */
-    public Route findRoute(int startX, int startY, int destinationX, int destinatinY);
+    public Route(int[][] route, int routeCostInMovementPoints) {
+        this.route = route;
+        this.routeCostInMovementPoints = routeCostInMovementPoints;
+    }
+
+    /**
+     *
+     * @return coordinates of hexes to go trough with X and Y coordinate of a
+     * hex on each row
+     */
+    public int[][] getRoute() {
+        return route;
+    }
+
+    public int getRouteCostInMovementPoints() {
+        return routeCostInMovementPoints;
+    }
 
 }

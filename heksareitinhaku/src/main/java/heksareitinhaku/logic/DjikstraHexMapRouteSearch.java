@@ -55,7 +55,7 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
      * x-coordinate and y-coordinate of a hex to go trough next on each row.
      */
     @Override
-    public int[][] findRoute(
+    public Route findRoute(
             int startX,
             int startY,
             int destinationX,
@@ -125,7 +125,9 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
             return null;
         }
 
-        return reconstructRoute(destinationX, destinationY);
+        int[][] plainRoute = reconstructRoute(destinationX, destinationY);
+
+        return new Route(plainRoute, distance[destinationY][destinationX]);
 
     }
 
@@ -141,8 +143,6 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
                 currentY,
                 newX,
                 newY);
-
-        System.out.println("X: " + newX + " Y: " + newY + " Vaatii: " + movementPointsNeeded);
 
         if (movementPointsNeeded < 0) {
             //impossible to move along this edge

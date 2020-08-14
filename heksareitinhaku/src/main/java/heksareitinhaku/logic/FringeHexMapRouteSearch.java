@@ -62,7 +62,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
      * x-coordinate and y-coordinate of a hex to go trough next on each row.
      */
     @Override
-    public int[][] findRoute(int startX, int startY, int destinationX, int destinationY) {
+    public Route findRoute(int startX, int startY, int destinationX, int destinationY) {
 
         fringe = new CoordinateList();
         fringe.insertToStart(nodes[startY][startX]);
@@ -161,7 +161,9 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
             return null;
         }
 
-        return reconstructRoute(destinationX, destinationY);
+        int[][] plainRoute = reconstructRoute(destinationX, destinationY);
+
+        return new Route(plainRoute, distance[destinationY][destinationX]);
     }
 
     private int heuristic(int currentX, int currentY, int destinationX, int destinationY) {
