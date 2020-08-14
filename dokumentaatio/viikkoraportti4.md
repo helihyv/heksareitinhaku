@@ -2,6 +2,8 @@
 
 ## Mitä tehty
 
+Tällä viikolla (la-pe) käytin projektiin noin 27 tuntia.
+
 Karttatulkkiin on lisätty teiden ja siltojen erityiskäsittely ja useita korjauksia. Sille on myös tehty hieman lisää testejä. 
 
 Kartan lataamiseen on lisätty välilyöntien jättäminen pois maastokoodeista. 
