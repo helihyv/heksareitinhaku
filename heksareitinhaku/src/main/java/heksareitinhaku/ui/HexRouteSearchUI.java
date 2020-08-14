@@ -105,7 +105,7 @@ public class HexRouteSearchUI extends Application {
                         aStarSearch = new AStarHexMapRouteSearch(mapInterpreter);
                         fringeSearch = new FringeHexMapRouteSearch(mapInterpreter);
                         mapView.setMap(map);
-                        guideText.setText("Valitse lähtöpaikka kartalta");
+                        clearSearch();
 
                     } catch (Exception e) {
 
@@ -143,19 +143,8 @@ public class HexRouteSearchUI extends Application {
         EventHandler newSearchPressedHander = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
-                selectingStartPoint = true;
-                guideText.setText("Valitse haun alkupiste kartalta");
-                newSearchButton.setVisible(false);
-                mapView.clearRoutes();
-                startPoint.unSelect();
-                startPoint = null;
-                goal.unSelect();;
-                goal = null;
-                startPointText.setText("Lähtöpaikka:");
-                goalText.setText("Maali:");
-                djikstraResultLabel.setText("");
-                aStarResultLabel.setText("");
-                fringeResultLabel.setText("");
+
+                clearSearch();
 
             }
         };
@@ -310,6 +299,34 @@ public class HexRouteSearchUI extends Application {
                 + (fringeEnd - aStarEndFringeStart) / 1e6 + " ms.";
         fringeResultLabel.setText(fringeText);
 
+        guideText.setText("");
+
+    }
+
+    private void clearSearch() {
+
+        selectingStartPoint = true;
+        guideText.setText("Valitse haun alkupiste kartalta");
+        mapView.clearRoutes();
+
+        if (startPoint != null) {
+            startPoint.unSelect();
+        }
+
+        startPoint = null;
+
+        if (goal != null) {
+            goal.unSelect();
+        }
+
+        goal = null;
+
+        startPointText.setText("Lähtöpaikka:");
+        goalText.setText("Maali:");
+        djikstraResultLabel.setText("");
+        aStarResultLabel.setText("");
+        fringeResultLabel.setText("");
+        newSearchButton.setVisible(false);
     }
 
 }
