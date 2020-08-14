@@ -150,6 +150,12 @@ public class HexRouteSearchUI extends Application {
                 startPoint = null;
                 goal.unSelect();;
                 goal = null;
+                startPointText.setText("Lähtöpaikka:");
+                goalText.setText("Maali:");
+                djikstraResultLabel.setText("");
+                aStarResultLabel.setText("");
+                fringeResultLabel.setText("");
+
             }
         };
 
