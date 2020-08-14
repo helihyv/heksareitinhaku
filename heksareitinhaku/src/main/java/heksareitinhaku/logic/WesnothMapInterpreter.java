@@ -140,6 +140,13 @@ public class WesnothMapInterpreter implements MapInterpreter {
             }
         }
 
+        System.out.println("base: " + base + " toHex: " + toHex + " base-A: " + (base - 'A') + "G-A" + ('G' - 'A'));
+        char first = toHex.charAt(0);
+        System.out.println("first: " + first);
+
+        if (base == '_') {
+            return 1; //special system terrain codes treated as easy terrain
+        }
         int baseMovementPoints = movementPointsPerTerrain[base - 'A'];
         if (baseMovementPoints < 0) {
             return -1;
