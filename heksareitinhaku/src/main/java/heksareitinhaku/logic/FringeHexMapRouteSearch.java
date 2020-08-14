@@ -130,8 +130,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                 handleEdge(currentX, currentY, currentX - 1, currentY);
                 //Northeast for even colums, southeast for odd columns
                 handleEdge(currentX, currentY, currentX + 1, currentY);
-                if (currentX % 2 != 0) {
-//even & odd are reversed by starting column numbering from zero
+                if (currentX % 2 == 0) {
                     //Southwest for evene columss
                     handleEdge(currentX, currentY, currentX - 1, currentY + 1);
                     //Southeast for even colums
@@ -175,7 +174,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         int maxYDiagonalTravel = yCoordinateDistance / 2;
 
         if (yCoordinateDistance % 2 == 1) {
-            boolean onEvenColumn = currentX % 2 != 0; //Even when starting column numbering from one!
+            boolean onEvenColumn = currentX % 2 == 0; //Even when starting column numbering from one!
             boolean destinationRoughlySouth = destinationY > currentY;
             if ((onEvenColumn && destinationRoughlySouth)
                     || (!onEvenColumn && !destinationRoughlySouth)) {

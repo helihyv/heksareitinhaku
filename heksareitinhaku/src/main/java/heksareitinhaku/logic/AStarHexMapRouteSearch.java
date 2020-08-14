@@ -139,8 +139,7 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
                     destinationY
             );
 
-            if (currentX % 2 != 0) {
-                //even & odd are reversed by starting column numbering from zero
+            if (currentX % 2 == 0) {
 
                 //Southwest for even columns
                 handleEdge(
@@ -242,7 +241,7 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
                     = SimpleMath.min(maxYDiagonalTravel, xCoordinateDistance);
             int distanceInHexes = xCoordinateDistance + yCoordinateDistance - minDiagonalMoves;
 
-            //Distance in hexees is the smallest possible distance when all
+            //Distance in hexagons is the smallest possible distance when all
             //edges weigth at least one
             int priority = newDistance + distanceInHexes;
 

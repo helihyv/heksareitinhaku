@@ -90,7 +90,7 @@ public class WesnothMapInterpreter implements MapInterpreter {
         if (fromX < 0 || fromX >= map[0].length || fromY < 0 || fromY >= map.length) {
             return -1;
         }
-        /*
+
         if (fromX == toX) {
             if (toY != fromY + 1 && toY != fromY - 1) {
                 return -1;
@@ -101,17 +101,16 @@ public class WesnothMapInterpreter implements MapInterpreter {
                 return -1;
             }
 
-            //even & odd are reversed by starting column numbering from zero
-            if (fromX % 2 != 0 && toY != fromY && toY != fromY + 1) {
+            if (fromX % 2 == 0 && toY != fromY && toY != fromY + 1) {
                 return -1;
 
             }
 
-            if (fromX % 2 == 0 && toY != fromY && toY != fromY - 1) {
+            if (fromX % 2 != 0 && toY != fromY && toY != fromY - 1) {
                 return -1;
             }
         }
-         */
+
         String fromHex = map[fromY][fromX];
         String toHex = map[toY][toX];
 
@@ -196,7 +195,6 @@ public class WesnothMapInterpreter implements MapInterpreter {
             int otherHexX,
             int otherHexY
     ) {
-// Bridge
         for (int i = 1; i < bridgeTerrainCode.length(); i++) {
             char direction = bridgeTerrainCode.charAt(i);
 

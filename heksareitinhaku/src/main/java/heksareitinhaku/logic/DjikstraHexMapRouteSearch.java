@@ -107,7 +107,7 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
             handleEdge(currentX, currentY, currentX - 1, currentY);
             //Northeast for even colums, southeast for odd columns
             handleEdge(currentX, currentY, currentX + 1, currentY);
-            if (currentX % 2 != 0) { //even & odd are reversed by starting column numbering from zero
+            if (currentX % 2 == 0) {
                 //Southwest for evene columss
                 handleEdge(currentX, currentY, currentX + -1, currentY + 1);
                 //Southeast for even colums
@@ -190,4 +190,12 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
         return route;
 
     }
+    /*
+    int heuristic(int currentX, int currentY, int destinationX, int destinationY) {
+
+        int cubeCurrentX = currentX;
+        int cubeCurrentY = currentY - ()
+
+    }
+     */
 }
