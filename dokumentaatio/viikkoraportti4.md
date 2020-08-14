@@ -24,7 +24,7 @@ Käyttöliittymässä on nyt mukana kaikki kolme vertailtavaa algoritmia. Eri al
 
 Reitinhaun testausta on järkevöitetty käyttämällä abstarkia kantaluokkaa reitinhakutesteille, jolloin sama testi voidaan ajaa kaikille kolmelle reitinhakualgoritmille, Testejä on tehty hieman lisää,
 
-Karttatulkissa on nyt sille suunnitellut ominaisuudet. Siltojen käsittelyssä voi olla vielä ongelmia. Testejä on hieman lisätty.
+Karttatulkissa on nyt sille suunnitellut ominaisuudet. Testejä on hieman lisätty.
 
 Omista tietorakenteista on toteutettuna edellisellä viikolla toteutettu linkitetty lista. Javan PriorityQueue:n korvaaminen itse tehdyllä keolla on vielä toteuttamatta. ArrayList ei ole enää käytössä minkään reitinhaun toteutuksessa, mutta tiedostonlukua hoitavasta aluokasta se pitää vielä korvata. Tässä luokassa ovat käytössä myös String.split() ja String.strip(), jotka korvataan myöhemmin omilla toteutuksilla.
 
