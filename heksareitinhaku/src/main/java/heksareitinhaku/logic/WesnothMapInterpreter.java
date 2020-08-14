@@ -115,11 +115,11 @@ public class WesnothMapInterpreter implements MapInterpreter {
         String fromHex = map[fromY][fromX];
         String toHex = map[toY][toX];
 
-        int base = toHex.charAt(0);
+        int base = extractBase(toHex);
 
         int overlay = extractOverlay(toHex);
 
-        int fromBase = fromHex.charAt(0);
+        int fromBase = extractBase(fromHex);
 
         int fromOverlay = extractOverlay(fromHex);
 
@@ -246,10 +246,6 @@ public class WesnothMapInterpreter implements MapInterpreter {
                 return -1;
             }
 
-            if (direction == '^') //code ended {
-            {
-                return -1; // invalid bridge
-            }
         }
 
         return -1; //invalid bridge
@@ -270,6 +266,18 @@ public class WesnothMapInterpreter implements MapInterpreter {
 
         return overlay;
 
+    }
+
+    int extractBase(String terrainCode) {
+        //Starting positions before actual terrain code main char are skipped
+        for (int i = 0; i < terrainCode.length(); i++) {
+            int base = terrainCode.charAt(i);
+            if ((base >= 'A' && base <= 'Z') || base == '_') {
+                return base;
+            }
+        }
+
+        return 'X'; //Invalid code, treat as impassable
     }
 
 }
