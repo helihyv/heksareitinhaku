@@ -60,7 +60,7 @@ public class MapUI {
 
                 double y = (i + 0.5) * 1.732 * radius;
 
-                if (j % 2 != 0) {
+                if (j % 2 == 0) {
                     y += 0.866 * radius;
 
                 }
