@@ -43,7 +43,11 @@ public class WesnothMapInterpreterJUnitTest {
         {"Gd^Ft", "Gs^Eff"}
     };
 
-    ;
+    private String[][] bridgeMap = {
+        {"Ds^Do", "Hh^Ecf"},
+        {"W^B|", "Md^Fdf"},
+        {"Gd", "Gs^Eff"}
+    };
 
     public WesnothMapInterpreterJUnitTest() {
 
@@ -122,6 +126,28 @@ public class WesnothMapInterpreterJUnitTest {
         int movementPoints = mapInterpreter.getMovementPointsBetween(1, 1, 0, 1);
 
         assertEquals(-1, movementPoints);
+
+    }
+
+    @Test
+    public void bridgeCanBeEnterdFromRigthtDirection() {
+
+        MapInterpreter mapInterpreter = new WesnothMapInterpreter(bridgeMap);
+
+        int movementPoints = mapInterpreter.getMovementPointsBetween(0, 0, 0, 1);
+
+        assertEquals(1, movementPoints);
+
+    }
+
+    @Test
+    public void bridgeCanBeLeftToigthtDirection() {
+
+        MapInterpreter mapInterpreter = new WesnothMapInterpreter(bridgeMap);
+
+        int movementPoints = mapInterpreter.getMovementPointsBetween(0, 1, 0, 2);
+
+        assertEquals(1, movementPoints);
 
     }
 
