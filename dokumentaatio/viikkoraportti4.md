@@ -2,17 +2,17 @@
 
 ## Mitä tehty
 
-Karttatulkkiin on lisätty teiden ja siltojen erityiskäsittely ja useita korjauksia. Sille on myös tehty hieamn lisää testejä. 
+Karttatulkkiin on lisätty teiden ja siltojen erityiskäsittely ja useita korjauksia. Sille on myös tehty hieman lisää testejä. 
 
-Kartan lataamiseen on lisätty välilyöntien jättäminen pois maastokoodesita. 
+Kartan lataamiseen on lisätty välilyöntien jättäminen pois maastokoodeista. 
 
 Djikstran- ja A*-algoritmeissa käytössä ollut ArrayList on korvattu tavallisella taulukolla. 
 
-Kaikkiin kolmeen reitinhakualgoritmiin on tehty korjauksia. Niihin om myös lisätty reitin pituuden liikkumispisteinä palauttaminen reitin mukana. Tätä varten on luotu reitlle oma luokkansa.
+Kaikkiin kolmeen reitinhakualgoritmiin on tehty korjauksia. Niihin om myös lisätty reitin pituuden liikkumispisteinä palauttaminen reitin mukana. Tätä varten on luotu reitille oma luokkansa.
 
-Reitinhaun testeille on tehty abstratkti kantaluokka, johon varsinaiset testit on sijoitettu. Algoritmikohtaisissa testilukissa itsessään on vain funktot reitinahkuolioiden luomiseen. Testejä on myös tehty hieman lisää. 
+Reitinhaun testeille on tehty abstrakti kantaluokka, johon varsinaiset testit on sijoitettu. Algoritmikohtaisissa testiluokissa itsessään on vain funktot reitinahkuolioiden luomiseen. Testejä on myös tehty hieman lisää. 
 
-Käyttöliittymään on lisätty Fringe Search-algoritmin ajaminen, reittien näyttäminen karttaruudukolla, reitinhakuun kuluneen ajan ja reitin pituuden liikkumispisteinä näyttäminen ja mahdollisuus useampaan hakuun lataamatta kartaa uuudestaan.
+Käyttöliittymään on lisätty Fringe Search-algoritmin ajaminen, reittien näyttäminen karttaruudukolla, reitinhakuun kuluneen ajan ja reitin pituuden liikkumispisteinä näyttäminen sekä mahdollisuus useampaan hakuun lataamatta kartaa uuudestaan.
 
 Olen myös aloittanut käyttöohjeen, testausdokumentin ja toteutusdokumnetin kirjoittamisen.
 
@@ -20,13 +20,13 @@ Olen myös aloittanut käyttöohjeen, testausdokumentin ja toteutusdokumnetin ki
 
 Käyttöliittymässä on nyt mukana kaikki kolme vertailtavaa algoritmia. Eri algoritmien hakemat reitit näytetään kartalla erivärisinä palloina heksoissa. Kunkin algoritmin reitinhakuun käyttämä aika näytetään myös. Samoin reitin pituus liikkumispisteinä. Kartan maastoja ei vielä näytetä.
 
- Reitinhakuihin on lisätty reitin pituuden liikkumispisteinä palauttainen. Reitinhakualgoritmien, etenkin Fringe Search-algoritmin, toteutuksiin on tehty korjauksia. Kaikki reitinhakualgoritmit löytävät nyt lyhimmän reitin.
+Reitinhakuihin on lisätty reitin pituuden liikkumispisteinä palauttaminen. Reitinhakualgoritmien, etenkin Fringe Search-algoritmin, toteutuksiin on tehty korjauksia. Kaikki reitinhakualgoritmit löytävät nyt lyhimmän reitin.
 
-Reitinhaun testausta on järkevöitetty käyttämällä abstarkia kantaluokkaa reitinhakutesteille, jolloin sama testi voidaan ajaa kaikille kolmelle reitinhakualgoritmille, Testejä on tehty hieman lisää,
+Reitinhaun testausta on järkevöitetty käyttämällä abstraktia kantaluokkaa reitinhakutesteille, jolloin sama testi voidaan ajaa kaikille kolmelle reitinhakualgoritmille. Testejä on tehty hieman lisää,
 
 Karttatulkissa on nyt sille suunnitellut ominaisuudet. Testejä on hieman lisätty.
 
-Omista tietorakenteista on toteutettuna edellisellä viikolla toteutettu linkitetty lista. Javan PriorityQueue:n korvaaminen itse tehdyllä keolla on vielä toteuttamatta. ArrayList ei ole enää käytössä minkään reitinhaun toteutuksessa, mutta tiedostonlukua hoitavasta aluokasta se pitää vielä korvata. Tässä luokassa ovat käytössä myös String.split() ja String.strip(), jotka korvataan myöhemmin omilla toteutuksilla.
+Omista tietorakenteista on toteutettuna edellisellä viikolla toteutettu linkitetty lista. Javan PriorityQueue:n korvaaminen itse tehdyllä keolla on vielä toteuttamatta. ArrayList ei ole enää käytössä minkään reitinhaun toteutuksessa, mutta tiedostonlukua hoitavasta luokasta se pitää vielä korvata. Tässä luokassa ovat käytössä myös String.split() ja String.strip(), jotka korvataan myöhemmin omilla toteutuksilla.
 
 Köyttöohje on osittain tehty, testausdokumentin ja toteutusdokumentin kirjoittaminen on aloitettu.
 
