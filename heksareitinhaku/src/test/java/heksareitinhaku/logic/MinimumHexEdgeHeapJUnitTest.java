@@ -123,7 +123,7 @@ public class MinimumHexEdgeHeapJUnitTest {
     }
 
     @Test
-    public void valuesInsertedBeforeEnlareningHeapRemainInHeapWhenHeapEnlargened() {
+    public void valuesInsertedBeforeEnlagreningHeapRemainInHeapWhenHeapEnlargened() {
         for (int i = 0; i < 127; i++) {
             heap.insert(new NextHexEdge(2, 2, i + 1));
         }

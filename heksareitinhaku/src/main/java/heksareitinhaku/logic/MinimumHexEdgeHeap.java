@@ -50,6 +50,11 @@ public class MinimumHexEdgeHeap {
         last--;
 
         lowerIfNeeded(1);
+        System.out.println("Heap after poll");
+        for (int i = 1; i <= last; i++) {
+            System.out.print(" " + heap[i].getPriority());
+        }
+        System.out.println("");
 
         return minimum;
 
@@ -63,6 +68,12 @@ public class MinimumHexEdgeHeap {
 
         heap[++last] = edge;
         raiseIfNeeded(last);
+
+        System.out.println("Heap after insert");
+        for (int i = 1; i <= last; i++) {
+            System.out.print(" " + heap[i].getPriority());
+        }
+        System.out.println("");
 
     }
 
@@ -88,23 +99,26 @@ public class MinimumHexEdgeHeap {
         }
 
         NextHexEdge current = heap[index];
-        NextHexEdge leftChild = heap[index * 2];
+        int leftChildIndex = 2 * index;
+        int rigthChildIndex = 2 * index + 1;
 
-        if (current.compareTo(leftChild) > 0) {
-            heap[index] = leftChild;
-            heap[index * 2] = current;
-            lowerIfNeeded(index * 2);
+        int smallerChildIndex;
 
-        } else if (index * 2 + 1 <= last) {
+        if (rigthChildIndex > last) {
+            smallerChildIndex = leftChildIndex;
 
-            NextHexEdge rigthChild = heap[index * 2 + 1];
-            if (current.compareTo(rigthChild) > 0) {
-                heap[index] = rigthChild;
-                heap[index * 2 + 1] = current;
-                lowerIfNeeded(index * 2 + 1);
-            }
-
+        } else if (heap[leftChildIndex].compareTo(heap[rigthChildIndex]) < 0) {
+            smallerChildIndex = leftChildIndex;
+        } else {
+            smallerChildIndex = rigthChildIndex;
         }
+
+        if (current.compareTo(heap[smallerChildIndex]) > 0) {
+            heap[index] = heap[smallerChildIndex];
+            heap[smallerChildIndex] = current;
+            lowerIfNeeded(smallerChildIndex);
+        }
+
     }
 
     private void increaseHeap() {

@@ -16,8 +16,6 @@
  */
 package heksareitinhaku.logic;
 
-import java.util.PriorityQueue;
-
 /**
  * Finds shortest route betwween two points on a hex map using Djikstra's
  * algorithm.
@@ -27,7 +25,7 @@ import java.util.PriorityQueue;
 public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
 
     private MapInterpreter mapInterpreter;
-    private PriorityQueue<NextHexEdge> heap;
+    private MinimumHexEdgeHeap heap;
     private boolean[][] checked;
     private int[][] distance;
     private int[][] cameFromX;
@@ -79,9 +77,9 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
         cameFromX[startY][startX] = -1;
         cameFromY[startY][startX] = -1;
 
-        heap = new PriorityQueue<>();
+        heap = new MinimumHexEdgeHeap();
 
-        heap.add(new NextHexEdge(startX, startY, 0));
+        heap.insert(new NextHexEdge(startX, startY, 0));
 
         boolean found = false;
 
@@ -157,7 +155,7 @@ public class DjikstraHexMapRouteSearch implements HexMapRouteSearch {
 
         if (newDistance < currentDistance) {
             distance[newY][newX] = newDistance;
-            heap.add(new NextHexEdge(newX, newY, newDistance));
+            heap.insert(new NextHexEdge(newX, newY, newDistance));
             cameFromX[newY][newX] = currentX;
             cameFromY[newY][newX] = currentY;
 

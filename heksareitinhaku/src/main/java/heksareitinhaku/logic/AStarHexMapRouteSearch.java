@@ -16,8 +16,6 @@
  */
 package heksareitinhaku.logic;
 
-import java.util.PriorityQueue;
-
 /**
  * Finds the shortest route betwween two points on a hex map using the A*
  * algorithm.
@@ -26,12 +24,12 @@ import java.util.PriorityQueue;
  */
 public class AStarHexMapRouteSearch implements HexMapRouteSearch {
 
-    protected MapInterpreter mapInterpreter;
-    protected PriorityQueue<NextHexEdge> heap;
+    private MapInterpreter mapInterpreter;
+    private MinimumHexEdgeHeap heap;
     private boolean[][] checked;
-    protected int[][] distance;
-    protected int[][] cameFromX;
-    protected int[][] cameFromY;
+    private int[][] distance;
+    private int[][] cameFromX;
+    private int[][] cameFromY;
 
     /**
      *
@@ -79,9 +77,9 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
         cameFromX[startY][startX] = -1;
         cameFromY[startY][startX] = -1;
 
-        heap = new PriorityQueue<>();
+        heap = new MinimumHexEdgeHeap();
 
-        heap.add(new NextHexEdge(startX, startY, 0));
+        heap.insert(new NextHexEdge(startX, startY, 0));
 
         boolean found = false;
 
@@ -233,7 +231,7 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
 
             int priority = newDistance + heuristic;
 
-            heap.add(new NextHexEdge(newX, newY, priority));
+            heap.insert(new NextHexEdge(newX, newY, priority));
             cameFromX[newY][newX] = currentX;
             cameFromY[newY][newX] = currentY;
 
