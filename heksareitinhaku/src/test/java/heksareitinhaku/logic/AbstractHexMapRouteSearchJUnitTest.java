@@ -79,16 +79,19 @@ public abstract class AbstractHexMapRouteSearchJUnitTest {
     }
 
     @Test
+    public void findRouteReturnsRouteWithCorrectCostInMovementPoints() {
+        HexMapRouteSearch routeSearch = createRouteSearchWithUniformTerrainMock(4);
+        Route route = routeSearch.findRoute(8, 8, 2, 2);
+        assertEquals(36, route.getRouteCostInMovementPoints());
+    }
+
+    @Test
     public void findRouteReturnsRouteWithCorrectNumberOfHexesWhenMountainsOnTheWay()
             throws IOException {
 
         HexMapRouteSearch routeSearch
                 = createRouteSearchWithRealMap("src/test/resources/mountains.map");
         Route route = routeSearch.findRoute(6, 2, 6, 5);
-        for (int i = 0; i < route.getRoute().length; i++) {
-            System.out.println("reitti vuorten ympäri: ");
-            System.out.println("X: " + route.getRoute()[i][0] + " Y: " + route.getRoute()[i][1]);
-        }
 
         assertEquals(8, route.getRoute().length);
     }
@@ -108,6 +111,35 @@ public abstract class AbstractHexMapRouteSearchJUnitTest {
         }
         assertTrue(found);
 
+    }
+
+    @Test
+    public void findRouteReturnsRouteWithCorrectLengthIMovementPointsOnRealMap()
+            throws IOException {
+
+        HexMapRouteSearch routeSearch
+                = createRouteSearchWithRealMap("src/test/resources/bridgetest.map");
+
+        Route route = routeSearch.findRoute(6, 1, 6, 11);
+
+        for (int i = 0; i < route.getRoute().length; i++) {
+            System.out.println("X: " + route.getRoute()[i][0] + " Y: " + route.getRoute()[i][1]);
+        }
+
+        assertEquals(11, route.getRouteCostInMovementPoints());
+
+    }
+
+    @Test
+    public void findRouteReturnsRouteWithCorrectNumberOfHexesAndMovementPoints()
+            throws IOException {
+
+        HexMapRouteSearch routeSearch
+                = createRouteSearchWithRealMap("src/test/resources/mountains.map");
+        Route route = routeSearch.findRoute(6, 1, 6, 11);
+
+        assertEquals(13, route.getRoute().length);
+        assertEquals(13, route.getRouteCostInMovementPoints());
     }
 
 }

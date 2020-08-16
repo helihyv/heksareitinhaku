@@ -90,10 +90,6 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         //set search debth for the first round to the minimum possible distance
         int fLimit = heuristic(startX, startY, destinationX, destinationY);
 
-        for (CoordinateListItem node = fringe.getFirst(); node != null; node = node.getNext()) {
-            System.out.println("Listalla X: " + node.getX() + " Y: " + node.getY());
-        }
-
         while (!fringe.isEmpty() && !found) {
 
             int fMin = Integer.MAX_VALUE;
@@ -105,16 +101,11 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                 int currentX = head.getX();
                 int currentY = head.getY();
 
-                //               System.out.println("fLimit: " + fLimit);
-                System.out.println("Came to head X: " + currentX + " Y: " + currentY);
-//                System.out.println("Distance this far: " + distance[currentY][currentX]);
                 int f = distance[currentY][currentX]
                         + heuristic(currentX, currentY, destinationX, destinationY);
 
                 if (f > fLimit) {
-                    System.out.println("fmin before" + fMin);
                     fMin = SimpleMath.min(f, fMin);
-                    System.out.println("fmin after" + fMin);
                     head = head.getNext();
                     continue;
                 }
@@ -144,9 +135,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
                 }
 
                 CoordinateListItem oldHead = head;
-                System.out.println("Old head " + oldHead);
                 head = head.getNext();
-                System.out.println("New head " + head);
 
                 fringe.remove(oldHead);
 
@@ -166,14 +155,24 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         return new Route(plainRoute, distance[destinationY][destinationX]);
     }
 
-    private int heuristic(int currentX, int currentY, int destinationX, int destinationY) {
+    /**
+     * Returns the minimum possible distance betwwwen (x1,y1( and ((x2,y2) for
+     * use as heuristics. Uses Manhattan distance adapted to hex grid. (Which is
+     * minimum distance assuming all cost >< 1.
+     */
+    int heuristic(int x1, int y1, int x2, int y2) {
+        //transfor offset coordinates to cube coordinates
+        //X is fine as it is
+        int cubeZ1 = y1 - (x1 + (x1 & 1)) / 2;
+        int cubeZ2 = y2 - (x2 + (x2 & 1)) / 2;
+        int cubeY1 = -x1 - cubeZ1;
+        int cubeY2 = -x2 - cubeZ2;
 
-        // Reeturns a rough estimate of the minimum remaining distance to goal
-        // Mostly smaller than real miminam distance so not optimal but safe
-        return SimpleMath.max(
-                SimpleMath.abs(currentX - destinationX),
-                SimpleMath.abs(currentY - destinationY)
-        );
+        //return Manhattan distance based on cube coordinates
+        return ((SimpleMath.abs(x1 - x2)
+                + SimpleMath.abs(cubeY1 - cubeY2)
+                + SimpleMath.abs(cubeZ1 - cubeZ2))
+                / 2);
     }
 
     private void handleEdge(
