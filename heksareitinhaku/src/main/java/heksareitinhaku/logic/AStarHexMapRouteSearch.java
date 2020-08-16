@@ -59,7 +59,6 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
             int destinationX,
             int destinationY
     ) {
-        System.out.println("A*");
 
         int heigth = mapInterpreter.getHeigth();
         int width = mapInterpreter.getWidth();
@@ -209,13 +208,6 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
                 newX,
                 newY);
 
-        if (currentX == 6 && currentY == 6) {
-            System.out.println("Tässä menee pieleen");
-            System.out.println("newY " + newY + " newX: " + newX);
-            System.out.println("liikkumispiteitä tarvitaan " + movementPointsNeeded);
-
-        }
-
         if (movementPointsNeeded < 0) {
             //impossible to move along this edge
             return;
@@ -227,33 +219,14 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
                 = distance[currentY][currentX]
                 + movementPointsNeeded;
 
-        if (currentX == 6 && currentY == 6) {
-
-            System.out.println("new distance " + newDistance);
-            System.out.println("current distance to new" + currentDistance);
-            System.out.println(" distance to here" + distance[currentY][currentX]);
-            System.out.println((newDistance < currentDistance));
-            System.out.println(newDistance - currentDistance);
-
-        }
-
         if (newDistance < currentDistance) {
             distance[newY][newX] = newDistance;
-            System.out.println("Päästy");
 
             int priority = newDistance + heuristic(currentX, currentY, newX, newY);
 
             heap.insert(new NextHexEdge(newX, newY, priority));
             cameFromX[newY][newX] = currentX;
             cameFromY[newY][newX] = currentY;
-
-            if (currentX == 6 && currentY == 6) {
-                System.out.println("Tässä menee pieleen");
-                System.out.println("newY " + newY + " newX: " + newX);
-                System.out.println("old distance " + distance[currentY][currentX]);
-                System.out.println("new distance " + distance[newY][newX]);
-                System.out.println("Priority: " + priority);
-            }
 
         }
 
@@ -287,7 +260,7 @@ public class AStarHexMapRouteSearch implements HexMapRouteSearch {
     }
 
     /**
-     * Returns the mimimum possible distanve betwwwen (x1,y1( and ((x2,y2) for
+     * Returns the mimimum possible distanve betweeen (x1,y1( and ((x2,y2) for
      * use as heuristics. Uses Manhattan distance adapted to hex grid. (Which is
      * minimum distance assuming all cost >< 1.
      */

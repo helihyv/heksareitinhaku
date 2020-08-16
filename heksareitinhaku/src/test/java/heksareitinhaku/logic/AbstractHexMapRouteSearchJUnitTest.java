@@ -122,10 +122,6 @@ public abstract class AbstractHexMapRouteSearchJUnitTest {
 
         Route route = routeSearch.findRoute(6, 1, 6, 11);
 
-        for (int i = 0; i < route.getRoute().length; i++) {
-            System.out.println("X: " + route.getRoute()[i][0] + " Y: " + route.getRoute()[i][1]);
-        }
-
         assertEquals(11, route.getRouteCostInMovementPoints());
 
     }

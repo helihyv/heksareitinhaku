@@ -17,6 +17,7 @@
 package heksareitinhaku.logic;
 
 /**
+ * Minimum heap for NextHexEdges.
  *
  * @author Heli Hyvättinen
  */
@@ -33,10 +34,20 @@ public class MinimumHexEdgeHeap {
 
     }
 
+    /**
+     * Check whether the heap is epty
+     *
+     * @return true if heap is empty, fals eotherwise
+     */
     public boolean isEmpty() {
         return last == 0;
     }
 
+    /**
+     * Return the topmost (mininimum) NextHexEdge and removes it from the heap.
+     *
+     * @return The smallest item in heap before call
+     */
     public NextHexEdge poll() {
 
         if (last == 0) {
@@ -50,16 +61,16 @@ public class MinimumHexEdgeHeap {
         last--;
 
         lowerIfNeeded(1);
-        System.out.println("Heap after poll");
-        for (int i = 1; i <= last; i++) {
-            System.out.print(" " + heap[i].getPriority());
-        }
-        System.out.println("");
 
         return minimum;
 
     }
 
+    /**
+     * Inserts an new NexthHexEdge into the heap
+     *
+     * @param edge NextHexEdge to be inserted
+     */
     public void insert(NextHexEdge edge) {
 
         if (last == heap.length - 1) {
@@ -68,12 +79,6 @@ public class MinimumHexEdgeHeap {
 
         heap[++last] = edge;
         raiseIfNeeded(last);
-
-        System.out.println("Heap after insert");
-        for (int i = 1; i <= last; i++) {
-            System.out.print(" " + heap[i].getPriority());
-        }
-        System.out.println("");
 
     }
 
@@ -90,6 +95,7 @@ public class MinimumHexEdgeHeap {
             heap[index / 2] = current;
             raiseIfNeeded(index / 2);
         }
+
     }
 
     private void lowerIfNeeded(int index) {

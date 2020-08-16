@@ -49,12 +49,8 @@ public class MapUI {
 
         mapTileGroup.getChildren().clear();
 
-        System.out.println("Saavuttu ruuduon luomiseen 2");
-
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-
-                System.out.println("i: " + i + "j: " + j);
 
                 double x = j * radius * 1.5 + radius;
 
