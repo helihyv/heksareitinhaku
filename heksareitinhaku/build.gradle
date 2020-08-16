@@ -27,6 +27,13 @@ jacocoTestReport {
         xml.enabled = true
         html.enabled = true
     }
-}    
+    afterEvaluate {
 
-    check.dependsOn jacocoTestReport
+        classDirectories.setFrom (files(classDirectories.files.collect {
+                    fileTree(dir: it,
+                        exclude: ['**/performance/**','**/ui/**'])
+                }))
+    }
+}
+
+check.dependsOn jacocoTestReport
