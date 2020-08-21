@@ -16,3 +16,7 @@ Ohjelman syötteeksi käyvät [Battle for Wesnoth -pelin](https://www.wesnoth.or
 Hakemistossa heksareitinhaku/src/test/resources on testikarttoja, joilla ohjelmaa voi kokeilla.
 Lsiää karttoja löytyy [Battle for Wesnoth -pelin github-repositoriosta](https://github.com/wesnoth/wesnoth). Karttoja voisi myös tehdä peliin kuuluvalla karttaeditorilla, tosin se tuottaa vanhantyyppisiä karttoja. Niitä käytettessä pitäisi poistaa karttatiedoston alusta yleistiedot.
 
+## Ohjelman  käynnistäminen
+
+Ohjelman voi käynnistää komennolla ./gradlew run (Tai netbeansista jos gradle-tuki on käytössä ja ḱonfiguroitu käyttämään gradle wrapperia.)   
+
