@@ -213,7 +213,7 @@ public class MapUI {
                 return Color.CHOCOLATE;
 
             case 'C':
-                 return Color.GREY;
+                return Color.GREY;
 
             case 'K':
                 return Color.GREY;
