@@ -37,7 +37,14 @@ public class HexOutline extends Polygon {
 
     HexRouteSearchUI ui;
 
-    public HexOutline(double centerX, double centerY, HexRouteSearchUI ui, int indexX, int indexY) {
+    public HexOutline(
+            double centerX,
+            double centerY,
+            HexRouteSearchUI ui,
+            int indexX,
+            int indexY,
+            Color fill
+    ) {
 
         super(
                 centerX - (radius / 2), centerY - distanceToMiddleOfSide,
@@ -48,7 +55,7 @@ public class HexOutline extends Polygon {
                 centerX - radius, centerY
         );
 
-        setFill(Color.TRANSPARENT);
+        setFill(fill);
         unSelect();
 
         this.ui = ui;

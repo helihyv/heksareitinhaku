@@ -39,6 +39,7 @@ import heksareitinhaku.logic.WesnothMapInterpreter;
 import java.io.IOException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ScrollPane;
 
 /**
  * Käyttölittymän runko
@@ -154,6 +155,8 @@ public class HexRouteSearchUI extends Application {
 
         mapView = new MapUI(this);
 
+        ScrollPane scrolledMapView = new ScrollPane(mapView.getMapTileGroup());
+
         VBox mainLayout = new VBox(
                 guideText,
                 openMapFileButton,
@@ -163,7 +166,7 @@ public class HexRouteSearchUI extends Application {
                 aStarResultLabel,
                 fringeResultLabel,
                 newSearchButton,
-                mapView.getMapTileGroup()
+                scrolledMapView
         );
 
         Scene scene = new Scene(mainLayout, 1200, 800);

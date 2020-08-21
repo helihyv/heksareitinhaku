@@ -61,7 +61,9 @@ public class MapUI {
 
                 }
 
-                HexOutline hex = new HexOutline(x, y, parentUI, j, i);
+                Color fill = getTerrainColor(map[i][j]);
+
+                HexOutline hex = new HexOutline(x, y, parentUI, j, i, fill );
 
                 mapTileGroup.getChildren().add(hex);
 
@@ -142,6 +144,93 @@ public class MapUI {
                 routeMarks[i][j][algorithmIndex].setVisible(false);
             }
 
+        }
+    }
+
+    private Color getTerrainColor(String terrainCode) {
+
+        if (terrainCode.contains("B")) { //Rails are ignored for movementpoins,ignore here?
+
+            if (terrainCode.contains("/")) {
+
+            }
+
+            if (terrainCode.contains("/")) {
+
+            }
+
+            if (terrainCode.contains("|")) {
+
+            }
+
+            return Color.BEIGE;
+
+        }
+
+        if (terrainCode.contains("X")
+                || terrainCode.contains("Q")) {
+            return Color.BLACK;
+        }
+
+        if (terrainCode.contains("R")) {
+            return Color.BEIGE;
+        }
+
+        boolean forest = false;
+        if (terrainCode.contains("F")) {
+            forest = true;
+        }
+
+        switch (terrainCode.charAt(0)) {
+
+            case 'M':
+
+                return Color.gray(0.5);
+
+            case 'H':
+                if (forest) {
+                    return Color.DARKGREEN;
+                }
+                return Color.BROWN;
+
+            case 'W':
+                return Color.BLUE;
+
+            case 'A':
+                return Color.WHITE;
+
+            case 'D':
+                if (forest) {
+                    return Color.YELLOWGREEN;
+                }
+                return Color.YELLOW;
+
+            case 'S':
+
+                return Color.LIGHTBLUE;
+
+            case 'U':
+                return Color.CHOCOLATE;
+
+            case 'C':
+                 return Color.GREY;
+
+            case 'K':
+                return Color.GREY;
+
+            case 'G':
+                if (forest) {
+                    return Color.FORESTGREEN;
+                }
+
+                return Color.LIGHTGREEN;
+
+            default:
+
+                if (forest) {
+                    return Color.FORESTGREEN;
+                }
+                return Color.LIGHTGRAY;
         }
     }
 }
