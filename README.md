@@ -9,6 +9,8 @@
 
 [Viikkoraportti 4](dokumentaatio/viikkoraportti4.md)
 
+[Viikkoraportti 5](dokumentaatio/viikkoraportti5.md)
+
 ## Dokumentaatio
 
 [Määrittelydokumentti](dokumentaatio/määrittelydokumentti.md)
