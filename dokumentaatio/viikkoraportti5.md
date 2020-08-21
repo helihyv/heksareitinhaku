@@ -2,7 +2,7 @@
 
 ## Mitä tehty
 
-Tällä viikolla (la-pe) käytin projektiin, vertaisarviointi mukaanluettuna, n. 15   tuntia.                                                                                                                                                           Tällä viikolla olen toteuttanut oman keon ja sille testit. Lisäksi olen vaihtant käyttöön paremman heuristiikanlaskennan ja lisännyt reitinhakuluokille uusia testejä. Käyttöliittymän olen lisännyt karkean maastojen näyttämisen ja vierityspalkit kartan ympärille. Olen myös täydentänyt dokumentaatiota.
+Tällä viikolla (la-pe) käytin projektiin, vertaisarviointi mukaanluettuna, n. 16   tuntia.                                                                                                                                                           Tällä viikolla olen toteuttanut oman keon ja sille testit. Lisäksi olen vaihtant käyttöön paremman heuristiikanlaskennan ja lisännyt reitinhakuluokille uusia testejä. Käyttöliittymän olen lisännyt karkean maastojen näyttämisen ja vierityspalkit kartan ympärille. Olen myös täydentänyt dokumentaatiota.
 
 ## Miten edistytty
 
