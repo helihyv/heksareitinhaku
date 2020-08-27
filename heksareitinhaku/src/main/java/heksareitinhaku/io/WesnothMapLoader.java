@@ -61,14 +61,60 @@ public class WesnothMapLoader implements MapLoader {
 
         for (int i = 0; i < lineCount; i++) {
             line = reader.readLine();
-            String[] terrainCodes = line.split(",");
-            for (int j = 0; j < mapWidth; j++) {
-
-                map[i][j] = terrainCodes[j].strip();
-            }
+            separateTerrainCodesToMap(line, map, i);
         }
 
         return map;
 
     }
+
+    private void separateTerrainCodesToMap(
+            String terrainCodes,
+            String[][] map,
+            int lineNumber
+    ) {
+        int x = 0;
+        int charCount = 0;
+        char[] code = new char[terrainCodes.length()];
+
+        for (int i = 0; i < terrainCodes.length(); i++) {
+
+            char character = terrainCodes.charAt(i);
+
+            if (character == ',' || character == '\n') {
+
+                char[] readyCode = new char[charCount];
+                for (int j = 0; j < charCount; j++) {
+                    readyCode[j] = code[j];
+                }
+
+                String codeString = new String(readyCode);
+                map[lineNumber][x++] = codeString;
+                charCount = 0;
+                continue;
+            }
+
+            if (character != '_'
+                    && character != '/'
+                    && character != '|'
+                    && character != '\\'
+                    && character != '^'
+                    && !(character >= 'A' && character <= 'Z')
+                    && !(character >= 'a' && character <= 'z')) {
+                continue;
+            }
+
+            code[charCount++] = character;
+
+        }
+        char[] readyCode = new char[charCount];
+        for (int j = 0; j < charCount; j++) {
+            readyCode[j] = code[j];
+        }
+
+        String codeString = new String(readyCode);
+        map[lineNumber][x++] = codeString;
+
+    }
+
 }
