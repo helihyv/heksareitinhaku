@@ -20,7 +20,6 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Reads Battle for Wesnoth maps from files
@@ -44,32 +43,29 @@ public class WesnothMapLoader implements MapLoader {
 
         BufferedReader reader = new BufferedReader(fileReader);
 
-        String line;
-        ArrayList<String> lines = new ArrayList();
+        String line = reader.readLine();
 
-        line = reader.readLine();
+        int mapWidth = line.split(",").length;
+
+        int lineCount = 0;
+
         while (line != null) {
-            lines.add(line);
+            lineCount++;
             line = reader.readLine();
 
         }
+        fileReader = new FileReader(file);
+        reader = new BufferedReader(fileReader);
 
-        String[] terrainCodes = lines.get(0).split(",");
+        String[][] map = new String[lineCount][mapWidth];
 
-        int mapWidth = terrainCodes.length;
-        int mapHeigth = lines.size();
-
-        String[][] map = new String[mapHeigth][mapWidth];
-
-        for (int i = 0; i < mapHeigth; i++) {
-
-            terrainCodes = lines.get(i).split(",");
-
+        for (int i = 0; i < lineCount; i++) {
+            line = reader.readLine();
+            String[] terrainCodes = line.split(",");
             for (int j = 0; j < mapWidth; j++) {
 
                 map[i][j] = terrainCodes[j].strip();
             }
-
         }
 
         return map;
