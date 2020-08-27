@@ -36,77 +36,125 @@ import java.util.Random;
 public class PerformanceTester {
 
     private final int seed = 501;
-    private final int searchesPerMap = 100;
+    private final int searchesPerMap = 1000;
 
     private MapInterpreter[] mapInterpreters;
 
-    public void run() {
-        File dir = new File("src/test/resources/");
-        String[] filenames = dir.list();
+    public void run(String[] filenames) {
+        /*
         mapInterpreters = new MapInterpreter[filenames.length];
         HexMapRouteSearch[] djikstraSearches = new DjikstraHexMapRouteSearch[filenames.length];
         HexMapRouteSearch[] aStarSearches = new AStarHexMapRouteSearch[filenames.length];
         HexMapRouteSearch[] fringeSearches = new FringeHexMapRouteSearch[filenames.length];
-
-        MapLoader mapLoader = new WesnothMapLoader();
+         */
 
         for (int i = 0; i < filenames.length; i++) {
-
-            try {
-                File mapFile = new File(filenames[i]);
-                String[][] map = mapLoader.loadMap(mapFile);
-                MapInterpreter mapInterpreter = new WesnothMapInterpreter(map);
-                mapInterpreters[i] = mapInterpreter;
-                djikstraSearches[i] = new DjikstraHexMapRouteSearch(mapInterpreter);
-                aStarSearches[i] = new AStarHexMapRouteSearch(mapInterpreter);
-                fringeSearches[i] = new FringeHexMapRouteSearch(mapInterpreter);
-
-            } catch (IOException e) {
-                System.out.println("Virhe ladattaessa karttatiedostoa " + filenames[i]);
-            }
-
+            runTestsForSingleMap(filenames[i]);
         }
-
-        long djikstraTime = test(djikstraSearches);
-        long aStarTime = test(aStarSearches);
-        long fringeTime = test(fringeSearches);
-
-        System.out.println("Djikstran algoritmilla " + filenames.length * searchesPerMap
-                + " hun tekemiseen kului " + djikstraTime / 1e9 + " s.");
-
-        System.out.println("A*-algoritmilla " + filenames.length * searchesPerMap
-                + " hun tekemiseen kului " + djikstraTime / 1e9 + " s.");
-
-        System.out.println("Fringe search-algoritmilla " + filenames.length * searchesPerMap
-                + " hun tekemiseen kului " + djikstraTime / 1e9 + " s."
-        );
 
     }
 
-    private long test(HexMapRouteSearch[] routeSearchs) {
+    private void runTestsForSingleMap(String filename) {
+
+        MapLoader mapLoader = new WesnothMapLoader();
+
+        String[][] map = null;
+
+        try {
+            File mapFile = new File(filename);
+            map = mapLoader.loadMap(mapFile);
+        } catch (IOException e) {
+            System.out.println("Virhe ladattaessa karttatiedostoa " + filename);
+        }
+
+        if (map == null) {
+            return;
+        }
+
+        MapInterpreter mapInterpreter = new WesnothMapInterpreter(map);
+        DjikstraHexMapRouteSearch djikstraSearch = new DjikstraHexMapRouteSearch(mapInterpreter);
+        AStarHexMapRouteSearch aStarSearch = new AStarHexMapRouteSearch(mapInterpreter);
+        FringeHexMapRouteSearch fringeSearch = new FringeHexMapRouteSearch(mapInterpreter);
+
+        double[] djikstraResults = test(djikstraSearch, mapInterpreter.getWidth(), mapInterpreter.getHeigth());
+        double[] aStarResults = test(aStarSearch, mapInterpreter.getWidth(), mapInterpreter.getHeigth());
+        double[] fringeResults = test(fringeSearch, mapInterpreter.getWidth(), mapInterpreter.getHeigth());
+
+        System.out.println("Tehtiin " + searchesPerMap + " hakua kartalta "
+                + filename + ", koko " + mapInterpreter.getHeigth()
+                + " X " + mapInterpreter.getWidth());
+
+        System.out.println(
+                "Djikstran algoritmilla "
+                + " reitin hakemiseen kului keskimäärin" + djikstraResults[0] / 1e6 + " ms"
+                + " keskihajonnalla" + djikstraResults[1] / 1e6 + ".");
+
+        System.out.println(
+                "A*-algoritmilla "
+                + " reitin hakemiseen kului keskimäärin  " + aStarResults[0] / 1e6 + " ms"
+                + " keskihajonnalla " + aStarResults[1] / 1e6 + " .");
+
+        System.out.println(
+                "Fringe search-algoritmilla "
+                + " reitin hakemiseen kului keskimäärin " + fringeResults[0] / 1e6 + " ms"
+                + " keskihajonalla " + fringeResults[1] / 1e6 + ".");
+
+        System.out.println("");
+    }
+
+    private double[] test(HexMapRouteSearch routeSearch, int mapWidth, int mapHeigth) {
 
         Random rand = new Random(seed);
 
-        long start = System.nanoTime();
+        long totalTime = 0;
 
-        for (int i = 0; i < routeSearchs.length; i++) {
+        long[] results = new long[searchesPerMap];
 
-            HexMapRouteSearch routeSearch = routeSearchs[i];
-            int mapWidth = mapInterpreters[i].getWidth();
-            int mapHeigth = mapInterpreters[i].getHeigth();
-            for (int j = 0; j < searchesPerMap; j++) {
-                int startX = rand.nextInt(mapWidth);
-                int startY = rand.nextInt(mapHeigth);
-                int goalX = rand.nextInt(mapWidth);
-                int goalY = rand.nextInt(mapHeigth);
+        for (int i = 0; i < searchesPerMap; i++) {
+            int startX = rand.nextInt(mapWidth);
+            int startY = rand.nextInt(mapHeigth);
+            int goalX = rand.nextInt(mapWidth);
+            int goalY = rand.nextInt(mapHeigth);
 
-                routeSearchs[i].findRoute(startX, startY, goalX, goalY);
-            }
+            long start = System.nanoTime();
+            routeSearch.findRoute(startX, startY, goalX, goalY);
+            long end = System.nanoTime();
+
+            long time = end - start;
+            results[i] = time;
+            totalTime += time;
+
         }
 
-        long end = System.nanoTime();
+        double mean = totalTime / searchesPerMap;
 
-        return end - start;
+        double variance = 0;
+
+        for (int i = 0; i < searchesPerMap; i++) {
+            variance += (mean - results[i]) * (mean - results[i]);
+        }
+
+        variance /= searchesPerMap - 1;
+
+        double[] meanAndStandardDeviation = new double[2];
+        meanAndStandardDeviation[0] = mean;
+        meanAndStandardDeviation[1] = Math.sqrt(variance);
+
+        return meanAndStandardDeviation;
+    }
+
+    public static void main(String[] args) {
+        PerformanceTester tester = new PerformanceTester();
+
+        String[] mapfilenames = {
+            "data/large_maps/Kalian.map",
+            "data/large_maps/08b_Ray_of_Hope.map",
+            //       "data/large_maps/23_Test_of_the_Clans.map",
+            "data/medium_size_maps/02_The_Chase.map",
+            "data/medium_size_maps/03_The_Isle_of_Alduin.map"//,    "data/medium_size_maps/05_Northern_Outpost.map"
+        };
+
+        tester.run(mapfilenames);
     }
 
 }
