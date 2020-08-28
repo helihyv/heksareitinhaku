@@ -194,7 +194,7 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         }
         int newDistance = distance[currentY][currentX] + movementPointsNeeded;
 
-        if (newDistance > distance[newY][newX]) {
+        if (newDistance >= distance[newY][newX]) {
             return;
         }
 
