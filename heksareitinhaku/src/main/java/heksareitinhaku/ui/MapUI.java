@@ -228,50 +228,50 @@ public class MapUI {
     private Polygon drawBridgeIfNeeded(String terrainCode, double centerX, double centerY) {
 
 
-            if (!terrainCode.contains("B")) {
-                  return null;
-            }
+        if (!terrainCode.contains("B")) {
+            return null;
+        }
 
-            Polygon bridge = null;
+        Polygon bridge = null;
 
-            if (terrainCode.contains("/")) {
+        if (terrainCode.contains("/")) {
 
-                bridge = new Polygon(
-                centerX + (radius / 2), centerY - distanceToMiddleOfSide,
-                centerX + radius, centerY,
-                centerX - radius / 2, centerY + distanceToMiddleOfSide,
-                centerX - radius, centerY
+            bridge = new Polygon(
+            centerX + (radius / 2), centerY - distanceToMiddleOfSide,
+            centerX + radius, centerY,
+            centerX - radius / 2, centerY + distanceToMiddleOfSide,
+            centerX - radius, centerY
 
-                );
+            );
 
-            }
+        }
 
-            if (terrainCode.contains("\\")) {
+        if (terrainCode.contains("\\")) {
 
-                bridge = new Polygon(
-                centerX - (radius / 2), centerY - distanceToMiddleOfSide,
-                centerX + radius, centerY,
-                centerX + radius / 2, centerY + distanceToMiddleOfSide,
-                centerX - radius, centerY
+            bridge = new Polygon(
+            centerX - (radius / 2), centerY - distanceToMiddleOfSide,
+            centerX + radius, centerY,
+            centerX + radius / 2, centerY + distanceToMiddleOfSide,
+            centerX - radius, centerY
 
-                );
+            );
 
-            }
+        }
 
-            if (terrainCode.contains("|")) {
+        if (terrainCode.contains("|")) {
 
-                bridge = new Polygon(
-                centerX - (radius / 2), centerY - distanceToMiddleOfSide,
-                centerX + (radius / 2), centerY - distanceToMiddleOfSide,
-                centerX + radius / 2, centerY + distanceToMiddleOfSide,
-                centerX - radius / 2, centerY + distanceToMiddleOfSide
+            bridge = new Polygon(
+            centerX - (radius / 2), centerY - distanceToMiddleOfSide,
+            centerX + (radius / 2), centerY - distanceToMiddleOfSide,
+            centerX + radius / 2, centerY + distanceToMiddleOfSide,
+            centerX - radius / 2, centerY + distanceToMiddleOfSide
 
-                );
-            }
+            );
+        }
 
-            bridge.setFill(Color.BEIGE);
+        bridge.setFill(Color.BEIGE);
 
-            return bridge;
+        return bridge;
 
     }
 

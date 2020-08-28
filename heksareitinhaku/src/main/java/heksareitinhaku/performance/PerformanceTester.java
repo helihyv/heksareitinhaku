@@ -76,9 +76,12 @@ public class PerformanceTester {
         AStarHexMapRouteSearch aStarSearch = new AStarHexMapRouteSearch(mapInterpreter);
         FringeHexMapRouteSearch fringeSearch = new FringeHexMapRouteSearch(mapInterpreter);
 
-        double[] djikstraResults = test(djikstraSearch, mapInterpreter.getWidth(), mapInterpreter.getHeigth());
-        double[] aStarResults = test(aStarSearch, mapInterpreter.getWidth(), mapInterpreter.getHeigth());
-        double[] fringeResults = test(fringeSearch, mapInterpreter.getWidth(), mapInterpreter.getHeigth());
+        double[] djikstraResults
+                = test(djikstraSearch, mapInterpreter.getWidth(), mapInterpreter.getHeigth());
+        double[] aStarResults
+                = test(aStarSearch, mapInterpreter.getWidth(), mapInterpreter.getHeigth());
+        double[] fringeResults
+                = test(fringeSearch, mapInterpreter.getWidth(), mapInterpreter.getHeigth());
 
         System.out.println("Tehtiin " + searchesPerMap + " hakua kartalta "
                 + filename + ", koko " + mapInterpreter.getHeigth()
@@ -149,9 +152,10 @@ public class PerformanceTester {
         String[] mapfilenames = {
             "data/large_maps/Kalian.map",
             "data/large_maps/08b_Ray_of_Hope.map",
-            //       "data/large_maps/23_Test_of_the_Clans.map",
+            "data/large_maps/23_Test_of_the_Clans.map",
             "data/medium_size_maps/02_The_Chase.map",
-            "data/medium_size_maps/03_The_Isle_of_Alduin.map"//,    "data/medium_size_maps/05_Northern_Outpost.map"
+            "data/medium_size_maps/03_The_Isle_of_Alduin.map",
+            "data/medium_size_maps/05_Northern_Outpost.map"
         };
 
         tester.run(mapfilenames);
