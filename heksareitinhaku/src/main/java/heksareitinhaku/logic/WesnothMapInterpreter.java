@@ -221,7 +221,7 @@ public class WesnothMapInterpreter implements MapInterpreter {
                 if (bridgeHexX % 2 == 0) {
                     if ((otherHexY == bridgeHexY && otherHexX == bridgeHexX - 1)
                             || (otherHexY == bridgeHexY + 1
-                            && otherHexX == bridgeHexY + 1)) {
+                            && otherHexX == bridgeHexX + 1)) {
                         return 1;
                     }
 
@@ -229,7 +229,7 @@ public class WesnothMapInterpreter implements MapInterpreter {
                 }
 
                 if ((otherHexY == bridgeHexY - 1 && otherHexX == bridgeHexX - 1)
-                        || (otherHexY == bridgeHexY + 1
+                        || (otherHexY == bridgeHexY
                         && otherHexX == bridgeHexX + 1)) {
                     return 1;
                 }
