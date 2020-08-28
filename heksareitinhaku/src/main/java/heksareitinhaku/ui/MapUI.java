@@ -19,6 +19,7 @@ package heksareitinhaku.ui;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 
 /**
  *
@@ -27,6 +28,8 @@ import javafx.scene.shape.Circle;
 public class MapUI {
 
     private final static double radius = 20;
+    //approximate of (radius * square root of 3) / 2
+    private final static double distanceToMiddleOfSide = 0.866 * radius;
 
     private Group mapTileGroup;
 
@@ -66,6 +69,12 @@ public class MapUI {
                 HexOutline hex = new HexOutline(x, y, parentUI, j, i, fill );
 
                 mapTileGroup.getChildren().add(hex);
+
+                Polygon bridge = drawBridgeIfNeeded(map[i][j], x, y);
+
+                if (bridge != null) {
+                    mapTileGroup.getChildren().add(bridge);
+                }
 
                 createRouteMarks(x, y, i, j);
 
@@ -149,24 +158,6 @@ public class MapUI {
 
     private Color getTerrainColor(String terrainCode) {
 
-        if (terrainCode.contains("B")) { //Rails are ignored for movementpoins,ignore here?
-
-            if (terrainCode.contains("/")) {
-
-            }
-
-            if (terrainCode.contains("/")) {
-
-            }
-
-            if (terrainCode.contains("|")) {
-
-            }
-
-            return Color.BEIGE;
-
-        }
-
         if (terrainCode.contains("X")
                 || terrainCode.contains("Q")) {
             return Color.BLACK;
@@ -233,4 +224,55 @@ public class MapUI {
                 return Color.LIGHTGRAY;
         }
     }
+
+    private Polygon drawBridgeIfNeeded(String terrainCode, double centerX, double centerY) {
+
+
+            if (!terrainCode.contains("B")) {
+                  return null;
+            }
+
+            Polygon bridge = null;
+
+            if (terrainCode.contains("/")) {
+
+                bridge = new Polygon(
+                centerX + (radius / 2), centerY - distanceToMiddleOfSide,
+                centerX + radius, centerY,
+                centerX - radius / 2, centerY + distanceToMiddleOfSide,
+                centerX - radius, centerY
+
+                );
+
+            }
+
+            if (terrainCode.contains("\\")) {
+
+                bridge = new Polygon(
+                centerX - (radius / 2), centerY - distanceToMiddleOfSide,
+                centerX + radius, centerY,
+                centerX + radius / 2, centerY + distanceToMiddleOfSide,
+                centerX - radius, centerY
+
+                );
+
+            }
+
+            if (terrainCode.contains("|")) {
+
+                bridge = new Polygon(
+                centerX - (radius / 2), centerY - distanceToMiddleOfSide,
+                centerX + (radius / 2), centerY - distanceToMiddleOfSide,
+                centerX + radius / 2, centerY + distanceToMiddleOfSide,
+                centerX - radius / 2, centerY + distanceToMiddleOfSide
+
+                );
+            }
+
+            bridge.setFill(Color.BEIGE);
+
+            return bridge;
+
+    }
+
 }
