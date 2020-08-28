@@ -4,7 +4,9 @@
 
 Tällä viikolla olen korvannut tiedostonlukuluokasta ArrayList:in tavallisella taulukolla, jonka koko selvitetän lukemalla tiedosto kerran läpi. Samasta luokasta korvasin  String::split() :nja String::strip():n käytön funktiolla, joka käy rivin merkki kerrallan läpi. 
 
-Olen myös jatkanut suorituskykytestien toteuttamista ja korjannut siltojen käsitteöyssä olleen virheen.
+Olen myös jatkanut suorituskykytestien toteuttamista ja korjannut siltojen käsitteöyssä olleet virheet.
+
+Käyttöliittymään toteutin siltojen piirtömisen niin, että niiden suunta on näkyvissä.
 
 ## Miten edistytty
 
@@ -12,13 +14,13 @@ Javan valmiit tetorakenteet on nyt kaikki korvattu joko omilla toteutuksilla (ke
 
 Suorituskykytetsit tekevät nyt 1000 (samaa) satunnaista hakua kullekin algoritmille annettua kartaa kohden ja raportoivat keskimääräisen hakuun kuluneen ajan ja keskihajonnan. Suorituskykytestit ajetaan vielä netbeansistä käsin Run file-toiminnolla.
 
-Karttatulkki on nyt valmis. 
+Karttatulkki on nyt valmis. Samoin käyttöliittymä. 
 
 Fringe search-algoritmi tarvitsee vielä korjausta.
 
 ## Mitä opin
 
-Keskihajonnan laskemista.
+Opin tällä viikolla lisää suortuskykytestien tekemisestä ja keskihajonnan laskemisesta.
 
 ## Epäselvyyksiä, vaikeuksia, kysymyksiä
 
