@@ -88,17 +88,17 @@ public class PerformanceTester {
                 + " X " + mapInterpreter.getWidth());
 
         System.out.println(
-                "Djikstran algoritmilla "
-                + " reitin hakemiseen kului keskimäärin" + djikstraResults[0] / 1e6 + " ms"
+                "Djikstran algoritmilla"
+                + " reitin hakemiseen kului keskimäärin " + djikstraResults[0] / 1e6 + " ms"
                 + " keskihajonnalla" + djikstraResults[1] / 1e6 + ".");
 
         System.out.println(
-                "A*-algoritmilla "
-                + " reitin hakemiseen kului keskimäärin  " + aStarResults[0] / 1e6 + " ms"
+                "A*-algoritmilla"
+                + " reitin hakemiseen kului keskimäärin " + aStarResults[0] / 1e6 + " ms"
                 + " keskihajonnalla " + aStarResults[1] / 1e6 + " .");
 
         System.out.println(
-                "Fringe search-algoritmilla "
+                "Fringe search-algoritmilla"
                 + " reitin hakemiseen kului keskimäärin " + fringeResults[0] / 1e6 + " ms"
                 + " keskihajonalla " + fringeResults[1] / 1e6 + ".");
 
