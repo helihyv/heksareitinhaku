@@ -29,7 +29,6 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
     private CoordinateList fringe;
     private CoordinateListItem[][] nodes;
     private boolean[][] onList;
-    private boolean[][] visited;
     private int cameFromX[][];
     private int cameFromY[][];
     private int distance[][];
@@ -78,7 +77,6 @@ public class FringeHexMapRouteSearch implements HexMapRouteSearch {
         distance[startY][startX] = 0;
         onList = new boolean[height][width];
         onList[startY][startX] = true;
-        visited = new boolean[height][width];
         cameFromX = new int[height][width];
         cameFromX[startY][startX] = -1;
         cameFromY = new int[height][width];
