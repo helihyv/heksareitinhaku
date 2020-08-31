@@ -123,17 +123,13 @@ public class WesnothMapInterpreter implements MapInterpreter {
         int fromOverlay = extractOverlay(fromHex);
 
         if (overlay == 'B') { //Bridges
-            if (toHex.charAt(1) == 'r') { //mine rail, move like under ground
-
-                return 3;
-            }
             int bridgeMovementPoints = handleBridge(toHex, toX, toY, fromX, fromY);
 
             return bridgeMovementPoints;
 
         }
-        if (fromHex.charAt(0) == 'B' && fromHex.charAt(1) != 'r') {
-            //Bridges, but not mine rails that also start with B!
+        if (fromOverlay == 'B') {
+
             if (handleBridge(fromHex, fromX, fromY, toX, toY) < 0) {
                 return -1;
             }
