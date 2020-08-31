@@ -16,4 +16,10 @@ Karttatulkkia on testattu käyttäen syötteenä pieniä testiluokan sisään to
 
 ## Suoritusykytestit
 
-Reitinhakualgoritmeja varten on alettu toteuttamaan suorituskykytestejä. Keskeneräinen alustava suorituskykytesti löytyy pakkauksesta performance. Testissä tehdään samat satunnaiset reitinhaut (100 per kartta, kartat puuttuvat vielä) kaikilla kolmella algoritmilla ja mitataan niihin yhteensä kuluva aika. Nämä testit eivät ole vielä ajettavissa.
+Reitinhakualgoritmeja varten on toteuttu suorituskykytestejä. Vielä hiean keskeneräinen uorituskykytesti löytyy pakkauksesta performance. Testissä tehdään samat satunnaiset reitinhaut (1000 per kartta, kartat toistaiseksi kiinteästi määritetty.) Kaikilla kolmella algoritmilla mitataan hakuihin keskimäärin  kuluva aika ja sen keskihajonta. Nämä testit ovat ajettavissa vasta netbeansin Run file -toiminnolla.
+
+Suorituskykytestit ajettiin fuksilaitteella vuosimallia 2019 (Thinkpad-kannettava). 
+
+Huolimatta suurimmasta O-arvostaan fringe search-algoritmin oli nopein kaikilla kuudella testatulla kartalla, useimmiten selvällä erolla. Tämä vastaa algoritmin kehittäjien saamia tuloksia. A* oli toiseksi nopein viidellä kartalla. Yhdellä kartalla Djikstran algoritmi oli hieman nopeampi kuin A*. Reitihhakuun kuluvaa aikaa määrittleli kuitenkin enemmän kartan koko kuin käytetty algoritmi. Hajonnat olivat ymmärettäävästi suuria suhteessa keskimääräiseen käytettyyn aikaam.
+
+

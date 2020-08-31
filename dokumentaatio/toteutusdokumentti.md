@@ -28,17 +28,18 @@ Algorritmi käyttää useita aputaulukoita ja kekoa ja käsiteltävistä kaarist
 
 ### A*-algoritmi
 
-A*-algoritmi on toiminnaltaan hyvin lähellä Djikstran algoritmia. Ainoa ero, joka voisi vaikuttaa aikavaativuuteen on heuristiikan laskeminen. Heuristiikkana käytetään pienintä mahdollista jäljelläolevaa etäisyyttä, joka on laskettu muuntamalla koordinaatit kuutiokoordinaateiksi ja laskemalla näiden kuutiokoordinaattien etäisyys. Tämä lasketaan ajassa O(1), joten A*-algoritmin aikavaativuus on sama kuin Djikstran algoritmilla, O(n+nlog(n)). A*-algoritmi käyttää samoja tietorakenteta kuin Djikstran algoritmi, joten sen tilavaativuus on sama kuin Djikstran algoritmillla eli O(n).
+A*-algoritmi on toiminnaltaan hyvin lähellä Djikstran algoritmia. Ainoa ero, joka voisi vaikuttaa aikavaativuuteen on heuristiikan laskeminen. Heuristiikkana käytetään pienintä mahdollista jäljelläolevaa etäisyyttä, joka on laskettu muuntamalla koordinaatit kuutiokoordinaateiksi ja laskemalla näiden kuutiokoordinaattien etäisyys. Tämä lasketaan ajassa O(1), joten A*-algoritmin aikavaativuus on sama kuin Djikstran algoritmilla, O(n+nlog(n)). A*-algoritmi käyttää samoja tietorakenteta kuin Djikstran algoritmi, joten sen tilavaativuus on sama kuin Djikstran algoritmillla eli O(n+log(n)).
 
 ### Fringe Search -algoritmi
 
-Fringe search -algortmi tutkii pintapuolisesti osan solmuista useamman kerran. Pahimmillaan se voisi teoriassa käydä jokaisen tutkimansa solmun kohdalla muut solmut lyhyesti läpi. Toisaalta se ei kuluta aikaa järjestyksen ylläpitoon. Kutakin solmua tutkittaessa käytetään aputaulukoita (O(1)) ja  saatetaan lisätä ja poistaa linkitetystä listasta (molemmat O(1)). Heuristiikka lasketaan samalla menetelmällä kuin A*-algoritmissa, joten heuristiikan laskemisen aikavaativuus on O(1). Fringe Search algoritmin toteutuksessa saavutettu aikavaativuus on O(n^2 ). 
+Fringe search -algortmi tutkii pintapuolisesti osan solmuista useamman kerran. Pahimmillaan se voisi teoriassa käydä jokaisen tutkimansa solmun kohdalla muut solmut lyhyesti läpi. Toisaalta se ei kuluta aikaa järjestyksen ylläpitoon. Kutakin solmua tutkittaessa käytetään aputaulukoita (O(1)) ja  saatetaan lisätä ja poistaa linkitetystä listasta (molemmat O(1)). Heuristiikka lasketaan samalla menetelmällä kuin A*-algoritmissa, joten heuristiikan laskemisen aikavaativuus on O(1). Käytössä on sama karttatulki mkuin muillakin algoritmeilla. Fringe Search algoritmin toteutuksessa saavutettu aikavaativuus on O(n^2). 
 
-Algoritmi tarvitsee useita aputaulukkoja, joiden kaikkien tilantarve saadaan suoraan kartan koosta ja linkitetyn listan, jolla kukin solmu voi olla samanaikaisesti vain kerran. Saavutettu tilavaativuus on O(n), tosin melko suurella kertoimella, sillä jokaista solmua kohden luodaan olio.
+Algoritmi tarvitsee useita aputaulukkoja, joiden kaikkien tilantarve saadaan suoraan kartan koosta ja linkitetyn listan, jolla kukin solmu voi olla samanaikaisesti vain kerran. Kaikkia solmuja kohden luodaan kuitenkin olio, sillä niistä pidetään nopean haun mahdollistavaa aputaulukkoa. Saavutettu tilavaativuus on O(n), tosin melko suurella kertoimella.
 
 ## Suorituskyky ja O-analyysivertailu totetutettujen reitinhakualgoritmien väilllä
 
 ## Puutteita ja parannusehdotuksia
+
 
 ## Lähteet
 
