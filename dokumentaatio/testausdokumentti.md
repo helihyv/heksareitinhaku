@@ -16,11 +16,11 @@ Karttatulkkia on testattu käyttäen syötteenä pieniä testiluokan sisään to
 
 Testikattavuus paketeittain:
 
-![testikattavuus paketeittain](dokumentaatio/testikattavuus_paketeitain.png)
+![testikattavuus paketeittain](/dokumentaatio/testikattavuus_paketeittain.png)
 
 Logic-paketin testikattavuus luokittain: 
 
-![logic-paketin testikattavuus luokittain](dokumentaatio/testikattavuus_logic.png)
+![logic-paketin testikattavuus luokittain](/dokumentaatio/testikattavuus_logic.png)
 
 
 ## Suoritusykytestit
@@ -29,6 +29,6 @@ Reitinhakualgoritmeja varten on toteuttu suorituskykytestejä. Vielä hiean kesk
 
 Suorituskykytestit ajettiin fuksilaitteella vuosimallia 2019 (Thinkpad-kannettava). 
 
-Huolimatta suurimmasta O-arvostaan fringe search-algoritmin oli kuudesta testatusta kartasta viidellä selvästi nopein. Yhdellä kartoista kaikki kolme algoritmia olivat käytännöllisesti katsoen yhtä nopeita. Tämä kartta koostui enmmäkseen kapeahkpista käytävistä. A* oli joillain kartoilla nopeampi kuin Djikstran algoritmi, joillain ne olivat hyvin tasaväkiset. Reitihhakuun kuluvaa aikaa määrittleli kuitenkin enemmän kartan kulkukelpoisen alueen koko kuin käytetty algoritmi. Hajonnat olivat ymmärettäävästi suuria suhteessa keskimääräiseen käytettyyn aikaam.
+Huolimatta suurimmasta O-arvostaan fringe search-algoritmi oli kuudesta testatusta kartasta viidellä selvästi nopein. Yhdellä kartoista kaikki kolme algoritmia olivat käytännöllisesti katsoen yhtä nopeita. Tämä kartta koostui enmmäkseen kapeahkoista käytävistä. A* oli joillain kartoilla nopeampi kuin Djikstran algoritmi, joillain ne olivat hyvin tasaväkiset. Reitinhakuun kuluvaa aikaa määritteli kuitenkin enemmän kartan kulkukelpoisen alueen koko kuin käytetty algoritmi. Hajonnat olivat ymmärettävästi suuria suhteessa keskimääräiseen käytettyyn aikaan.
 
 
