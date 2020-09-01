@@ -14,6 +14,15 @@ Linkitetyä listaa on testattu yhdessä se alkioina käytettävän CoordinatList
 
 Karttatulkkia on testattu käyttäen syötteenä pieniä testiluokan sisään toteutettuja karttoja.
 
+Testikattavuus paketeittain:
+
+![testikattavuus paketeittain](dokumentaatio/testikattavuus_paketeitain.png)
+
+Logic-paketin testikattavuus luokittain: 
+
+![logic-paketin testikattavuus luokittain](dokumentaatio/testikattavuus_logic.png)
+
+
 ## Suoritusykytestit
 
 Reitinhakualgoritmeja varten on toteuttu suorituskykytestejä. Vielä hiean keskeneräinen uorituskykytesti löytyy pakkauksesta performance. Testissä tehdään samat satunnaiset reitinhaut (1000 per kartta, kartat toistaiseksi kiinteästi määritetty.) Kaikilla kolmella algoritmilla mitataan hakuihin keskimäärin kuluva aika ja sen keskihajonta. Nämä testit ovat toistaiseksi ajettavissa vasta netbeansin Run file -toiminnolla.
