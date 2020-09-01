@@ -16,10 +16,10 @@ Karttatulkkia on testattu käyttäen syötteenä pieniä testiluokan sisään to
 
 ## Suoritusykytestit
 
-Reitinhakualgoritmeja varten on toteuttu suorituskykytestejä. Vielä hiean keskeneräinen uorituskykytesti löytyy pakkauksesta performance. Testissä tehdään samat satunnaiset reitinhaut (1000 per kartta, kartat toistaiseksi kiinteästi määritetty.) Kaikilla kolmella algoritmilla mitataan hakuihin keskimäärin  kuluva aika ja sen keskihajonta. Nämä testit ovat ajettavissa vasta netbeansin Run file -toiminnolla.
+Reitinhakualgoritmeja varten on toteuttu suorituskykytestejä. Vielä hiean keskeneräinen uorituskykytesti löytyy pakkauksesta performance. Testissä tehdään samat satunnaiset reitinhaut (1000 per kartta, kartat toistaiseksi kiinteästi määritetty.) Kaikilla kolmella algoritmilla mitataan hakuihin keskimäärin kuluva aika ja sen keskihajonta. Nämä testit ovat toistaiseksi ajettavissa vasta netbeansin Run file -toiminnolla.
 
 Suorituskykytestit ajettiin fuksilaitteella vuosimallia 2019 (Thinkpad-kannettava). 
 
-Huolimatta suurimmasta O-arvostaan fringe search-algoritmin oli nopein kaikilla kuudella testatulla kartalla, useimmiten selvällä erolla. Tämä vastaa algoritmin kehittäjien saamia tuloksia. A* oli toiseksi nopein viidellä kartalla. Yhdellä kartalla Djikstran algoritmi oli hieman nopeampi kuin A*. Reitihhakuun kuluvaa aikaa määrittleli kuitenkin enemmän kartan koko kuin käytetty algoritmi. Hajonnat olivat ymmärettäävästi suuria suhteessa keskimääräiseen käytettyyn aikaam.
+Huolimatta suurimmasta O-arvostaan fringe search-algoritmin oli kuudesta testatusta kartasta viidellä selvästi nopein. Yhdellä kartoista kaikki kolme algoritmia olivat käytännöllisesti katsoen yhtä nopeita. Tämä kartta koostui enmmäkseen kapeahkpista käytävistä. A* oli joillain kartoilla nopeampi kuin Djikstran algoritmi, joillain ne olivat hyvin tasaväkiset. Reitihhakuun kuluvaa aikaa määrittleli kuitenkin enemmän kartan kulkukelpoisen alueen koko kuin käytetty algoritmi. Hajonnat olivat ymmärettäävästi suuria suhteessa keskimääräiseen käytettyyn aikaam.
 
 
