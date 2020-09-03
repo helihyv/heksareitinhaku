@@ -176,7 +176,7 @@ public class MapUI {
 
             case 'M':
 
-                return Color.gray(0.5);
+                return Color.gray(0.4);
 
             case 'H':
                 if (forest) {
@@ -204,10 +204,10 @@ public class MapUI {
                 return Color.CHOCOLATE;
 
             case 'C':
-                return Color.GREY;
+                return Color.gray(0.7);
 
             case 'K':
-                return Color.GREY;
+                return Color.gray(0.6);
 
             case 'G':
                 if (forest) {
@@ -221,7 +221,7 @@ public class MapUI {
                 if (forest) {
                     return Color.FORESTGREEN;
                 }
-                return Color.LIGHTGRAY;
+                return Color.gray(0.8);
         }
     }
 
