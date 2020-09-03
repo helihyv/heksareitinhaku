@@ -37,3 +37,14 @@ jacocoTestReport {
 }
 
 check.dependsOn jacocoTestReport
+
+task performanceTesterJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'heksareitinhaku.performance.PerformanceTester'
+
+    }
+    baseName =  'performanceTester'
+    from configurations.compile.collect {it.isDirectory() ? it : zipTree(it)}
+    with jar
+
+}
