@@ -1,16 +1,15 @@
 # Toteutusdokumentti – Heksareitinhaku
 
-Ohjelma hakee annatulta  [Battle for Wesnoth -pelin](https://www.wesnoth.org/) kartalta lyhimmän reitin annetusta alkupisteestä annettuun kohteeseen. Ohjelma käyttää kolmea reitinhakualgoritmia: Djikstran algoritmia, A*-algoritmia ja Fringe Search-algoritmia. 
+Ohjelma hakee annetulta [Battle for Wesnoth -pelin](https://www.wesnoth.org/) kartalta lyhimmän reitin annetusta alkupisteestä annettuun kohteeseen. Ohjelma käyttää kolmea reitinhakualgoritmia: Djikstran algoritmia, A*-algoritmia ja Fringe Search-algoritmia. 
 Eri maastoille annetut liikkumispistevaatimukset ovat ohjelman omia, eivät Battle for Wesnoth -pelin käyttämiä. 
 
-Kaikkien algoritmien hakemat reitit näytetään kartalla. Koska Battle for Wesnoth -pelissä on maastojen esittämiseen yli 4000 kuvatiedostoa ja tietyssä heksassa olevan maaston ulkonäköön vaikuttavat myös viereisten heksojen maastot, ei tässä työssä ollut mielekästä yrittää esittää karttoja sellaisina kuin ne pelissä näkyvät. Sen sijaan maastot esitetään karkeasti maastotyypeittäin heksojen väreinä kartalla. Kaikkien algorimien hakemien reittien pituudet liikkumispisteinä ja reitin hakemiseen kulunut aika näytetän myös.
+Kaikkien algoritmien hakemat reitit näytetään kartalla. Koska Battle for Wesnoth -pelissä on maastojen esittämiseen yli 4000 kuvatiedostoa ja tietyssä heksassa olevan maaston ulkonäköön vaikuttavat myös viereisten heksojen maastot, ei tässä työssä ollut mielekästä yrittää esittää karttoja sellaisina kuin ne pelissä näkyvät. Sen sijaan maastot esitetään karkeasti maastotyypeittäin heksojen väreinä kartalla. Kaikkien algorimien hakemien reittien pituudet liikkumispisteinä ja reittien hakemiseen kuluneet ajat näytetään myös.
 
 ## Ohjelman yleisrakenne
 
 Varsinainen ohjelma on jaettu kolmeen pakkaukseen: sovelluslogiikalle, tiedostonkäsittelylle ja käyttöliittymälle on omat pakkauksensa. Lisäksi on oma performance -pakkauksensa suoritusykytesteille.
 
-Sovelluslogiikkkaan kuuluvat toteutetut tietorakenteet (linkitetty lista ja minimikeko), vertailtavat algoritmit toteuttavat luokat ja kaikkien vertailualgoritmien käyttämä karttatulkkiluokka. Karttatulkki kertoo reitinhakuolioille kartan koon ja kartan heksasta toiseen siirtymisen vaatimat liikkumispisteet. Lisäksi pakkauksessa on oma luokka matetmaattisille apufunktioille.  
-
+Sovelluslogiikkkaan kuuluvat toteutetut tietorakenteet (linkitetty lista ja minimikeko) sekä niiden alkioina toimivat luokat, vertailtavat algoritmit toteuttavat luokat ja kaikkien vertailualgoritmien käyttämä karttatulkkiluokka. Karttatulkki kertoo reitinhakuolioille kartan koon ja kartan heksasta toiseen siirtymisen vaatimat liikkumispisteet. Lisäksi pakkauksessa on oma luokka matemaattisille apufunktioille.  
 
 ## Saavutetut aika- ja tilavaativuudet
 
@@ -24,25 +23,27 @@ Fringe Search -algoritmia varten on toteutettu kaksisuuntaisesti linkitetty list
 
 ### Djikstran algoritmi
 
-Algorritmi käyttää useita aputaulukoita ja kekoa ja käsiteltävistä kaarista luodoaan oliot. Kaaria on solmua kohti enintään kuusi. Tilavaativuus on O(n) melko suurella kertoimella. Tutkittavia kaaria on kiinteästi kuusi solmua kohden (kartan rajojen tarkistaminen on jätetty karttatulkin vastuulle). Karttatulkki käy läpi lähtöheksan ja kohdeheksan maastokoodit joka kerta selvittäessään vaadittavaa liikkumispistemäärää. Maastokoodien pituus vaihtelee, mutta on ainakin useimmiten alle 10 merkkiä, joten maastokoodien käsittely voitaneen katsoa vakiokertoimeksi. Käsittelyä odottavat kaaret tallennetaan kekoon, jonka operaatioiden aikavaativuus on O(log(n)). Algoritmin aikavaativuus on siten O(n+log(n)) melko suurella kertoimella
+Djikstran algoritmi käyttää useita aputaulukoita ja kekoa ja käsiteltävistä kaarista luodoaan oliot.  Tutkittavia kaaria on kiinteästi kuusi solmua kohden (kartan rajojen tarkistaminen on jätetty karttatulkin vastuulle). Tilavaativuus on O(n) melko suurella kertoimella.
+
+Karttatulkki käy läpi lähtöheksan ja kohdeheksan maastokoodit joka kerta selvittäessään vaadittavaa liikkumispistemäärää. Maastokoodien pituus vaihtelee, mutta on ainakin useimmiten alle 10 merkkiä, joten maastokoodien käsittely voitaneen katsoa vakiokertoimeksi. Käsittelyä odottavat kaaret tallennetaan kekoon, jonka operaatioiden aikavaativuus on O(log(n)). Algoritmin aikavaativuus on siten O(n+log(n)) melko suurella kertoimella
 
 ### A*-algoritmi
 
-A*-algoritmi on toiminnaltaan hyvin lähellä Djikstran algoritmia. Ainoa ero, joka voisi vaikuttaa aikavaativuuteen on heuristiikan laskeminen. Heuristiikkana käytetään pienintä mahdollista jäljelläolevaa etäisyyttä, joka on laskettu muuntamalla koordinaatit kuutiokoordinaateiksi ja laskemalla näiden kuutiokoordinaattien etäisyys. Tämä lasketaan ajassa O(1), joten A*-algoritmin aikavaativuus on sama kuin Djikstran algoritmilla, O(n+nlog(n)). A*-algoritmi käyttää samoja tietorakenteta kuin Djikstran algoritmi, joten sen tilavaativuus on sama kuin Djikstran algoritmillla eli O(n+log(n)).
+A*-algoritmi on toiminnaltaan hyvin lähellä Djikstran algoritmia. Ainoa ero, joka voisi vaikuttaa aikavaativuuteen on heuristiikan laskeminen. Heuristiikkana käytetään pienintä mahdollista jäljelläolevaa etäisyyttä, joka on laskettu muuntamalla koordinaatit kuutiokoordinaateiksi ja laskemalla näiden kuutiokoordinaattien etäisyys. Tämä lasketaan ajassa O(1), joten A*-algoritmin aikavaativuus on sama kuin Djikstran algoritmilla, O(n+nlog(n)). A*-algoritmi käyttää samoja tietorakenteta kuin Djikstran algoritmi, joten sen tilavaativuus on sama kuin Djikstran algoritmillla eli O(n).
 
 ### Fringe Search -algoritmi
 
-Fringe search -algortmi tutkii pintapuolisesti osan solmuista useamman kerran. Pahimmillaan se voisi teoriassa käydä jokaisen tutkimansa solmun kohdalla muut solmut lyhyesti läpi. Toisaalta se ei kuluta aikaa järjestyksen ylläpitoon. Kutakin solmua tutkittaessa käytetään aputaulukoita (O(1)) ja  saatetaan lisätä ja poistaa linkitetystä listasta (molemmat O(1)). Heuristiikka lasketaan samalla menetelmällä kuin A*-algoritmissa, joten heuristiikan laskemisen aikavaativuus on O(1). Käytössä on sama karttatulki mkuin muillakin algoritmeilla. Fringe Search algoritmin toteutuksessa saavutettu aikavaativuus on O(n<sup>2</sup>). 
+Fringe search -algoritmi tutkii pintapuolisesti osan solmuista useamman kerran. Pahimmillaan se voisi teoriassa käydä jokaisen tutkimansa solmun kohdalla muut solmut lyhyesti läpi. Toisaalta se ei kuluta aikaa järjestyksen ylläpitoon. Kutakin solmua tutkittaessa käytetään aputaulukoita (O(1)) ja  saatetaan lisätä ja poistaa linkitetystä listasta (molemmat O(1)). Heuristiikka lasketaan samalla menetelmällä kuin A*-algoritmissa, joten heuristiikan laskemisen aikavaativuus on O(1). Käytössä on sama karttatulki kuin muillakin algoritmeilla. Fringe Search algoritmin toteutuksessa saavutettu aikavaativuus on O(n<sup>2</sup>). 
 
-Algoritmi tarvitsee useita aputaulukkoja, joiden kaikkien tilantarve saadaan suoraan kartan koosta ja linkitetyn listan, jolla kukin solmu voi olla samanaikaisesti vain kerran. Kaikkia solmuja kohden luodaan kuitenkin olio, sillä niistä pidetään nopean haun mahdollistavaa aputaulukkoa. Saavutettu tilavaativuus on O(n), tosin melko suurella kertoimella.
+Algoritmi tarvitsee useita aputaulukoita, joiden kaikkien tilantarve saadaan suoraan kartan koosta ja linkitetyn listan, jolla kukin solmu voi olla samanaikaisesti vain kerran. Kaikkia solmuja kohden luodaan kuitenkin olio, sillä niistä pidetään nopean haun mahdollistavaa aputaulukkoa. Saavutettu tilavaativuus on O(n), tosin melko suurella kertoimella.
 
 ## Suorituskyky ja O-analyysivertailu totetutettujen reitinhakualgoritmien väilllä
 
-Kaikkien kolmen algoritmin tilavaativuus on O(n). Djikstaran algoritmin ja A*-algoritmin aikavaativuus in O(n+log(n)), kun huomiodaan se, että kaarien määrä solmua kohden on vakio. Frnge search- algoritmin aikavaativuus on O(n<sup>2</sup>). Fringe search -algoritmin aikavaativuus on siten (pahimmassa mahdollisessa tilanteessa) suurempi kuin muiden. Empiirisen suorituskykyvertailun tulokset löytyvät testausdkumentista.
+Kaikkien kolmen algoritmin tilavaativuus on O(n). Djikstran algoritmin ja A*-algoritmin aikavaativuus in O(n+log(n)), kun huomiodaan se, että kaarien määrä solmua kohden on vakio. Fringe search- algoritmin aikavaativuus on O(n<sup>2</sup>). Fringe search -algoritmin aikavaativuus on siten (pahimmassa mahdollisessa tilanteessa) suurempi kuin muiden. Empiirisen suorituskykyvertailun tulokset löytyvät testausdokumentista.
 
 ## Puutteita ja parannusehdotuksia
 
-Sovelluksessa on käytetty karttatulkkia, joka selvittää tarvittessa heksasta toiseen siirtymiseen tarvittavan liikepistemäärän. Tämä toimii hyvin yksittäisen haun tekemiseen sovelluksessa. Suoristuskykytesteissä ajetaan kuitenkin 1000 hakua samalle kartalle. Sellaisessa tilanteessa olisi todennäköisesti tehokkaampaa laskea kaikkein mahdollisten siirtymisten vaatmat liikepistemäärät etukäteen muistiin. Etenkin kun arta evät ole kovinkaan suuria.
+Sovelluksessa on käytetty karttatulkkia, joka selvittää tarvittessa heksasta toiseen siirtymiseen tarvittavan liikepistemäärän. Tämä toimii hyvin yksittäisen haun tekemiseen sovelluksessa. Suoristuskykytesteissä ajetaan kuitenkin 1000 hakua samalle kartalle. Sellaisessa tilanteessa olisi todennäköisesti tehokkaampaa laskea kaikkein mahdollisten siirtymisten vaatimat liikepistemäärät etukäteen muistiin. Etenkin kun kartat eivät ole kovinkaan suuria.
 
 
 ## Lähteet
@@ -54,4 +55,4 @@ Laaksonen, Antti 2019: Tietorakenteet ja algoritmit
 
 Patel, Amit 2020: Introduction to A\* https://www.redblobgames.com/pathfinding/a-star/introduction.html
 
-
+Red Blob Games 2020: Hexagonal Grids https://www.redblobgames.com/grids/hexagons/
