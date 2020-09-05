@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.Random;
 
 /**
- * rchs
+ * Runs performance tests for maps given as commannd line arguments
  *
  * @author Heli Hyvättinen
  */
@@ -149,16 +149,14 @@ public class PerformanceTester {
     public static void main(String[] args) {
         PerformanceTester tester = new PerformanceTester();
 
-        String[] mapfilenames = {
-            "data/large_maps/Kalian.map",
-            "data/large_maps/08b_Ray_of_Hope.map",
-            "data/large_maps/23_Test_of_the_Clans.map",
-            "data/medium_size_maps/02_The_Chase.map",
-            "data/medium_size_maps/03_The_Isle_of_Alduin.map",
-            "data/medium_size_maps/05_Northern_Outpost.map"
-        };
+        if (args.length == 0) {
+            System.out.println("Ei annettu karttoja. "
+                    + "Anna suorituskykytestetissä käytettävät kartat "
+                    + "komentoriviparametreina.");
+            return;
+        }
 
-        tester.run(mapfilenames);
+        tester.run(args);
     }
 
 }
