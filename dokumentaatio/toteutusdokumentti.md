@@ -32,13 +32,17 @@ A*-algoritmi on toiminnaltaan hyvin lähellä Djikstran algoritmia. Ainoa ero, j
 
 ### Fringe Search -algoritmi
 
-Fringe search -algortmi tutkii pintapuolisesti osan solmuista useamman kerran. Pahimmillaan se voisi teoriassa käydä jokaisen tutkimansa solmun kohdalla muut solmut lyhyesti läpi. Toisaalta se ei kuluta aikaa järjestyksen ylläpitoon. Kutakin solmua tutkittaessa käytetään aputaulukoita (O(1)) ja  saatetaan lisätä ja poistaa linkitetystä listasta (molemmat O(1)). Heuristiikka lasketaan samalla menetelmällä kuin A*-algoritmissa, joten heuristiikan laskemisen aikavaativuus on O(1). Käytössä on sama karttatulki mkuin muillakin algoritmeilla. Fringe Search algoritmin toteutuksessa saavutettu aikavaativuus on O(n^2). 
+Fringe search -algortmi tutkii pintapuolisesti osan solmuista useamman kerran. Pahimmillaan se voisi teoriassa käydä jokaisen tutkimansa solmun kohdalla muut solmut lyhyesti läpi. Toisaalta se ei kuluta aikaa järjestyksen ylläpitoon. Kutakin solmua tutkittaessa käytetään aputaulukoita (O(1)) ja  saatetaan lisätä ja poistaa linkitetystä listasta (molemmat O(1)). Heuristiikka lasketaan samalla menetelmällä kuin A*-algoritmissa, joten heuristiikan laskemisen aikavaativuus on O(1). Käytössä on sama karttatulki mkuin muillakin algoritmeilla. Fringe Search algoritmin toteutuksessa saavutettu aikavaativuus on O(n<sup>2</sup>). 
 
 Algoritmi tarvitsee useita aputaulukkoja, joiden kaikkien tilantarve saadaan suoraan kartan koosta ja linkitetyn listan, jolla kukin solmu voi olla samanaikaisesti vain kerran. Kaikkia solmuja kohden luodaan kuitenkin olio, sillä niistä pidetään nopean haun mahdollistavaa aputaulukkoa. Saavutettu tilavaativuus on O(n), tosin melko suurella kertoimella.
 
 ## Suorituskyky ja O-analyysivertailu totetutettujen reitinhakualgoritmien väilllä
 
+Kaikkien kolmen algoritmin tilavaativuus on O(n). Djikstaran algoritmin ja A*-algoritmin aikavaativuus in O(n+log(n)), kun huomiodaan se, että kaarien määrä solmua kohden on vakio. Frnge search- algoritmin aikavaativuus on O(n<sup>2</sup>). Fringe search -algoritmin aikavaativuus on siten (pahimmassa mahdollisessa tilanteessa) suurempi kuin muiden. Empiirisen suorituskykyvertailun tulokset löytyvät testausdkumentista.
+
 ## Puutteita ja parannusehdotuksia
+
+Sovelluksessa on käytetty karttatulkkia, joka selvittää tarvittessa heksasta toiseen siirtymiseen tarvittavan liikepistemäärän. Tämä toimii hyvin yksittäisen haun tekemiseen sovelluksessa. Suoristuskykytesteissä ajetaan kuitenkin 1000 hakua samalle kartalle. Sellaisessa tilanteessa olisi todennäköisesti tehokkaampaa laskea kaikkein mahdollisten siirtymisten vaatmat liikepistemäärät etukäteen muistiin. Etenkin kun arta evät ole kovinkaan suuria.
 
 
 ## Lähteet
@@ -50,5 +54,4 @@ Laaksonen, Antti 2019: Tietorakenteet ja algoritmit
 
 Patel, Amit 2020: Introduction to A\* https://www.redblobgames.com/pathfinding/a-star/introduction.html
 
-Red Blob Games 2020: Hexagonal Grids https://www.redblobgames.com/grids/hexagons/
 
