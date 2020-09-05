@@ -4,7 +4,7 @@ Ohjelma hakee annatulta  [Battle for Wesnoth -pelin](https://www.wesnoth.org/) k
 
 ## Ohjelman käyttöönotto
 
-Sovellus asennetaan lataamalla github-releasessa oleva zip-paketti ja purkamalla se haluttuun paikkaan. Sovellus käynnistetään ajamalla puretun paketin kansiosta heksareitinhaku/bin/ tiedosto heksareitinhaku . (Sovelluksen joman koodin siältävä jar-tiedosto ja tarvittavat JavaFX-jar tiedostot ovat hakemistossa libs. Tämä on gradlen ohjeiden suosittelemam application-pluginin tapa java-sovelluksen julkaisuun.)
+Sovellus asennetaan lataamalla [github-releasessa](https://github.com/helihyv/heksareitinhaku/releases/tag/loppupalautus) oleva zip-paketti ja purkamalla se haluttuun paikkaan. Sovellus käynnistetään ajamalla puretun paketin kansiosta heksareitinhaku/bin/ tiedosto heksareitinhaku . (Sovelluksen joman koodin siältävä jar-tiedosto ja tarvittavat JavaFX-jar tiedostot ovat hakemistossa libs. Tämä on gradlen ohjeiden suosittelemam application-pluginin tapa java-sovelluksen julkaisuun.)
 
 Vaihtehtoisesti ohjelman voi käynnistäää lataamalla tai kloonaamalla projektin ja antamalla komennon ./gradlew run alihakemistossa heksareitinhaku(. Tai netbeansista jos gradle-tuki on käytössä ja ḱonfiguroitu käyttämään gradle wrapperia.)   
 
